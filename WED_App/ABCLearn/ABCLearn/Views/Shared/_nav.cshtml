@@ -24,7 +24,7 @@
 <div class="container-fluid position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
         <a href="Home" class="navbar-brand p-0 d-flex align-items-center">
-            <img src="./img/Logo-icon.png" class="fa-font-awesome-logo-full img-fluid" style="height: 200px;" alt="logo-ABCLearn">
+            <img src="~/img/Logo-icon.png" class="fa-font-awesome-logo-full img-fluid" style="height: 200px;" alt="logo-ABCLearn">
             <h1 class="text-primary m-0">BCLearn</h1>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -32,8 +32,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <a href="Home" class="nav-item nav-link active">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="@Url.Action("Index", "Home")" class="nav-item nav-link active">Home</a>
+                <a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
                 <a href="service.html" class="nav-item nav-link">Services</a>
                 <a href="package.html" class="nav-item nav-link">Packages</a>
                 <div class="nav-item dropdown">
