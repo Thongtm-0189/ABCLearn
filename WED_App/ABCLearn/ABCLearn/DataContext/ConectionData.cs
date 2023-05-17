@@ -7,7 +7,7 @@ namespace ABCLearn.DataContext
 {
     public class ConectionData
     {
-        static string connectionString = "";
+        static string connectionString = "Data Source=THONG-LAPTOP;Initial Catalog=ABCLearn;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=False";
         public static DataTable ExecuteQuery(string query, object[] parameter = null)
         {
             DataTable data = new DataTable();

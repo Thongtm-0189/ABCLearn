@@ -61,7 +61,7 @@ body {
     line-height: 1.5;
     color: #212529;
     text-align: left;
-    background-color: #30874c;
+    background-color: #4eae2d;
 }
 
 [tabindex="-1"]:focus {
@@ -82,7 +82,7 @@ h2, h3, h4, h5, h6 {
 
 h1 {
     font-family: Arial, sans-serif;
-    font-size: 48px;
+    font-size: 40px;
     font-weight: bold;
     color: #291072;
     text-align: center;
@@ -208,10 +208,11 @@ figure {
 }
 
 img {
-    width: 150px;
-    height: 100px;
-    display: inline-block;
+    width: 100px;
+    height: 60px;
+ display :inline-block;
     margin-left: 15px;
+    margin-top:50px;
     border-block-color: aqua;
 }
 
@@ -573,6 +574,7 @@ pre {
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
+    overflow: hidden;
 }
 
 
@@ -11375,7 +11377,7 @@ a.text-dark:hover, a.text-dark:focus {
     }
 
     body {
-        min-width: 992px !important;
+        min-width: 990px !important;
     }
 
     .container {
