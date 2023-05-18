@@ -30,5 +30,9 @@ namespace ABCLearn.Controllers
             course.Comments = CourseDAO.Instance().getComment(course.Id);
             return View(@"Views/Home/DetailCourse.cshtml", course);
         }
+        public IActionResult Contact()
+        {
+            return View();
+        }
     }
 }

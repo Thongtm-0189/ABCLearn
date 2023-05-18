@@ -1286,7 +1286,6 @@ D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\scopedcss\Views\Shared\_endScript.cshtml.rz.scp.css
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\scopedcss\Views\Shared\_head.cshtml.rz.scp.css
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\scopedcss\Views\Shared\_nav.cshtml.rz.scp.css
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\scopedcss\Views\Shared\_spanner.cshtml.rz.scp.css
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\scopedcss\bundle\ABCLearn.styles.css
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\scopedcss\projectbundle\ABCLearn.bundle.scp.css
@@ -1571,3 +1570,6 @@ E:\ABC-Learning\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\refint\ABCLearn.dll
 E:\ABC-Learning\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\ABCLearn.pdb
 E:\ABC-Learning\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\ABCLearn.genruntimeconfig.cache
 E:\ABC-Learning\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\ref\ABCLearn.dll
+D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\scopedcss\Views\Shared\_footer.cshtml.rz.scp.css
+D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\scopedcss\Views\Shared\_navEnd.cshtml.rz.scp.css
+D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\scopedcss\Views\Shared\_navStart.cshtml.rz.scp.css
