@@ -1,0 +1,138 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+	ViewBag.title = "ABC Learn";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	@Html.Partial("_head")
+</head>
+
+<body>
+
+	@Html.Partial("_navStart")
+	<a href="@Url.Action("Index", "Home")" class="nav-item nav-link active">Home</a>
+	<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+	<a href="" class="nav-item nav-link">Services</a>
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+	@Html.Partial("_navEnd")
+	<!-- tab search dictionary -->
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-5">
+			<div class="row justify-content-center py-5">
+				<div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+					<h1 class="display-3 text-white mb-3 animated slideInDown">Dictionary</h1>
+					<p class="fs-4 text-white mb-4 animated slideInDown">Enter the word to find</p>
+					<div class="position-relative w-75 mx-auto animated slideInDown">
+						<form action="/Dictionary?" method="get">
+							<input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" name="searchDictionary" id="word" type="text" value="@ViewBag.word" placeholder="Eg: Vocabulary">
+							<button type="submit" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;">Search</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Sourse Start -->
+	<div class="container-xxl py-5">
+		<div class="container">
+			<div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+				<h6 class="section-title bg-white text-center text-primary px-3">Course</h6>
+				<h1 class="mb-5">Detail Course</h1>
+			</div>
+
+			<div class="row g-4 justify-content-center">
+				<div class="col-lg-5 col-md-4 wow fadeInUp" data-wow-delay="0.1s">
+					<div class="package-item">
+						<div class="overflow-hidden">
+							<img class="img-fluid img-responsive" src="~/img/package-1.jpg" alt="">
+						</div>
+						<div class="d-flex border-bottom">
+							<small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2"></i>Online</small>
+							<small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2"></i>Every days</small>
+							<small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>All Student</small>
+						</div>
+						<div class="text-center p-4">
+							<h3 class="mb-0"> @Model.Price </h3>
+							<div class="mb-3">
+								<small class="fa fa-star text-primary"></small>
+								<small class="fa fa-star text-primary"></small>
+								<small class="fa fa-star text-primary"></small>
+								<small class="fa fa-star text-primary"></small>
+								<small class="fa fa-star text-primary"></small>
+							</div>
+							<p><b>@Model.Title</b></p>
+							<p>@Model.Detail</p>
+							<div class="d-flex justify-content-center mb-2">
+								<a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 30px;">Book Now</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-4 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
+					<div class="package-item">
+						<div class="overflow-hidden">
+							<img class="img-fluid img-responsive" src="~/img/team-1.jpg" alt="">
+						</div>
+						<div class="text-center p-4">
+							<h3 class="mb-0"> @Model.Lecturer.FirstName @Model.Lecturer.LastName </h3>
+							<div class="mb-3">
+								<small class="fa fa-star text-primary"></small>
+								<small class="fa fa-star text-primary"></small>
+								<small class="fa fa-star text-primary"></small>
+								<small class="fa fa-star text-primary"></small>
+								<small class="fa fa-star text-primary"></small>
+							</div>
+							<p><b>@Model.Lecturer.Phone</b></p>
+							<p>@Model.Lecturer.Email</p>
+							<!--
+								<div class="d-flex justify-content-center mb-2">
+								<a href="#" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
+								<a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Book Now</a>
+							</div>
+							-->
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<br />
+			<div class="row  justify-content-center">
+				<h2>Comment:</h2>
+				<form class="col-11 col-md-10 row">
+					<input class="border-0 rounded-pill w-70 py-2 ps-3 pe-4 col-md-10" placeholder="What do you think about this course?" name="comment" type="text" />
+					<input class="btn btn-sm btn-primary justify-content-end px-2 col-md-1" type="submit" value="Send" />
+				</form>
+				<br />
+				<!--comments-->
+				<div class="col-lg-9 col-md-5 m-4" data-wow-delay="0.1s">
+					@if (Model.Comments.Count > 0)
+					{
+						@foreach (var item in Model.Comments)
+						{
+							<div class="package-item">
+								<div class="overflow-hidden">
+									<h4> @item.StudentName:</h4>
+									<p>@item.Content</p>
+								</div>
+							</div>
+							<br />
+						}
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Sourse End -->
+	@Html.Partial("_footer")
+	@Html.Partial("_endScript")
+</body>
+
+</html>

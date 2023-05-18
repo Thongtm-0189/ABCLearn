@@ -1,5 +1,6 @@
 ﻿using ABCLearn.Models;
 using System.Data;
+using System.Globalization;
 
 namespace ABCLearn.DataContext
 {
@@ -35,7 +36,7 @@ namespace ABCLearn.DataContext
                     Course obj = new Course()
                     {
                         Id = Convert.ToInt32(row["IDCourse"].ToString()),
-                        IDLecturer = Convert.ToInt32(row["IDLecturer"]),
+                        Lecturer = LecturerDAO.Instance().Lecturers().FirstOrDefault(x => x.Id == Convert.ToInt32(row["IDLecturer"])),
                         Title = row["Title"].ToString(),
                         Detail = row["Detail"].ToString(),
                         Price = float.Parse(row["Price"].ToString()),
@@ -45,6 +46,31 @@ namespace ABCLearn.DataContext
                     _coureses.Add(obj);
                 }
             }
+        }
+        public List<Comment> getComment(int id)
+        {
+            List<Comment> comments = new List<Comment>();
+            string query = "SELECT * FROM tblCommentOfStudent, tblStudent WHERE tblStudent.IDStudent = tblCommentOfStudent.IDStudent AND IDCourse = @id";
+            DataTable dataTable = ConectionData.ExecuteQuery(query, new object[] { id });
+            foreach (DataRow row in dataTable.Rows)
+            {
+                Comment obj = new Comment()
+                {
+                    StudentName = $"{row["FirstName"].ToString()} {row["LastName"].ToString()}",
+                    IDCourse = Convert.ToInt32(row["IDCourse"].ToString()),
+                    Content = row["Comment"].ToString(),
+                    CreatedDate = DateTime.Parse(row["TimeDate"].ToString())
+                };
+
+                comments.Add(obj);
+            }
+            comments.Reverse();
+            return comments;
+        }
+        public void Update()
+        {
+            _coureses.Clear();
+            getCourse();
         }
     }
 }

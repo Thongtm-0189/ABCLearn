@@ -13,8 +13,9 @@ namespace ABCLearn.Controllers
         }
         public IActionResult Login(AccountLogin acc)
         {
-            
-            if (AdminDAO.Instence().Login(acc)) { 
+
+            if (AdminDAO.Instence().Login(acc))
+            {
                 return View(@"Views/Admin/AdminPage.cshtml");
             }
             else

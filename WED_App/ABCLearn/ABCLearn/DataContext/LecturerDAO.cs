@@ -53,5 +53,10 @@ namespace ABCLearn.DataContext
             DataTable dataTable = ConectionData.ExecuteQuery(query);
             return quizzes;
         }
+        public void Update()
+        {
+            _lecturers.Clear();
+            getLecturer();
+        }
     }
 }
