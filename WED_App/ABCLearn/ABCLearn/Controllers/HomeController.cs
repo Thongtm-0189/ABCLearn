@@ -34,5 +34,9 @@ namespace ABCLearn.Controllers
         {
             return View();
         }
+        public IActionResult CheckGarmarly()
+        {
+            return View();
+        }
     }
 }

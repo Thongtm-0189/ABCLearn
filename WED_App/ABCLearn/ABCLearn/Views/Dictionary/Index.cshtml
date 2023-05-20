@@ -16,10 +16,10 @@
     <a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
     <a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
     @Html.Partial("_navEnd")
-    <div class="container-fluid bg-primary mb-5 hero-header">
+    <div class="container-fluid bg-primary mb-5 hero-header" style="height: 400px">
         <div class="container py-5">
-            <div class="row justify-content-center py-5">
-                <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+            <div class="row justify-content-center py-5"">
+                <div class="col-lg-10 pt-lg-5 text-center">
                     <h1 class="display-3 text-white mb-3 animated slideInDown">Dictionary</h1>
                     <p class="fs-4 text-white mb-4 animated slideInDown">Enter the word to find</p>
                     <div class="position-relative w-75 mx-auto animated slideInDown">
@@ -74,8 +74,6 @@
                                              </p>
                                         </div>`;
                     }
-
-                    
                     //console.log(res.data[0]);
                     //console.log(res.data[0].phonetics[0].text);
                     document.getElementById("title").innerText = res.data[0].word;

@@ -2,14 +2,21 @@
 	<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
 	<div class="dropdown-menu m-0">
 		<a href="@Url.Action("Index", "Dictionary", new {searchDictionary = "Welcome"})" class="dropdown-item">Dictionary</a>
-		<a href="#" class="dropdown-item">Grammar check</a>
+		<a href="@Url.Action("CheckGarmarly", "Home")" class="dropdown-item">Grammar check</a>
 		<a href="#" class="dropdown-item">Calendar</a>
 		<a href="#" class="dropdown-item">Quiz</a>
-
 	</div>
 </div>
 			</div>
-<a href="Login" class="btn btn-primary rounded-pill py-2 px-4">Join now</a>
+			@if (UserLogin.Instance.Islogin)
+			{
+				<a href="#"class="nav-item nav-link">@UserLogin.Instance.FirstName @UserLogin.Instance.LastName @ViewData["check"]</a>
+				<a href="@Url.Action("Logout", "Login")" class="btn btn-primary rounded-pill py-2 px-4">Logout</a>
+			}
+			else
+			{
+	<a href="@Url.Action("Index", "Login", new {page = "Index", control = "Home", Id = 0})" class="btn btn-primary rounded-pill py-2 px-4">Join now</a>
+			}
 		</div>
 	</nav>
 </div>

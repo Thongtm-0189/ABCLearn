@@ -1,121 +1,108 @@
-﻿<!DOCTYPE html>
+﻿@{
+	ViewBag.title = "ABC Learn";
+	
+}
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Đăng nhập và Đăng ký</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    .container {
-      max-width: 100%;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .register-form {
-      display: none;
-    }
-        .button {
-  background-color: white;
-  color: black;
-  border-radius: 50px;
-  transition: background-color 0.3s;
-}
-
-.button:hover {
-  background-color: forestgreen;
-  color: black;
-  border: 2px solid none;
-}
-
-    
-  </style>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	@Html.Partial("_head")
 </head>
 <body>
-    <div class="container">
-      <div class="row">
-      <div class="col-md-6">
-          <div><img src="~/img/logo-ABCLearn.png"></div>
-          <h2 class="align-content-center">Nền Tảng Học Tiếng Anh ABC</h2>
-      </div>
-    <div class=" col-md-4 title">
-        <div class="form-group">
-          <h2>Welcome to ABC-Learning</h2>
-        </div>
-        
-      <h1>Đăng nhập</h1>
-      <form>
-        <div class="form-group">
-          <label for="loginUsername">UserName:</label>
-          <input type="text" class="form-control" id="loginUsername" placeholder="Enter username" required>
-        </div>
+	@Html.Partial("_navStart")
+	<a href="@Url.Action("Index", "Home")" class="nav-item nav-link">Home</a>
+	<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+	<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+	@Html.Partial("_navEnd")
 
-        <div class="form-group">
-          <label for="loginPassword">Password:</label>
-          <input type="password" class="form-control" id="loginPassword" placeholder="Enter password" required>
-        </div>
-        <p class=".align-text-center">Login with</p>
-        <div class="form-group row">
-          <div class="col-md-1"></div>
-          <button type="submit" class="col-md-4 button" id="loginStudent" placeholder="" required>Student</button>
-          <div class="col-md-2"></div>
-          <button type="submit" class="col-md-4 button" id="loginLecture" placeholder="" required>Lecture</button>
-          <div class="col-md-1"></div>
-        </div>
-     
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-5">
+			<div class="row justify-content-center py-5">
+				<h1 class="text-center text-white mb-2 animated slideInDown">Welcome to ABC-Learning</h1>
+			</div>
+			<div class="container">
+				<div class="row justify-content-center">
+					<div id="loginForm" class="col-md-4 title">
+						<h1 class="text-center text-white">Login</h1>
+						<form action="@Url.Action("Login", "Login")">
+							<p class="text-center text-white"></p>
+							<div class="form-group">
+								<label for="loginUsername">Email:</label>
+								<input type="email" class="form-control" name="Email" id="loginEmail" placeholder="Enter email" required>
+							</div>
 
-        <button type="submit" class="btn btn-primary">Login</button>
-      </form>
-      <p>Do not have an account? <a href="#" onclick="showRegisterForm()">Register</a></p>
-    </div>
+							<div class="form-group">
+								<label for="loginPassword">Password:</label>
+								<input type="password" name="Password" class="form-control" id="loginPassword" placeholder="Enter password" required>
+							</div>
+							<p class=".align-text-center">Login with</p>
+							<div class="form-group row justify-content-center">
+								<button type="submit" class=" btn btn-primary col-md-5 border-1 button" name="submitButton" value="Sutdent" id="loginStudent" placeholder="" required>Student</button>
+								<div class="col-1"></div>
+								<button type="submit" class=" btn btn-primary col-md-5 border-1 button" name="submitButton" value="Lecturer" id="loginLecture" placeholder="" required>Lecture</button>
+							</div>
+						</form>
+						<p>Do not have an account? <a href="#" onclick="showRegisterForm()">Register</a></p>
+					</div>
 
-    <div id="registerForm" class="register-form">
-      <h2>Đăng ký</h2>
-      <form>
-        <div class="form-group">
-          <label for="registerUsername">First Name</label>
-          <input type="text" class="form-control" id="registerFirstname" placeholder="Enter First Name" required>
-        </div>
-        <div class="form-group">
-          <label for="registerUsername">Last Name</label>
-          <input type="text" class="form-control" id="registerLastname" placeholder="Enter Last Name" required>
-        </div>
+					<div id="registerForm" style="display:none" class="col-md-6 title">
+						<h2 class="text-center text-white">Register</h2>
+						<form class="row">
+							<div id="left-form" class="col-6 col-md-6">
+								<div class="form-group">
+									<label for="registerUsername">First Name</label>
+									<input type="text" class="form-control" id="registerFirstname" placeholder="Enter First Name" required>
+								</div>
+								<div class="form-group">
+									<label for="registerUsername">Last Name</label>
+									<input type="text" class="form-control" id="registerLastname" placeholder="Enter Last Name" required>
+								</div>
 
-        <div class="form-group">
-          <label for="registerEmail">Email</label>
-          <input type="email" class="form-control" id="registerEmail" placeholder="Enter Email" required>
-        </div>
+								<div class="form-group">
+									<label for="registerEmail">Email</label>
+									<input type="email" class="form-control" id="registerEmail" placeholder="Enter Email" required>
+								</div>
+							</div>
 
-        <div class="form-group">
-          <label for="registerPassword">Password</label>
-          <input type="password" class="form-control" id="registerPassword" placeholder="Enter Password" required>
-        </div>
-        <div class="form-group">
-          <label for="registerPassword">Confirm password</label>
-          <input type="password" class="form-control" id="registerConfirmPassword" placeholder="Enter Confirm password" required>
-        </div>
-        <div class="form-group">
-          <label for="registerPassword">Phone number</label>
-          <input type="tel" class="form-control" id="registerPhonenumber" placeholder="Enter Phone number" required>
-        </div>
+							<div id="right-form" class="col-6 col-md-6">
+								<div class="form-group">
+									<label for="registerPassword">Password</label>
+									<input type="password" class="form-control" id="registerPassword" placeholder="Enter Password" required>
+								</div>
+								<div class="form-group">
+									<label for="registerPassword">Confirm password</label>
+									<input type="password" class="form-control" id="registerConfirmPassword" placeholder="Enter Confirm password" required>
+								</div>
+								<div class="form-group">
+									<label for="registerPassword">Phone number</label>
+									<input type="tel" class="form-control" id="registerPhonenumber" placeholder="Enter Phone number" required>
+								</div>
+							</div>
 
-        <button type="submit" class="btn btn-primary">Register</button>
-      </form>
-      <p>Do have an account?<a href="#" onclick="showLoginForm()">Login</a></p>
-    </div>
-  </div>
-  <div class="col-md-2"></div>
-  </div>
+							<button type="submit" class="btn btn-primary">Register</button>
+						</form>
+						<p>Do have an account?<a href="#" onclick="showLoginForm()">Login</a></p>
+					</div>
+				</div>
+				<div class="col-md-2"></div>
+			</div>
 
-  <script>
-    function showRegisterForm() {
-      document.getElementById("loginForm").style.display = "none";
-      document.getElementById("registerForm").style.display = "block";
-    }
+		</div>
+	</div>
 
-    function showLoginForm() {
-      document.getElementById("loginForm").style.display = "block";
-      document.getElementById("registerForm").style.display = "none";
-    }
-  </script>
+	
+	<script>
+		function showRegisterForm() {
+			document.getElementById("loginForm").style.display = "none";
+			document.getElementById("registerForm").style.display = "block";
+		}
+
+		function showLoginForm() {
+			document.getElementById("loginForm").style.display = "block";
+			document.getElementById("registerForm").style.display = "none";
+		}
+	</script>
 </body>
 </html>

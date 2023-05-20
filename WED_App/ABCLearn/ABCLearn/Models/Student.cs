@@ -9,7 +9,7 @@
         public string Password { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public bool ConfirmEmail { get; set; }
+        public bool IsConfirmEmail { get; set; }
         public DateTime DateCreated { get; set; }
         public List<Course> Courses { get; set; }
         public List<Comment> Comments { get; set; }

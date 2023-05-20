@@ -1,8 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
-}
+@using ABCLearn.Models
 @{
 	ViewBag.title = "ABC Learn";
 }
@@ -14,12 +13,11 @@
 </head>
 
 <body>
-
 	@Html.Partial("_navStart")
-	<a href="@Url.Action("Index", "Home")" class="nav-item nav-link active">Home</a>
-	<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
-	<a href="" class="nav-item nav-link">Services</a>
-	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+	<a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
+	<a href="@Url.Action("About", "Home")" class="nav-item nav-link ">About US</a>
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link active">Course</a>
+	<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
 	@Html.Partial("_navEnd")
 	<!-- tab search dictionary -->
 	<div class="container-fluid bg-primary mb-5 hero-header">
@@ -70,7 +68,7 @@
 							<p><b>@Model.Title</b></p>
 							<p>@Model.Detail</p>
 							<div class="d-flex justify-content-center mb-2">
-								<a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 30px;">Book Now</a>
+								<a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 30px;">Enroll Now</a>
 							</div>
 						</div>
 					</div>
@@ -106,10 +104,19 @@
 			<br />
 			<div class="row  justify-content-center">
 				<h2>Comment:</h2>
-				<form class="col-11 col-md-10 row">
-					<input class="border-0 rounded-pill w-70 py-2 ps-3 pe-4 col-md-10" placeholder="What do you think about this course?" name="comment" type="text" />
-					<input class="btn btn-sm btn-primary justify-content-end px-2 col-md-1" type="submit" value="Send" />
-				</form>
+				@if (UserLogin.Instance.Islogin)
+				{
+					<form class="col-11 col-md-10 row" data-wow-delay="0.2s">
+						<input class="border-0 rounded-pill w-70 py-2 ps-3 pe-4 col-md-10" placeholder="What do you think about this course?" name="comment" type="text" />
+						<input class="btn btn-sm btn-primary justify-content-end px-2 col-md-1" type="submit" value="Send" />
+					</form>
+				}
+				else
+				{
+					<div id="btn-login" class="justify-content-center">
+						<a href="@Url.Action("Index", "Login")"><input class="btn btn-sm btn-primary px-4 col-md-3" type="submit" value="Login To Send Comment" /></a>
+					</div>
+				}
 				<br />
 				<!--comments-->
 				<div class="col-lg-9 col-md-5 m-4" data-wow-delay="0.1s">

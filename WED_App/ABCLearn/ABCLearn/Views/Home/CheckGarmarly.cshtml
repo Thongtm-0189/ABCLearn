@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using ABCLearn.DataContext
+@{
+    ViewBag.title = "ABC Learn";
+    var Lecturers = LecturerDAO.Instance().Lecturers();
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @Html.Partial("_head")
+</head>
+
+<body>
+    @Html.Partial("_navStart")
+    <a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
+    <a href="@Url.Action("About", "Home")" class="nav-item nav-link active">About US</a>
+    <a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+    <a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+    @Html.Partial("_navEnd")
+    <!-- tab search dictionary -->
+    <div class="container-fluid bg-primary mb-5 hero-header">
+        <div class="container py-5">
+            <div class="row justify-content-center py-5">
+                <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Dictionary</h1>
+                    <p class="fs-4 text-white mb-4 animated slideInDown">Enter the word to find</p>
+                    <div class="position-relative w-75 mx-auto animated slideInDown">
+                        <form action="/Dictionary?" method="get">
+                            <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" name="searchDictionary" id="word" type="text" value="@ViewBag.word" placeholder="Eg: Vocabulary">
+                            <button type="submit" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--text area in here-->
+    
+
+
+    @Html.Partial("_footer")
+    @Html.Partial("_endScript")
+</body>
+
+</html>
