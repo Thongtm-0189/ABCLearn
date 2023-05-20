@@ -44,12 +44,15 @@
             </div>
 
             <div class="row g-4 justify-content-center">
-                @if(@ViewBag.Course.Count>0){
-                    @for (int i = 0; i < @ViewBag.Course.Count; i++)
+                @if (Courses.Count > 0)
+                {
+                    @for (int i = 0; i < @Courses.Count; i++)
                     {
                         Random random = new Random();
                         int randomNumber = random.Next(1, 4);
-                        <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.@(randomNumber)s">
+                        @if (@Courses[i].Status)
+                        {
+                            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.@(randomNumber)s">
                             <div class="package-item">
                                 <div class="overflow-hidden">
                                     <img class="img-fluid" src="~/img/package-@(randomNumber).jpg" alt="">
@@ -60,7 +63,7 @@
                                     <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>All Student</small>
                                 </div>
                                 <div class="text-center p-4">
-                                    <h3 class="mb-0"> @ViewBag.Course[i].Price </h3>
+                                        <h3 class="mb-0"> @Courses[i].Price </h3>
                                     <div class="mb-3">
                                         <small class="fa fa-star text-primary"></small>
                                         <small class="fa fa-star text-primary"></small>
@@ -77,6 +80,7 @@
                                 </div>
                             </div>
                         </div>
+                       }
                     }
                 }
             </div>

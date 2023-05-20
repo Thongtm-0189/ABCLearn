@@ -45,6 +45,7 @@ namespace ABCLearn.DataContext
                     _lecturers.Add(obj);
                 }
             }
+            _lecturers.Reverse();
         }
         public List<Quiz> GetQuizzes(int id)
         {

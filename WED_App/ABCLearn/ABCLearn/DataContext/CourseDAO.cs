@@ -39,6 +39,7 @@ namespace ABCLearn.DataContext
                         Lecturer = LecturerDAO.Instance().Lecturers().FirstOrDefault(x => x.Id == Convert.ToInt32(row["IDLecturer"])),
                         Title = row["Title"].ToString(),
                         Detail = row["Detail"].ToString(),
+                        Status = bool.Parse(row["Status"].ToString()),
                         Price = float.Parse(row["Price"].ToString()),
                         Sale = float.Parse(row["Sale"].ToString())
                     };

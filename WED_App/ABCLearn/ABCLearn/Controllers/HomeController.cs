@@ -38,5 +38,13 @@ namespace ABCLearn.Controllers
         {
             return View();
         }
+        public IActionResult Calendar()
+        {
+            return View();
+        }
+        public IActionResult Profile()
+        {
+            return View();
+        }
     }
 }

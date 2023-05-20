@@ -3,14 +3,14 @@
 	<div class="dropdown-menu m-0">
 		<a href="@Url.Action("Index", "Dictionary", new {searchDictionary = "Welcome"})" class="dropdown-item">Dictionary</a>
 		<a href="@Url.Action("CheckGarmarly", "Home")" class="dropdown-item">Grammar check</a>
-		<a href="#" class="dropdown-item">Calendar</a>
+		<a href="@Url.Action("Calendar", "Home")" class="dropdown-item">Calendar</a>
 		<a href="#" class="dropdown-item">Quiz</a>
 	</div>
 </div>
 			</div>
 			@if (UserLogin.Instance.Islogin)
 			{
-				<a href="#"class="nav-item nav-link">@UserLogin.Instance.FirstName @UserLogin.Instance.LastName @ViewData["check"]</a>
+				<a href="@Url.Action("Profile", "Home")"class="nav-item nav-link">@UserLogin.Instance.FirstName @UserLogin.Instance.LastName</a>
 				<a href="@Url.Action("Logout", "Login")" class="btn btn-primary rounded-pill py-2 px-4">Logout</a>
 			}
 			else

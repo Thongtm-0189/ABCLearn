@@ -180,7 +180,8 @@
 			<div class="row g-4 justify-content-center">
 				@for (int i = 0; i < 3; i++)
 				{
-					<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.@(i+1)s">
+					@if( @Courses[i].Status){
+						<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.@(i+1)s">
 						<div class="package-item">
 							<div class="overflow-hidden">
 								<img class="img-fluid" src="~/img/package-@(i+1).jpg" alt="">
@@ -207,6 +208,7 @@
 							</div>
 						</div>
 					</div>
+					}
 				}
 			</div>
 		</div>

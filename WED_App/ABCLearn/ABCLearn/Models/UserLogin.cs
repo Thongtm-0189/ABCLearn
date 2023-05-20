@@ -22,6 +22,7 @@
         public string Password { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public TimeSpan TimeLogin { get; set; }
         public bool IsConfirmEmail { get; set; }
         public bool Islogin { get; set; } = false;
         public DateTime DateCreated { get; set; }
