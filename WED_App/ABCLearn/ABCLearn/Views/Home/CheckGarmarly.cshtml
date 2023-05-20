@@ -41,7 +41,16 @@
     </div>
 
     <!--text area in here-->
-    
+    <div class="container">
+        <form>
+
+            <div class="form-group">
+                <label for="multilineInput">Enter your text</label>
+                <textarea class="form-control multiline-textbox" id="multilineInput" style="resize: none;"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-410 position-absolute right border-10 end-50 me-2" style="margin-top: 7px;">Check</button>
+        </form>
+    </div>
 
 
     @Html.Partial("_footer")
