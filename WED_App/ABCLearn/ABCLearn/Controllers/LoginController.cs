@@ -18,20 +18,39 @@ namespace ABCLearn.Controllers
             {
                 if (StudentDAO.Instance.login(acc))
                 {
-                    UserLogin.Instance.Courses = StudentDAO.Instance.GetCourses(UserLogin.Instance.Id);
                     UserLogin.Instance.Islogin = true;
+                    UserLogin.Instance.RoleID = "Student";
+                    UserLogin.Instance.TimeLogin = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                    foreach (var course in UserLogin.Instance.Courses)
+                    {
+                        course.Calendars = CourseDAO.Instance.getCalendar(course.Id);
+                    }
                     return RedirectToAction("Index", "Home");
-
                 }
                 else
                 {
-                    ViewBag.MessError = "Pass Or Email was Wrong!!";
+                    TempData["MessError"] = "Pass Or Email was Wrong!!";
                     return RedirectToAction("Index", "Login");
                 }
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                if (LecturerDAO.Instance.login(acc))
+                {
+                    UserLogin.Instance.Islogin = true;
+                    UserLogin.Instance.RoleID = "Lecturer";
+                    UserLogin.Instance.TimeLogin = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                    foreach (var course in UserLogin.Instance.Courses)
+                    {
+                        course.Calendars = CourseDAO.Instance.getCalendar(course.Id);
+                    }
+                    return RedirectToAction("Profile", "Home");
+                }
+                else
+                {
+                    TempData["MessError"] = "Pass Or Email was Wrong!!";
+                    return RedirectToAction("Index", "Login");
+                }
             }
         }
         public IActionResult Logout()

@@ -1,7 +1,7 @@
 ﻿@using ABCLearn.DataContext
 @{
     ViewBag.title = "ABC Learn";
-    var Lecturers = LecturerDAO.Instance().Lecturers();
+    var Lecturers = LecturerDAO.Instance.Lecturers();
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -14,8 +14,8 @@
     @Html.Partial("_navStart")
     <a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
     <a href="@Url.Action("About", "Home")" class="nav-item nav-link active">About US</a>
-    <a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
     <a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+    <a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
     @Html.Partial("_navEnd")
     <!-- tab search dictionary -->
     <div class="container-fluid bg-primary mb-5 hero-header">
@@ -83,14 +83,12 @@
                 <h1 class="mb-5">Meet Our Lecturer</h1>
             </div>
             <div class="row g-4">
-                @for (int i = 0; i < ViewBag.Lecturer.Count; i++)
-                {   
-                    Random random = new Random();
-                    int randomNumber = random.Next(1, 5);
+                @for (int i = 0; i < Lecturers.Count; i++)
+                {
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="team-item">
                             <div class="overflow-hidden">
-                                <img class="img-fluid" src="~/img/team-@(randomNumber).jpg" alt="">
+                                <img class="img-fluid" src="~/img/Avatar/@(Lecturers[i].Avatar)" alt="">
                             </div>
                             <div class="position-relative d-flex justify-content-center" style="margin-top: -19px;">
                                 <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>

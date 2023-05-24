@@ -7,13 +7,16 @@ namespace ABCLearn.DataContext
     {
         private List<Lecturer> _lecturers = new List<Lecturer>();
         private static LecturerDAO insctance;
-        public static LecturerDAO Instance()
+        public static LecturerDAO Instance
         {
-            if (insctance == null)
+            get
             {
-                insctance = new LecturerDAO();
+                if (insctance == null)
+                {
+                    insctance = new LecturerDAO();
+                }
+                return insctance;
             }
-            return insctance;
         }
 
         public List<Lecturer> Lecturers()
@@ -32,13 +35,16 @@ namespace ABCLearn.DataContext
                 {
                     Lecturer obj = new Lecturer()
                     {
-                        Id = Convert.ToInt32(row["IDLecturer"]),
-                        FirstName = row["FirstName"].ToString(),
-                        LastName = row["LastName"].ToString(),
-                        RoleID = row["RoleID"].ToString(),
-                        Email = row["Email"].ToString(),
-                        Password = "8888888",
-                        Phone = row["Phone"].ToString()
+                        Id = Convert.ToInt32(row["IDLecturer"].ToString().Trim()),
+                        FirstName = row["FirstName"].ToString().Trim(),
+                        LastName = row["LastName"].ToString().Trim(),
+                        RoleID = row["RoleID"].ToString().Trim(),
+                        Email = row["Email"].ToString().Trim(),
+                        Avatar = row["Avatar"].ToString().Trim(),
+                        Courses = getCourse(Convert.ToInt32(row["IDLecturer"].ToString().Trim())),
+                        Quizs = GetQuizzes(Convert.ToInt32(row["IDLecturer"].ToString().Trim())),
+                        Password = row["Password"].ToString().Trim(),
+                        Phone = row["Phone"].ToString().Trim()
                         // Gán các giá trị khác của object từ các cột trong DataTable
                     };
 
@@ -47,12 +53,71 @@ namespace ABCLearn.DataContext
             }
             _lecturers.Reverse();
         }
+        public bool login(AccountLogin acc)
+        {
+            string query = "SELECT * FROM tblLecturer WHERE Email = @Email AND Password = @pass";
+            DataTable tb = ConectionData.ExecuteQuery(query, new object[] { acc.Email, acc.Password });
+            foreach (DataRow row in tb.Rows)
+            {
+                UserLogin obj = new UserLogin()
+                {
+                    Id = Convert.ToInt32(row["IDLecturer"].ToString().Trim()),
+                    FirstName = row["FirstName"].ToString().Trim(),
+                    LastName = row["LastName"].ToString().Trim(),
+                    RoleID = row["RoleID"].ToString().Trim(),
+                    Password = row["Password"].ToString().Trim(),
+                    Email = row["Email"].ToString().Trim(),
+                    Phone = row["Phone"].ToString().Trim(),
+                    Avatar = row["Avatar"].ToString().Trim(),
+                    Courses = getCourse(Convert.ToInt32(row["IDLecturer"].ToString().Trim())),
+                };
+                UserLogin.Instance = obj;
+            }
+            if (tb.Rows.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        public List<Course> getCourse(int id)
+        {
+            List<Course> courses = new List<Course>();
+            string query = "SELECT * FROM tblCourse WHERE IDLecturer = @id";
+            DataTable dataTable = ConectionData.ExecuteQuery(query, new object[] { id });
+            foreach (DataRow row in dataTable.Rows)
+            {
+                Course obj = new Course()
+                {
+                    Id = Convert.ToInt32(row["IDCourse"].ToString().Trim()),
+                    Title = row["Title"].ToString().Trim(),
+                    Detail = row["Detail"].ToString().Trim(),
+                    Status = bool.Parse(row["Status"].ToString().Trim()),
+                    Price = float.Parse(row["Price"].ToString().Trim()),
+                    Sale = float.Parse(row["Sale"].ToString().Trim())
+                };
+
+                courses.Add(obj);
+            }
+            return courses;
+        }
         public List<Quiz> GetQuizzes(int id)
         {
             List<Quiz> quizzes = new List<Quiz>();
             string query = "SELECT * FROM tblLecturer";
             DataTable dataTable = ConectionData.ExecuteQuery(query);
             return quizzes;
+        }
+        public bool editprofile(Profile pro)
+        {
+            int ID = UserLogin.Instance.Id;
+            string query = "UPDATE tblLecturer " +
+                " \nSET FirstName = @FirstName , LastName = @LastName , Password = @Password , Phone = @Phone , Email = @Email" +
+                " \nWHERE IDlecturer = @IDlecturer";
+            bool result = ConectionData.ExecuteUpdate(query, new object[] { pro.FirstName, pro.LastName, pro.Password, pro.Phone, pro.Email, ID });
+            return result;
         }
         public void Update()
         {

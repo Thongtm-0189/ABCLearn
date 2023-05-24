@@ -10,191 +10,59 @@
 
 <body>
 	@Html.Partial("_navStart")
-	<a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
-	<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+	@if (UserLogin.Instance.RoleID != "Lecturer")
+	{
+		<a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
+		<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+		<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+	}
 	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
-    <a href="@Url.Action("Contact", "Home")" class="nav-item nav-link active">Contact</a>
 	@Html.Partial("_navEnd")
-    <!-- tab search dictionary -->
-    <div class="container-fluid bg-primary mb-5 hero-header">
-        <div class="container py-5">
-            <div class="row justify-content-center py-5">
-                <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
-                    <h1 class="display-3 text-white mb-3 animated slideInDown">@UserLogin.Instance.FirstName @UserLogin.Instance.LastName</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Profile in here -->
-    <div class="container">
-    <div class="main-body">
-      <!-- Breadcrumb -->
-      <nav aria-label="breadcrumb" class="main-breadcrumb bg-success">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a style="color: rgb(175, 240, 111);" href="index.html">Home</a></li>
-          <li class="breadcrumb-item"><a style="color: rgb(175, 240, 111);" href="javascript:void(0)">Student</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Student Profile</li>
-        </ol>
-      </nav>
-      <!-- /Breadcrumb -->
+	<!-- tab search dictionary -->
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-1">
+			<div class="row justify-content-center" style="margin-top: 100px">
+				<div class="col-lg-10 text-center">
+					<h1 class="display-3 text-white animated slideInDown">@UserLogin.Instance.FirstName @UserLogin.Instance.LastName</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Profile in here -->
+	@if(UserLogin.Instance.RoleID == "Student"){
+		@Html.Partial("_profileStudent")
+	}else{
+		@Html.Partial("_profileLecturer")
+	}
+		<script>
+			console.log("@UserLogin.Instance.Avatar")
+			var dobValue = "@UserLogin.Instance.DOB.ToString("yyyy-MM-dd")";
+			document.getElementById("dobInput").value = dobValue;
 
-      <div class="row gutters-sm">
-        <div class="col-md-4 mb-3">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-flex flex-column align-items-center text-center">
-                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle"
-                  width="242">
-                <div class="mt-3">
-                  <h4>Tran Minh Thong</h4>
-                  <p class="text-secondary mb-1">Student</p>
+			function showProfileForm() {
+				document.getElementById("ProfileForm").style.display = "none";
+				document.getElementById("EditProfileForm").style.display = "block";
+			}
+			function showEditProfileForm() {
+				document.getElementById("ProfileForm").style.display = "block";
+				document.getElementById("EditProfileForm").style.display = "none";
+			}
 
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-8 ">
-          <div id="ProfileForm" class="card mb-3" >
-            <div class="card-body">
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">First Name</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  Tran Minh
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Last Name</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  Thong
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Password</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  thongthong
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Email</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  thongminh@gmail.com
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Phone</h6>
-                </div>
-                <div class="col-sm-9 text-secondary">
-                  0123 456 789
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-12">
-                  <a onclick="showProfileForm()" class="btn btn-success">Edit</a>
-                </div>
-              </div>
-            </div>
-          
-          <div class="row gutters-sm">
-          </div>
-        </div>
-          <div id="EditProfileForm" class="card mb-3 edit-form"  style="display:none ;" >
-            <div class="card-body">
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">First Name</h6>
-                </div>
-                <input class="col-sm-9 text-secondary" placeholder="Tran Minh">
-
-                </input>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Last Name</h6>
-                </div>
-                <input class="col-sm-9 text-secondary" placeholder="Thong">
-
-                </input>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Password</h6>
-                </div>
-                <input class="col-sm-9 text-secondary" placeholder="thongthong">
-
-                </input>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Confirm Password</h6>
-                </div>
-                <input class="col-sm-9 text-secondary" placeholder="">
-
-                </input>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Email</h6>
-                </div>
-                <input class="col-sm-9 text-secondary" placeholder="thongminh@gmail,com">
-                </input>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <h6 class="mb-0">Phone</h6>
-                </div>
-                <input class="col-sm-9 text-secondary" placeholder="0123 456 789">
-                </input>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-12">
-                  <a href="#" class="btn btn-success">Summit</a>
-                  <a onclick="showEditProfileForm()" class="btn btn-success">Cancer</a>
-                </div>
-              </div>
-            </div>
-            <div class="row gutters-sm">
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <script>
-      function showProfileForm() {
-        document.getElementById("ProfileForm").style.display = "none";
-        document.getElementById("EditProfileForm").style.display = "block";
-      }
-      function showEditProfileForm() {
-        document.getElementById("ProfileForm").style.display = "block";
-        document.getElementById("EditProfileForm").style.display = "none";
-      }
-    </script>
+		function showProfileFormlt() {
+			document.getElementById("ProfileFormlt").style.display = "none";
+			document.getElementById("EditProfileFormlt").style.display = "block";
+			}
+		function showEditProfileFormlt() {
+			document.getElementById("ProfileFormlt").style.display = "block";
+			document.getElementById("EditProfileFormlt").style.display = "none";
+			}
+		</script>
 
 
-
-    @Html.Partial("_footer")
-	@Html.Partial("_endScript")
+		@if(UserLogin.Instance.RoleID != "Lecturer"){
+			@Html.Partial("_footer")
+		}
+		@Html.Partial("_endScript")
 </body>
 
 </html>

@@ -9,6 +9,7 @@
         public string Password { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public string Avatar { get; set; }
         public List<Quiz> Quizs { get; set; }
         public List<Course> Courses { get; set; }
     }

@@ -1,0 +1,211 @@
+﻿@{
+	var currentTime = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+}
+<div class="container">
+	<div class="main-body">
+		<div class="row gutters-sm">
+			<div class="col-md-4 mb-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex flex-column align-items-center text-center">
+							@if (UserLogin.Instance.Avatar != null)
+							{
+								<img src="~/img/Avatar/Lecturer/@(UserLogin.Instance.Avatar)" alt="Admin" class="rounded-circle" width="242">
+							}
+							else
+							{
+								<img src="~/img/Avatar/Male.jpg" alt="Admin" class="rounded-circle" width="242">
+							}
+							<div class="mt-3">
+								<h4>@UserLogin.Instance.FirstName @UserLogin.Instance.LastName</h4>
+								<p class="text-secondary mb-1">@UserLogin.Instance.RoleID</p>
+								<form method="post" enctype="multipart/form-data">
+									<div class="mb-3">
+										<input id="fileInputStudent" class="form-control" type="file" accept="image/*" name="file" />
+									</div>
+									<button id="uploadButtonLecturer" class="btn d-none btn-primary" type="submit">Upload</button>
+									<button id="cancel-buttonLecturer" class="btn d-none btn-primary">Cancel</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8 ">
+				<div id="ProfileFormlt" class="card mb-3">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-3">
+								<h6 class="mb-0">First Name</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								@UserLogin.Instance.FirstName
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-3">
+								<h6 class="mb-0">Last Name</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								@UserLogin.Instance.LastName
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-3">
+								<h6 class="mb-0">Password</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								*********
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-3">
+								<h6 class="mb-0">Email</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								@UserLogin.Instance.Email
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-3">
+								<h6 class="mb-0">Phone</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								@UserLogin.Instance.Phone
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-12">
+								<a onclick="showProfileFormlt()" class="btn btn-primary px-5">Edit</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="row gutters-sm">
+					</div>
+				</div>
+
+				<div id="EditProfileFormlt" class="card mb-3 edit-form" style="display:none ;">
+					<div class="card-body">
+						<form action="@Url.Action("EditInformation", "Profile")" method="post">
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">First Name</h6>
+								</div>
+								<input class="col-sm-9 text-secondary" placeholder="First Name" name="FirstName" value="@UserLogin.Instance.FirstName">
+
+								</input>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Last Name</h6>
+								</div>
+								<input class="col-sm-9 text-secondary" placeholder="Last Name" name="LastName" value="@UserLogin.Instance.LastName">
+
+								</input>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Password</h6>
+								</div>
+								<input class="col-sm-9 text-secondary" name="Password" placeholder="Password" value="@UserLogin.Instance.Password">
+
+								</input>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Email</h6>
+								</div>
+								<input class="col-sm-9 text-secondary" name="Email" placeholder="Email" type="email" value="@UserLogin.Instance.Email">
+								</input>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Phone</h6>
+								</div>
+								<input class="col-sm-9 text-secondary" name="Phone" type="tel" placeholder="Phone Number" value="@UserLogin.Instance.Phone">
+								</input>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-12">
+									<input type="submit" class="btn btn-primary px-5" />
+									<a onclick="showEditProfileFormlt()" class="btn btn-primary px-5">Cancer</a>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="row gutters-sm">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<table class="table table-striped text-center">
+			<thead>
+				<tr>
+					<th>Course</th>
+					<th>Time</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (Course course in UserLogin.Instance.Courses)
+				{
+					@if (course.Status)
+					{
+						@foreach (var calendar in course.Calendars)
+						{
+							<tr>
+								<td><b>@course.Title</b></td>
+								<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
+								@if (currentTime > calendar.EndTime)
+								{
+									<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
+								}
+								else if (currentTime < calendar.StartTime)
+								{
+									<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
+								}
+								else
+								{
+									<td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
+								}
+							</tr>
+						}
+					}
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+	<script>
+		var uploadButton = document.getElementById('uploadButtonLecturer');
+		const cancelButton = document.getElementById('cancel-buttonLecturer');
+
+		document.getElementById('fileInputStudent').addEventListener('change', function () {
+			var fileName = this.value.split('\\').pop();
+			if (fileName) {
+				uploadButton.classList.remove('d-none');
+				cancelButton.classList.remove('d-none');
+			} else {
+				uploadButton.classList.add('d-none');
+				cancelButton.classList.add('d-none');
+			}
+		});
+
+		cancelButton.addEventListener('click', function () {
+			fileInput.value = '';
+			cancelButton.style.display = 'none';
+		});
+	</script>

@@ -11,23 +11,23 @@ namespace ABCLearn.Controllers
     {
         public IActionResult Index()
         {
+            LecturerDAO.Instance.Lecturers();
+            StudentDAO.Instance.Students();
+            CourseDAO.Instance.Courses();
             return View();
         }
         public IActionResult About()
         {
-            ViewBag.Lecturer = LecturerDAO.Instance().Lecturers();
             return View();
         }
         public IActionResult Course()
         {
-            ViewBag.Course = CourseDAO.Instance().Courses();
             return View();
         }
         public IActionResult CourseDetail(int id)
         {
-
-            Course course = CourseDAO.Instance().Courses().FirstOrDefault(x => x.Id == id);
-            course.Comments = CourseDAO.Instance().getComment(course.Id);
+            Course course = CourseDAO.Instance.Courses().FirstOrDefault(x => x.Id == id);
+            course.Comments = CourseDAO.Instance.getComment(course.Id);
             return View(@"Views/Home/DetailCourse.cshtml", course);
         }
         public IActionResult Contact()
@@ -45,6 +45,16 @@ namespace ABCLearn.Controllers
         public IActionResult Profile()
         {
             return View();
+        }
+        public IActionResult Commemt(int IDStudent, int IDCourse, string comment)
+        {
+            Course course = new Course();
+            if (CourseDAO.Instance.Comment(IDStudent, IDCourse, comment))
+            {
+                course = CourseDAO.Instance.Courses().FirstOrDefault(x => x.Id == IDCourse);
+                course.Comments = CourseDAO.Instance.getComment(course.Id);
+            }
+            return View(@"Views/Home/DetailCourse.cshtml", course);
         }
     }
 }
