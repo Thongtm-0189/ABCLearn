@@ -5,7 +5,7 @@ namespace ABCLearn.DAO
 {
     public class Email
     {
-        /*private static Email instance;
+        private static Email instance;
         public static Email Instance
         {
             get
@@ -55,6 +55,6 @@ namespace ABCLearn.DAO
                 isSend = false;
             }
             return (isSend, OTP);
-        }*/
+        }
     }
 }
