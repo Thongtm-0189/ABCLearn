@@ -1,0 +1,90 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using ABCLearn.DataContext
+@model Dictionary<int, string>
+@{
+	var Quzss = QuizDAO.Instance.quizzes();
+}
+<!--
+	
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	@Html.Partial("_head")
+</head>
+
+<body>
+	@Html.Partial("_navStart")
+	@if (UserLogin.Instance.RoleID != "Lecturer")
+	{
+		<a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
+		<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+		<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+	}
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+	@Html.Partial("_navEnd")
+	<!-- tab search dictionary -->
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-1">
+			<div class="row justify-content-center" style="margin-top: 100px">
+				<div class="col-lg-10 text-center">
+					<h1 class="display-3 text-white animated slideInDown">Test your ability</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<h3>Your correct Answer: @ViewBag.Score</h3>
+	@if(UserLogin.Instance.Islogin){
+		<a href="@Url.Action("Quiz", "Quiz", new {page = "Index", control = "Home", Id = 0})" class="btn btn-primary rounded-pill py-2 px-4">TRY AGAIN</a>
+	}else{
+		<a href="@Url.Action("Index", "Login", new {page = "Index", control = "Home", Id = 0})" class="btn btn-primary rounded-pill py-2 px-4">Login For more</a>
+	}
+	<div class="container">
+		<table class="table table-striped text-center">
+			<thead>
+				<tr>
+					<th>QUESTION</th>
+					<th>CORRECT ANSWER</th>
+					<th>YOUR ANSWER</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (KeyValuePair<int, string> entry in Model)
+				{
+					int idQuiz = entry.Key;
+					string answer = entry.Value;
+					Quiz quiz = Quzss.Find(x => x.Id == idQuiz);
+					bool check = quiz.CorrectAnswer == answer;
+					<tr>
+						<td>
+							<b>@(quiz.Question)</b>
+						</td>
+						<td>
+							<b>@(quiz.CorrectAnswer)</b>
+						</td>
+						@if(check){
+							<td style="color: forestgreen"> 
+								@(quiz.CorrectAnswer)
+							</td>
+						}else{
+							<td style="color: red">
+								<del>@(answer)</del>
+							</td>
+						}
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+
+	@Html.Partial("_footer")
+	@Html.Partial("_endScript")
+	<script>
+	</script>
+</body>
+
+</html>
+
+-->

@@ -27,6 +27,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cQ291cnNlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Admin/DetailUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGV0YWlsVXNlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Admin/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -79,8 +83,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Login/ConfirmEmail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cQ29uZmlybUVtYWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Login/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Quiz/Quiz.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxRdWl6LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Quiz/SubmitQuiz.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxTdWJtaXRRdWl6LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/Error.cshtml]

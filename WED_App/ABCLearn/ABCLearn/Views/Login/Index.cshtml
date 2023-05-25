@@ -21,16 +21,16 @@
 	@Html.Partial("_navEnd")
 
 	<div class="container-fluid bg-primary mb-5 hero-header">
-		<div class="container py-2">
+		<div class="container py-1">
 			<div class="row justify-content-center py-5">
 				<h1 class="text-center text-white animated slideInDown">Welcome to ABC-Learning</h1>
 			</div>
 			<div class="container">
 				<div class="row justify-content-center py-1">
-					<div id="loginForm" class="col-md-4 py-5 title wow" data-wow-delay="0.2s">
+					<div id="loginForm" class="col-md-4 py-3 title wow" data-wow-delay="0.2s">
 						<h1 class="text-center text-white">Login</h1>
 						<form action="@Url.Action("Login", "Login")">
-							<p class="text-center" style="color: red">@TempData["MessError"]</p>
+							<p class="text-center" style="color: red"><small>@TempData["MessError"]</small></p>
 							<div class="form-group">
 								<label for="loginUsername">Email:</label>
 								<input type="email" class="form-control" name="Email" id="loginEmail" placeholder="Enter email" required>
@@ -42,9 +42,9 @@
 							</div>
 							<p class=".align-text-center">Login with</p>
 							<div class="form-group row justify-content-center">
-								<button type="submit" class=" btn btn-primary col-md-5 border-1 button" name="submitButton" value="Sutdent" id="loginStudent" placeholder="" required>Student</button>
+								<button type="submit" class=" btn btn-primary col-md-5 border-1 button" name="submitButton" value="Sutdent" id="loginStudent" required>Student</button>
 								<div class="col-1"></div>
-								<button type="submit" class=" btn btn-primary col-md-5 border-1 button" name="submitButton" value="Lecturer" id="loginLecture" placeholder="" required>Lecture</button>
+								<button type="submit" class=" btn btn-primary col-md-5 border-1 button" name="submitButton" value="Lecturer" id="loginLecture" required>Lecture</button>
 							</div>
 						</form>
 						<p>Do not have an account? <a href="#" onclick="showRegisterForm()">Register</a> Or have you <a href="#" onclick="showForgotpass()">forgotten your password</a>?</p>
@@ -52,11 +52,11 @@
 					 
 					<div id="registerForm" style="display:none" class="col-md-6 title wow" data-wow-delay="0.2s">
 						<h2 class="text-center text-white">Register</h2>
-						<form class="row">
+						<form action="@Url.Action("ConfirmEmail", "Login")" class="row" method="post">
 							<div id="left-form" class="col-6 col-md-6">
 								<div class="form-group">
 									<label for="registerUsername">First Name</label>
-									<input type="text" name="Firstname" class="form-control" id="registerFirstname" placeholder="Enter First Name" required>
+									<input type="text" name="FirstName" class="form-control" id="registerFirstname" placeholder="Enter First Name" required>
 								</div>
 								<div class="form-group">
 									<label for="registerUsername">Last Name</label>
@@ -75,7 +75,7 @@
 								<div class="form-group">
 									<label for="registerEmail">Email</label>
 									<input id="emailRegister" type="email" name="Email" class="form-control" placeholder="Enter Email" required>
-									<span id="spanEmail" style="color:red; display: none">This Mail existed</span>
+									<small><span id="spanEmail" style="color:red; display: none">This Mail existed</span></small>
 								</div>
 							</div>
 
@@ -91,16 +91,16 @@
 								<div class="form-group">
 									<label for="registerPassword">Password</label>
 									<input type="password" name="Password" class="form-control" id="registerPassword" placeholder="Enter Password EX:Abc123@@" required>
-									<span id="spanPass" style="color:red; display: none">Not correct </span>
+									<small><span id="spanPass" style="color:red; display: none">Not correct </span></small>
 								</div>
 								<div class="form-group">
 									<label for="registerPassword">Confirm password</label>
 									<input type="password" class="form-control" id="registerConfirmPassword" placeholder="Enter Confirm password" required>
-									<span id="spanConfirmpass" style="color:red; display:none">Password not correct</span>
+									<small><span id="spanConfirmpass" style="color:red; display:none">Password not correct</span></small>
 								</div>
 							</div>
 
-							<button id="btnRegister" type="submit" class="btn btn-primary">Register</button>
+							<button id="btnRegister" type="submit" class="btn btn-primary"> Register</button>
 						</form>
 						<p>Do have an account?<a href="#" onclick="showLoginForm()">Login</a> Or have you <a href="#" onclick="showForgotpass()">forgotten your password</a>?</p>
 					</div>
@@ -130,47 +130,54 @@
 		</div>
 	</div>
 
-	
+	@Html.Partial("_endScript")
 	<script>
 		var listEmail = @Html.Raw(Json.Serialize(StudentEmail));
 		var count = 0;
 		var btnRegister = document.querySelector("#btnRegister")
+		var isEmail =false
+		var isPass=false
+		var isRepass = false
 		document.querySelector("#emailRegister").addEventListener('change',(e)=>{
 			var value = e.target.value;
 			function check() { return listEmail.includes(value) }
-			checked("#spanEmail", check, value)
+			isEmail = checked("#spanEmail", check, value)
 		})
 
 		document.querySelector("#registerPassword").addEventListener('change', (e) => {
 			var value = e.target.value;
 			function check(){return !validatePassword(value) }
-			checked("#spanPass", check, value)
-			enableSubmit()
+			isPass = checked("#spanPass", check, value)
 		})
 
 		document.querySelector("#registerConfirmPassword").addEventListener('change', (e) => {
 			var value = e.target.value;
 			function check() { return !(value == document.querySelector("#registerPassword").value) }
 			checked("#spanConfirmpass", check, value)
-			enableSubmit()
+			isRepass = enableSubmit()
 		})
 
-		function enableSubmit(){
-			if(count>=3){
-				console.log("ok");
+		document.addEventListener('keydown', function () {
+			if(isEmail && isPass && isRepass){
+				//btnRegister.setAttribute("type", "submit");
+			}else{
+				//btnRegister.setAttribute("type", "button");
 			}
-		}
-		console.log(document.querySelector("#spanConfirmpass").style.display == "none")
+		});
+
 		function checked(span, callback, value){
 			if (value) {
 				var check = callback()
 				if (check) {
 					document.querySelector(span).style.display = "block";
+					return false;
 				} else {
 					document.querySelector(span).style.display = "none";
+					return true;
 				}
 			} else {
 				document.querySelector(span).style.display = "none";
+				return false;
 			}
 		}
 

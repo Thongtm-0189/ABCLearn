@@ -3,13 +3,13 @@
     ViewBag.title = "ABC Learn";
     var Lecturers = Model;
     int numOflecturer = LecturerDAO.Instance.Lecturers().Count;
-    if (numOflecturer % 10 == 0)
+    if (numOflecturer % 8 == 0)
     {
-        numOflecturer = numOflecturer / 10;
+        numOflecturer = numOflecturer / 8;
     }
     else
     {
-        numOflecturer = (numOflecturer / 10) + 1;
+        numOflecturer = (numOflecturer / 8) + 1;
     }
 }
 <!DOCTYPE html>
@@ -77,14 +77,21 @@
             <tbody>
                 @foreach (var lecturer in Lecturers)
                 {
+                    <form action="@Url.Action("LecturertAction", "Admin")" method="post">
                     <tr>
-                        <td>@lecturer.Id</td>
+                        <td>@lecturer.Id<input type="hidden" name="idLecturer" value="@lecturer.Id" /></td>
                         <td>@lecturer.FirstName</td>
                         <td>@lecturer.LastName</td>
-                        <td>@lecturer.Courses.Count</td>
+                        <td>@lecturer.Courses.Count <input type="hidden" name="countCourse" value="@lecturer.Courses.Count" /></td>
                         <td>@lecturer.Quizs.Count</td>
-                        <td>Action</td>
+                        <td>
+                            <div class="d-flex row">
+                                <button name="btnLecturerAdmin" type="submit" class="col-6 btn btn-primary" value="View">View</button>
+                                <button name="btnLecturerAdmin" type="submit" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</button>
+                            </div>
+                        </td>
                     </tr>
+                    </form>
                 }
             </tbody>
         </table>
@@ -95,6 +102,11 @@
             }
         </div>
     </div>
+    <script>
+        if ("@TempData["Lecturer"]") {
+            console.log("@TempData["Lecturer"]");
+        }
+    </script>
 </body>
 
 </html>

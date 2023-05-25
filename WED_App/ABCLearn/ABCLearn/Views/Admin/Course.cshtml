@@ -3,13 +3,13 @@
     ViewBag.title = "ABC Learn";
     var Courses = CourseDAO.Instance.Courses();
     int numOfCourse = CourseDAO.Instance.Courses().Count;
-    if (numOfCourse % 10 == 0)
+    if (numOfCourse % 8 == 0)
     {
-        numOfCourse = numOfCourse / 10;
+        numOfCourse = numOfCourse / 8;
     }
     else
     {
-        numOfCourse = (numOfCourse / 10) + 1;
+        numOfCourse = (numOfCourse / 8) + 1;
     }
 }
 

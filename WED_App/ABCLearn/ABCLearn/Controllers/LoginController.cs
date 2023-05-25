@@ -1,4 +1,5 @@
-﻿using ABCLearn.DataContext;
+﻿using ABCLearn.DAO;
+using ABCLearn.DataContext;
 using ABCLearn.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,10 +54,43 @@ namespace ABCLearn.Controllers
                 }
             }
         }
+        private Profile proSet;
+        private int OTP;
+        public IActionResult ConfirmEmail(Profile pro)
+        {
+            if (pro != null)
+            {
+                proSet = pro;
+                string email = pro.Email;
+                (bool, int) afterSend = Email.Instance.sendOTP(email);
+                bool isSend = afterSend.Item1;
+                OTP = afterSend.Item2;
+                if (isSend)
+                {
+                    ViewBag.Email = email;
+                    ViewBag.OTP = OTP;
+                    return View();
+                }
+            }
+            TempData["MessError"] = "ERROR in register form let try again!!";
+            return RedirectToAction("Index", "Login");
+        }
+        public IActionResult acceptanceEmail()
+        {
+
+            return RedirectToAction("Index", "Login");
+        }
         public IActionResult Logout()
         {
             UserLogin.Instance.Islogin = false;
             return RedirectToAction("Index", "Home");
+        }
+        private void renderData()
+        {
+            LecturerDAO.Instance.Lecturers();
+            StudentDAO.Instance.Students();
+            CourseDAO.Instance.Courses();
+            QuizDAO.Instance.quizzes();
         }
     }
 }

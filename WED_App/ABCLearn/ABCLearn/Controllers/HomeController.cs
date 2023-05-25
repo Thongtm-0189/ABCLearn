@@ -11,21 +11,22 @@ namespace ABCLearn.Controllers
     {
         public IActionResult Index()
         {
-            LecturerDAO.Instance.Lecturers();
-            StudentDAO.Instance.Students();
-            CourseDAO.Instance.Courses();
+            renderData();
             return View();
         }
         public IActionResult About()
         {
+            renderData();
             return View();
         }
         public IActionResult Course()
         {
+            renderData();
             return View();
         }
         public IActionResult CourseDetail(int id)
         {
+            renderData();
             Course course = CourseDAO.Instance.Courses().FirstOrDefault(x => x.Id == id);
             course.Comments = CourseDAO.Instance.getComment(course.Id);
             return View(@"Views/Home/DetailCourse.cshtml", course);
@@ -40,14 +41,21 @@ namespace ABCLearn.Controllers
         }
         public IActionResult Calendar()
         {
+            renderData();
             return View();
         }
         public IActionResult Profile()
         {
+            renderData();
+            if (!UserLogin.Instance.Islogin)
+            {
+                return RedirectToAction("Index", "Login");
+            }
             return View();
         }
         public IActionResult Commemt(int IDStudent, int IDCourse, string comment)
         {
+            renderData();
             Course course = new Course();
             if (CourseDAO.Instance.Comment(IDStudent, IDCourse, comment))
             {
@@ -55,6 +63,13 @@ namespace ABCLearn.Controllers
                 course.Comments = CourseDAO.Instance.getComment(course.Id);
             }
             return View(@"Views/Home/DetailCourse.cshtml", course);
+        }
+        private void renderData()
+        {
+            LecturerDAO.Instance.Lecturers();
+            StudentDAO.Instance.Students();
+            CourseDAO.Instance.Courses();
+            QuizDAO.Instance.quizzes();
         }
     }
 }

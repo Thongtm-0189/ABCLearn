@@ -124,5 +124,11 @@ namespace ABCLearn.DataContext
             _lecturers.Clear();
             getLecturer();
         }
+        public bool removeLecturer(int id)
+        {
+            string query = "DELETE FROM tblLecturer WHERE IDLecturer = @IDlecturer ";
+            bool result = ConectionData.ExecuteUpdate(query, new object[] { id });
+            return result;
+        }
     }
 }

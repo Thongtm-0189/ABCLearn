@@ -129,5 +129,17 @@ namespace ABCLearn.DataContext
             bool result = ConectionData.ExecuteUpdate(query, new object[] { name, id });
             return result;
         }
+
+        public bool removeStudent(int id)
+        {
+            string query = "DELETE FROM tblStudent WHERE IDStudent = @idStudent ";
+            bool result = ConectionData.ExecuteUpdate(query, new object[] { id });
+            return result;
+        }
+        public void upDate()
+        {
+            _student.Clear();
+            getStudents();
+        }
     }
 }

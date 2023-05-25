@@ -3,10 +3,10 @@
     ViewBag.title = "ABC Learn";
     var Students = Model;
     int numOfSutdent = StudentDAO.Instance.Students().Count;
-    if(numOfSutdent%10==0){
-        numOfSutdent = numOfSutdent / 10;
+    if(numOfSutdent%8==0){
+        numOfSutdent = numOfSutdent / 8;
     }else{
-        numOfSutdent = (numOfSutdent / 10) + 1;
+        numOfSutdent = (numOfSutdent / 8) + 1;
     }
 }
 <!DOCTYPE html>
@@ -74,14 +74,21 @@
             <tbody>
                 @foreach (var student in Students)
                 {
+                    <form action="@Url.Action("StudentAction","Admin")" method="post">
                     <tr>
-                        <td>@student.Id</td>
+                        <td>@student.Id<input type="hidden" name="idStudent" value="@student.Id" /></td>
                         <td>@student.FirstName</td>
                         <td>@student.LastName</td>
                         <td>@student.Courses.Count</td>
                         <td>@student.DateCreated.Date.ToString()</td>
-                        <td>Action</td>
+                        <td>
+                            <div class="d-flex row">
+                                <button type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" value="View">View</button>
+                                <button type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</button>
+                            </div>
+                        </td>
                     </tr>
+                    </form>
                 }
             </tbody>
         </table>
