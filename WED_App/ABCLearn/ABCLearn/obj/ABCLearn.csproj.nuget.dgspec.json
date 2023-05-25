@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj": {}
+    "I:\\Desktop\\project_SWP391\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj": {}
   },
   "projects": {
-    "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj": {
+    "I:\\Desktop\\project_SWP391\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj",
+        "projectUniqueName": "I:\\Desktop\\project_SWP391\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj",
         "projectName": "ABCLearn",
-        "projectPath": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj",
-        "packagesPath": "C:\\Users\\thong\\.nuget\\packages\\",
-        "outputPath": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\obj\\",
+        "projectPath": "I:\\Desktop\\project_SWP391\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj",
+        "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
+        "outputPath": "I:\\Desktop\\project_SWP391\\WED_App\\ABCLearn\\ABCLearn\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\thong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -72,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }
