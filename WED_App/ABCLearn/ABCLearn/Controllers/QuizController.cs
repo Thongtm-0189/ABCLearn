@@ -7,7 +7,7 @@ namespace ABCLearn.Controllers
 {
     public class QuizController : Controller
     {
-        /*public IActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
@@ -68,5 +68,5 @@ namespace ABCLearn.Controllers
             CourseDAO.Instance.Courses();
             QuizDAO.Instance.quizzes();
         }
-    }*/
+    }
     }
