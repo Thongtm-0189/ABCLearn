@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3YdkeMpuOL094WCNBD1jFRRlz8duU7X+14t6wXg6vJ211qMfZWvwvrEKtMI2hdM72yGMWSO57gJ4NBwln8T72Q==",
+  "dgSpecHash": "c20gi0fykUZwL+qHVsjcTBkJ/6laSD57jC3Jxd5pcr5aVW1C0QmOc5kJSZJI4NIl4d1QbR/lTGQ6SDDxLmcvmA==",
   "success": true,
-  "projectFilePath": "D:\\SUMMER23\\ABCLearn_25_4\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj",
+  "projectFilePath": "C:\\Users\\ADMIN\\Desktop\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\humanizer.core\\2.2.0\\humanizer.core.2.2.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
@@ -180,12 +180,5 @@
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file D:\\SUMMER23\\ABCLearn_25_4\\WED_App\\ABCLearn\\ABCLearn\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }
