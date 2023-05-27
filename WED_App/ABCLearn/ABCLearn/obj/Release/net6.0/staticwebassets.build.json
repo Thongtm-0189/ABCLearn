@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "xgHpgIS3CcP5U3uX7ZKdSJpYlWPR/oMxhGg0HNTjR78=",
+  "Hash": "szjaIyoFvMlDVtrJnJ2PJkZWqdU2UN4mUAfswj1hWl8=",
   "Source": "ABCLearn",
   "BasePath": "_content/ABCLearn",
   "Mode": "Default",
@@ -338,6 +338,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\Avatar\\Student\\Student-1.jpg"
+    },
+    {
+      "Identity": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\img\\Avatar\\Student\\Student-1.png",
+      "SourceId": "ABCLearn",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\",
+      "BasePath": "_content/ABCLearn",
+      "RelativePath": "img/Avatar/Student/Student-1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\Avatar\\Student\\Student-1.png"
     },
     {
       "Identity": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\img\\bg.jpg",

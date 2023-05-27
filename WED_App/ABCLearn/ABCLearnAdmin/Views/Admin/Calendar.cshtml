@@ -1,0 +1,71 @@
+﻿@using ABCLearn.DataContext
+@{
+    ViewBag.title = "ABC Learn";
+    var Courses = CourseDAO.Instance.Courses();
+    ViewBag.title = "ABC Learn";
+    var currentTime = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @Html.Partial("_head")
+</head>
+
+<body>
+    @Html.Partial("_navAdmin")
+    <!-- tab search dictionary -->
+    <div class="container-fluid bg-primary hero-header">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <h1 class="display-3 text-white"></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <table class="table table-striped text-center">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Lecturer</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in Courses)
+                {
+                    @if (course.Status)
+                    {
+                        @foreach (var calendar in course.Calendars)
+                        {
+                            <tr>
+                                <td><b>@course.Title</b></td>
+                                <td>@course.Lecturer.FirstName @course.Lecturer.LastName</td>
+                                <td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
+                                @if (currentTime > calendar.EndTime)
+                                {
+                                    <td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
+                                }
+                                else if (currentTime < calendar.StartTime)
+                                {
+                                    <td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
+                                }
+                                else
+                                {
+                                    <td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
+                                }
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

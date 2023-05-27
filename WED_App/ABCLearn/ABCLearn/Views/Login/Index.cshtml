@@ -3,7 +3,9 @@
 	ViewBag.title = "ABC Learn";
 	var pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,32}$/";
 	List<string> StudentEmail = new List<string>();
+	List<string> LecturerEmail = new List<string>();
 	StudentDAO.Instance.Students().ForEach(x => StudentEmail.Add(x.Email));
+	LecturerDAO.Instance.Lecturers().ForEach(x => LecturerEmail.Add(x.Email));
 }
 <!DOCTYPE html>
 <html>
@@ -100,27 +102,29 @@
 								</div>
 							</div>
 
-							<button id="btnRegister" type="submit" class="btn btn-primary"> Register</button>
+							<button id="btnRegister" type="button" class="btn btn-primary"> Register</button>
 						</form>
 						<p>Do have an account?<a href="#" onclick="showLoginForm()">Login</a> Or have you <a href="#" onclick="showForgotpass()">forgotten your password</a>?</p>
 					</div>
 					
 					<div id="forgotPass" style="display:none; margin: 50px 0 160px 0" class="col-md-6 title justify-content-center wow" data-wow-delay="0.2s">
 						<h2 class="text-center text-white">Forgot password</h2>
-						<form class="row col-12 justify-content-center">
+						<form action="@Url.Action("ConfirmEmail","Login")" class="row col-12 justify-content-center">
 							<div id="left-form" class="col-10 col-md-10 justify-content-center">
 								<div class="form-group">
 									<label for="registerUsername">Your Email</label>
-									<input type="email" name="Email" class="form-control" id="registerFirstname" placeholder="Enter your Email" required>
+									<input type="email" name="Email" class="form-control" id="inputResetPass" placeholder="Enter your Email" required>
+									<span id="spanResetPass" style="display: none; color: red"><small>Email does not exist</small></span>
 									<label for="Rolename">You are </label>
-									<select name="Role" id="Rolename" class="form-control">
+									<input type="hidden" value="reset" name="forgot"/>
+									<select name="Role" id="RoleName" class="form-control">
 										<option value="Student">
 											Student
 										</option>
 										<option value="Lecturer">Lecturer</option>
 									</select>
 								</div>
-								<button type="submit" class="btn btn-primary">Reset</button>
+								<button type="button" id="btnReset" class="btn btn-primary">Reset</button>
 								<p>Do have an account?<a href="#" onclick="showLoginForm()">Login</a> Or have you <a href="#" onclick="showForgotpass()">forgotten your password</a>?</p>
 							</div>
 						</form>
@@ -133,6 +137,7 @@
 	@Html.Partial("_endScript")
 	<script>
 		var listEmail = @Html.Raw(Json.Serialize(StudentEmail));
+		var listEmailLT = @Html.Raw(Json.Serialize(LecturerEmail));
 		var count = 0;
 		var btnRegister = document.querySelector("#btnRegister")
 		var isEmail =false
@@ -142,19 +147,21 @@
 			var value = e.target.value;
 			function check() { return listEmail.includes(value) }
 			isEmail = checked("#spanEmail", check, value)
+			setSubmit()
 		})
 
 		document.querySelector("#registerPassword").addEventListener('change', (e) => {
 			var value = e.target.value;
 			function check(){return !validatePassword(value) }
 			isPass = checked("#spanPass", check, value)
+			setSubmit()
 		})
 
 		document.querySelector("#registerConfirmPassword").addEventListener('change', (e) => {
 			var value = e.target.value;
 			function check() { return !(value == document.querySelector("#registerPassword").value) }
-			checked("#spanConfirmpass", check, value)
-			isRepass = enableSubmit()
+			isRepass = checked("#spanConfirmpass", check, value);
+			setSubmit()
 		})
 
 		document.addEventListener('keydown', function () {
@@ -162,6 +169,39 @@
 				//btnRegister.setAttribute("type", "submit");
 			}else{
 				//btnRegister.setAttribute("type", "button");
+			}
+		});
+
+		var roleName = "Student";
+
+		document.getElementById('RoleName').addEventListener('change', (event) => {
+			roleName = event.target.value;
+			document.getElementById('inputResetPass').value = "";
+			console.log(roleName);
+		});
+
+		document.getElementById('inputResetPass').addEventListener('change', (event) => {
+			var value = document.getElementById('inputResetPass').value;
+			const btnReset = document.getElementById('btnReset')
+			if (roleName == "Student") {
+				var check = listEmail.includes(value);
+				if (check) {
+					btnReset.setAttribute("type","submit");
+					document.getElementById('spanResetPass').style.display = "none";
+				} else {
+					btnReset.setAttribute("type", "button");
+					document.getElementById('spanResetPass').style.display = "block";
+				}
+
+			} else {
+				var check = listEmailLT.includes(value);
+				if (check) {
+					btnReset.setAttribute("type", "submit");
+					document.getElementById('spanResetPass').style.display = "none";
+				} else {
+					btnReset.setAttribute("type", "button");
+					document.getElementById('spanResetPass').style.display = "block";
+				}
 			}
 		});
 
@@ -178,6 +218,14 @@
 			} else {
 				document.querySelector(span).style.display = "none";
 				return false;
+			}
+		}
+
+		function setSubmit(){
+			if (isPass && isRepass && isEmail) {
+				document.querySelector('#btnRegister').setAttribute("type", "submit");
+			} else {
+				document.querySelector('#btnRegister').setAttribute("type", "button");
 			}
 		}
 
@@ -202,6 +250,9 @@
 			document.getElementById("loginForm").style.display = "block";
 			document.getElementById("registerForm").style.display = "none";
 			document.getElementById("forgotPass").style.display = "none";
+		}
+		if("@TempData["MessSS"]"){
+			alert("@TempData["MessSS"]");
 		}
 	</script>
 </body>

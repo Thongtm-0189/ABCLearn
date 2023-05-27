@@ -1,0 +1,99 @@
+﻿@{
+	var pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,32}$/";
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	@Html.Partial("_head")
+</head>
+<body class=" hero-header">
+	@Html.Partial("_navStart")
+	<a href="@Url.Action("Index", "Home")" class="nav-item nav-link">Home</a>
+	<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+	<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+	@Html.Partial("_navEnd")
+
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-1 justify-content-center">
+			<div class="row justify-content-center py-5">
+				<h1 class="text-center text-white animated slideInDown">Welcome to ABC-Learning</h1>
+			</div>
+
+			<div id="forgotPass" style="margin: 50px 0 160px 0" class="col-md-12 title">
+				<div class="row ">
+					<div class="col-3"></div>
+					<form action="@Url.Action("ResetPassword","Login")" class="row col-6 justify-content-center">
+						<h2 class="text-center text-white">Verify your email address</h2>
+						<div id="left-form" class="col-10 col-md-10 justify-content-center">
+							<div class="form-group">
+								<label for="registerPassword">New Password</label>
+								<input type="password" name="Password" class="form-control" id="registerPassword" placeholder="Enter Password EX:Abc123@@" required>
+								<small><span id="spanPass" style="color:red; display: none">Not correct </span></small>
+							</div>
+							<div class="form-group">
+								<label for="registerPassword">Confirm password</label>
+								<input type="password" class="form-control" id="registerConfirmPassword" placeholder="Enter Confirm password" required>
+								<small><span id="spanConfirmpass" style="color:red; display:none">Password not correct</span></small>
+							</div>
+							<input type="hidden" value="reset" name="forgot" />
+							<button id="btnSub" type="button" class="btn btn-primary">Confirm</button>
+							<p>If you can not see it, you should check it in spam Email</p>
+						</div>
+					</form>
+					<div class="col-3"></div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	@Html.Partial("_endScript")
+	<script>
+		
+		var isRepass = false
+		var isPass = false;
+		document.querySelector("#registerPassword").addEventListener('change', (e) => {
+			var value = e.target.value;
+			function check() { return !validatePassword(value) }
+			isPass = checked("#spanPass", check, value)
+			setSubmit()
+		})
+
+		document.querySelector("#registerConfirmPassword").addEventListener('change', (e) => {
+			var value = e.target.value;
+			function check() { return !(value == document.querySelector("#registerPassword").value) }
+			isRepass = checked("#spanConfirmpass", check, value)
+			setSubmit()
+		})
+
+		function checked(span, callback, value) {
+			if (value) {
+				var check = callback()
+				if (check) {
+					document.querySelector(span).style.display = "block";
+					return false;
+				} else {
+					document.querySelector(span).style.display = "none";
+					return true;
+				}
+			} else {
+				document.querySelector(span).style.display = "none";
+				return false;
+			}
+		}
+		function setSubmit(){
+			if (isPass && isRepass) {
+				document.querySelector('#btnSub').setAttribute("type", "submit");
+			} else {
+				document.querySelector('#btnSub').setAttribute("type", "button");
+			}
+		}
+		function validatePassword(password) {
+			var pattern = @pattern;
+			return pattern.test(password);
+		}
+	</script>
+</body>
+</html>

@@ -12,6 +12,10 @@ namespace ABCLearn.Controllers
             return View();
         }
 
+        public IActionResult forgotPass()
+        {
+            return View();
+        }
         public IActionResult Login(AccountLogin acc, string submitButton)
         {
             ViewData["check"] = submitButton;
@@ -54,30 +58,40 @@ namespace ABCLearn.Controllers
                 }
             }
         }
-        private Profile proSet;
-        private int OTP;
-        public IActionResult ConfirmEmail(Profile pro)
+        public IActionResult ConfirmEmail(Profile pro, string forgot)
         {
             if (pro != null)
             {
-                proSet = pro;
+                Profile.Instance = pro;
                 string email = pro.Email;
-                (bool, int) afterSend = Email.Instance.sendOTP(email);
+                (bool, int) afterSend = Email.Instance.sendOTP(email, forgot);
                 bool isSend = afterSend.Item1;
-                OTP = afterSend.Item2;
+                int OTP = afterSend.Item2;
                 if (isSend)
                 {
                     ViewBag.Email = email;
                     ViewBag.OTP = OTP;
-                    return View();
+                    return View("Views/Login/ConfirmEmail.cshtml", forgot);
                 }
             }
             TempData["MessError"] = "ERROR in register form let try again!!";
             return RedirectToAction("Index", "Login");
         }
-        public IActionResult acceptanceEmail()
+        public IActionResult AcceptanceEmail(string forgot)
         {
-
+            if (forgot == "reset")
+            {
+                return RedirectToAction("forgotPass", "Login");
+            }
+            else
+            {
+                if (StudentDAO.Instance.insertStudent(Profile.Instance))
+                {
+                    Profile.Instance = null;
+                }
+            }
+            TempData["MessSS"] = "Success!!";
+            StudentDAO.Instance.upDate();
             return RedirectToAction("Index", "Login");
         }
         public IActionResult Logout()
@@ -91,6 +105,33 @@ namespace ABCLearn.Controllers
             StudentDAO.Instance.Students();
             CourseDAO.Instance.Courses();
             QuizDAO.Instance.quizzes();
+        }
+        public IActionResult ResetPassword(string Password)
+        {
+            if (Profile.Instance.Role == "Student")
+            {
+                Profile.Instance.Password = Password;
+                if (StudentDAO.Instance.resetPassword(Profile.Instance))
+                {
+                    Profile.Instance = null;
+                    TempData["MessSS"] = "Success!!";
+                    StudentDAO.Instance.upDate();
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            else
+            {
+                Profile.Instance.Password = Password;
+                if (LecturerDAO.Instance.resetPassword(Profile.Instance))
+                {
+                    Profile.Instance = null;
+                    TempData["MessSS"] = "Success!!";
+                    LecturerDAO.Instance.Update();
+                    return RedirectToAction("Index", "Login");
+                }
+            }
+            TempData["MessError"] = "ERROR in reset password!!";
+            return RedirectToAction("Index", "Login");
         }
     }
 }

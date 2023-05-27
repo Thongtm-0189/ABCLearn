@@ -3,7 +3,10 @@
     ViewBag.title = "ABC Learn";
     var Courses = CourseDAO.Instance.Courses();
     ViewBag.title = "ABC Learn";
-    var currentTime = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+    DateTime nowUtc = DateTime.UtcNow;
+	TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
+	DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
+	TimeSpan currentTime = vietnamTime.TimeOfDay;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -13,35 +16,7 @@
 </head>
 
 <body>
-    <div class="container-fluid position-relative p-0">
-        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-            <a href="#" class="navbar-brand p-0 d-flex align-items-center">
-                <img src="~/img/Logo-icon.png" class="fa-font-awesome-logo-full img-fluid" style="height: 200px;" alt="logo-ABCLearn">
-                <h1 class="text-primary m-0">Dmin</h1>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto py-0">
-                    <a href="@Url.Action("pageStudent", "Admin", new{page = 0})" class="nav-item nav-link ">Student</a>
-                    <a href="@Url.Action("Lecturer", "Admin", new{page = 0})" class="nav-item nav-link ">Lecturer</a>
-                    <a href="@Url.Action("Course", "Admin")" class="nav-item nav-link">Course</a>
-                    <a href="@Url.Action("Calendar", "Admin")" class="nav-item nav-link active">Calendar</a>
-                    <a href="#" class="nav-item nav-link">Notification</a>
-                </div>
-                @if (UserLogin.Instance.Islogin)
-                {
-                    <a href="#" class="nav-item nav-link">@UserLogin.Instance.FirstName @UserLogin.Instance.LastName</a>
-                    <a href="#" class="btn btn-primary rounded-pill py-2 px-4">Logout</a>
-                }
-                else
-                {
-                    <a href="#" class="btn btn-primary rounded-pill py-2 px-4">Join now</a>
-                }
-            </div>
-        </nav>
-    </div>
+    @Html.Partial("_navAdmin")
     <!-- tab search dictionary -->
     <div class="container-fluid bg-primary hero-header">
         <div class="container py-5">

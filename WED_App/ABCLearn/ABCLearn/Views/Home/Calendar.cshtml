@@ -3,7 +3,10 @@
 	ViewBag.title = "ABC Learn";
 	var Courses = CourseDAO.Instance.Courses();
 	var User = UserLogin.Instance;
-	var currentTime = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+	DateTime nowUtc = DateTime.UtcNow;
+	TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
+	DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
+	TimeSpan currentTime = vietnamTime.TimeOfDay;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -54,17 +57,17 @@
 								<td><b>@course.Title</b></td>
 								<td>@course.Lecturer.FirstName @course.Lecturer.LastName</td>
 								<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
-								@if (currentTime > calendar.EndTime)
+								@if (currentTime < calendar.EndTime && currentTime > calendar.StartTime)
 								{
-									<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
+									<td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
 								}
 								else if (currentTime < calendar.StartTime)
 								{
 									<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
 								}
-								else
+								else if (currentTime > calendar.EndTime)
 								{
-									<td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
+									<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
 								}
 							</tr>
 						}
@@ -76,6 +79,9 @@
 	<!-- Calendar End -->
 	@Html.Partial("_footer")
 	@Html.Partial("_endScript")
+	<script>
+		console.log("@currentTime.ToString()");
+	</script>
 </body>
 
 </html>

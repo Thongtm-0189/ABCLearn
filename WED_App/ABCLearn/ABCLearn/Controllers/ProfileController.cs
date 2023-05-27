@@ -38,6 +38,7 @@ namespace ABCLearn.Controllers
                     UserLogin.updateIfor(idUserLgin, "Lecturer");
                 }
             }
+            UserLogin.Instance.Islogin = true;
             UserLogin.Instance.Courses.ForEach(course => course.Calendars = CourseDAO.Instance.getCalendar(course.Id));
             return View("Views/Home/Profile.cshtml");
         }

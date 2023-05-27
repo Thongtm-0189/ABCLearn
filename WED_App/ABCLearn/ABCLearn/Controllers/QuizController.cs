@@ -20,10 +20,20 @@ namespace ABCLearn.Controllers
             string role = UserLogin.Instance.RoleID;
             if (role == "Student")
             {
+                Random rand = new Random();
+                HashSet<int> usedIndexes = new HashSet<int>(); // Sử dụng HashSet để theo dõi các chỉ số đã sử dụng
+
                 for (int i = 0; i < 10; i++)
                 {
-                    Random rand = new Random();
-                    int numberRandom = rand.Next(0, numberQuiz);
+                    int numberRandom;
+                    do
+                    {
+                        numberRandom = rand.Next(0, numberQuiz);
+                    }
+                    while (usedIndexes.Contains(numberRandom)); // Lặp lại cho đến khi có chỉ số chưa được sử dụng
+
+                    usedIndexes.Add(numberRandom); // Đánh dấu chỉ số đã sử dụng
+
                     Quiz subQuiz = QuizDAO.Instance.quizzes()[numberRandom];
                     quizs.Add(subQuiz);
                 }
@@ -33,7 +43,8 @@ namespace ABCLearn.Controllers
                 int idLecturer = UserLogin.Instance.Id;
                 quizs = QuizDAO.Instance.quizzes().Where(q => q.IDLecturer == idLecturer).ToList();
             }
-            else
+
+            if (!UserLogin.Instance.Islogin)
             {
                 quizs = QuizDAO.Instance.quizzes().Take(5).ToList();
             }
@@ -69,4 +80,4 @@ namespace ABCLearn.Controllers
             QuizDAO.Instance.quizzes();
         }
     }
-    }
+}

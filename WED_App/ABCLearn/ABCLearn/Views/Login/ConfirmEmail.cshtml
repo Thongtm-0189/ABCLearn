@@ -2,8 +2,9 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+	string forgot = Model;
 }
-<!--
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,19 +26,25 @@
 				<h1 class="text-center text-white animated slideInDown">Welcome to ABC-Learning</h1>
 			</div>
 
-			<div id="forgotPass" style="margin: 50px 0 160px 0" class="col-md-6 title">
-				<div>
-					<form class="row col-12 justify-content-center">
+			<div id="forgotPass" style="margin: 50px 0 160px 0" class="col-md-12 title">
+				<div class="row ">
+					<div class="col-3"></div>
+					<form action="@Url.Action("AcceptanceEmail","Login")" class="row col-6 justify-content-center">
 						<h2 class="text-center text-white">Verify your email address</h2>
 						<div id="left-form" class="col-10 col-md-10 justify-content-center">
 							<div class="form-group">
 								<label for="registerUsername"><b>OTP sent and your Email: @(ViewBag.Email) </b></label>
-								<input type="number" name="Email" class="form-control" id="OTP" placeholder="Enter OTP" required>
+								<input type="number" class="form-control" id="OTP" placeholder="Enter OTP" required>
+								<span id="spanOTP" style="display:none; color:red"><small>OTP code is incorrect!!</small></span>
+								@if (forgot == "reset"){
+									<input type="hidden" value="reset" name="forgot" />
+								}
 							</div>
 							<button id="btnSub" type="button" class="btn btn-primary">Confirm</button>
 							<p>If you can not see it, you should check it in spam Email</p>
 						</div>
 					</form>
+					<div class="col-3"></div>
 				</div>
 			</div>
 
@@ -47,14 +54,16 @@
 	<script>
 		var inputOTP = document.querySelector("#OTP")
 		var btn = document.querySelector("#btnSub")
+		var spanOPT = document.querySelector('#spanOTP')
 		inputOTP.addEventListener('change',()=>{
 			if (inputOTP.value == "@ViewBag.OTP") {
 				btn.setAttribute("type", "submit");
+				spanOPT.style.display = "none"
 			}else{
+				spanOPT.style.display = "block"
 				btn.setAttribute("type", "button");
 			}
 		})
 	</script>
 </body>
 </html>
--->
