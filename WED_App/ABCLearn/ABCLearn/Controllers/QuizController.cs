@@ -12,7 +12,7 @@ namespace ABCLearn.Controllers
             return View();
         }
         private List<Quiz> quizs = new List<Quiz>();
-        public IActionResult Quiz()
+        public IActionResult Quiz(int courseChoise = 0)
         {
             quizs.Clear();
             renderData();
@@ -23,25 +23,28 @@ namespace ABCLearn.Controllers
                 Random rand = new Random();
                 HashSet<int> usedIndexes = new HashSet<int>(); // Sử dụng HashSet để theo dõi các chỉ số đã sử dụng
 
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 8; i++)
                 {
                     int numberRandom;
+                    if (courseChoise != 0)
+                    {
+                        numberQuiz = QuizDAO.Instance.quizzes().Where(x => x.IDCourse == courseChoise).ToList().Count;
+                    }
                     do
                     {
                         numberRandom = rand.Next(0, numberQuiz);
                     }
                     while (usedIndexes.Contains(numberRandom)); // Lặp lại cho đến khi có chỉ số chưa được sử dụng
+                    Quiz subQuiz = QuizDAO.Instance.quizzes()[numberRandom];
+                    if (courseChoise != 0)
+                    {
+                        subQuiz = QuizDAO.Instance.quizzes().Where(x => x.IDCourse == courseChoise).ToList()[numberRandom];
+                    }
 
                     usedIndexes.Add(numberRandom); // Đánh dấu chỉ số đã sử dụng
 
-                    Quiz subQuiz = QuizDAO.Instance.quizzes()[numberRandom];
                     quizs.Add(subQuiz);
                 }
-            }
-            else if (role == "Lecturer")
-            {
-                int idLecturer = UserLogin.Instance.Id;
-                quizs = QuizDAO.Instance.quizzes().Where(q => q.IDLecturer == idLecturer).ToList();
             }
 
             if (!UserLogin.Instance.Islogin)
@@ -71,6 +74,38 @@ namespace ABCLearn.Controllers
                 }
             }
             return score;
+        }
+        public IActionResult DetailQuiz(int IDCourse)
+        {
+            List<Quiz> quizzes = QuizDAO.Instance.quizzes().Where(x => x.IDCourse == IDCourse).ToList();
+            return View(quizzes);
+        }
+
+        public IActionResult EditQuiz(string btnQuiz, Quiz quiz)
+        {
+            if (btnQuiz == "Edit")
+            {
+                if (QuizDAO.Instance.UpdateQuiz(quiz))
+                {
+                    QuizDAO.Instance.update();
+                    RedirectToAction("DetailQuiz", "Quiz", new { IDCourse = quiz.IDCourse });
+                }
+            }
+            else
+            {
+                if (QuizDAO.Instance.DeleteQuiz(quiz))
+                {
+                    QuizDAO.Instance.update();
+                    RedirectToAction("DetailQuiz", "Quiz", new { IDCourse = quiz.IDCourse });
+                }
+            }
+            return RedirectToAction("DetailQuiz", "Quiz", new { IDCourse = quiz.IDCourse });
+        }
+        public IActionResult Addnew(Quiz quiz)
+        {
+            QuizDAO.Instance.Addnew(quiz);
+            QuizDAO.Instance.update();
+            return RedirectToAction("DetailQuiz", "Quiz", new { IDCourse = quiz.IDCourse });
         }
         private void renderData()
         {

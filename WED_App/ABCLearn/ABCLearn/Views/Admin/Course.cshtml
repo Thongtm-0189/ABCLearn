@@ -35,6 +35,11 @@
 
     <div class="container">
         <h2 class="text-center">Course Table</h2>
+        <div class="row">
+            <div class="col-3"></div>
+            <a type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" value="Delete">Add New</a>
+            <div class="col-3"></div>
+        </div>
         <table class="table table-striped text-center">
             <thead>
                 <tr>
@@ -54,8 +59,17 @@
                         <td>@course.Title</td>
                         <td>@course.Detail</td>
                         <td>@course.Calendars.Count</td>
-                        <td>@course.Students</td>
-                        <td>Action</td>
+                        <td>@course.Students.Count</td>
+                        <td>
+                            <div class="d-flex row">
+                                <a href="" name="btnStudentAdmin" class="col-6 btn btn-primary">View</a>
+                                @if(course.Status){
+                                    <button type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" value="Delete" style="color: red">Lock</button>
+                                }else{
+                                    <button type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" value="Delete" style="color: red">UnLock</button>
+                                }
+                            </div>
+                        </td>
                     </tr>
                 }
             </tbody>

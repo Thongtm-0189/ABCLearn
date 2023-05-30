@@ -96,6 +96,7 @@
 				<div id="EditProfileFormlt" class="card mb-3 edit-form" style="display:none ;">
 					<div class="card-body">
 						<form action="@Url.Action("EditInformation", "Profile")" method="post">
+							<input type="hidden" name="Id" value="@(UserLogin.Instance.Id)"/>
 							<div class="row">
 								<div class="col-sm-3">
 									<h6 class="mb-0">First Name</h6>
@@ -150,65 +151,74 @@
 					<div class="row gutters-sm">
 					</div>
 				</div>
+				@if (UserLogin.Instance.Courses.Count > 0)
+				{
+					<div class="container" style="margin-bottom: 50px">
+						<table class="table table-striped text-center">
+							<thead>
+								<tr>
+									<th>Course</th>
+									<th>Time</th>
+									<th>Status</th>
+									<th>Student</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (Course course in UserLogin.Instance.Courses)
+								{
+									@if (course.Status)
+									{
+										@if (course.Calendars.Count > 0)
+										{
+											@foreach (var calendar in course.Calendars)
+											{
+												<tr>
+													<td><a href="@Url.Action("DetailQuiz","Quiz", new{IDCourse = course.Id})"><b>@course.Title</b></a></td>
+													<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
+													@if (currentTime < calendar.EndTime && currentTime > calendar.StartTime)
+													{
+														<td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
+													}
+													else if (currentTime < calendar.StartTime)
+													{
+														<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
+													}
+													else if (currentTime > calendar.EndTime)
+													{
+														<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
+													}
+													<td><a href="@Url.Action("StudentCourse","Home", new{IDCourse = course.Id})">View</a></td>
+												</tr>
+											}
+										}
+									}
+								}
+							</tbody>
+						</table>
+					</div>
+				}
 			</div>
+
 		</div>
 	</div>
-	<div class="container">
-		<table class="table table-striped text-center">
-			<thead>
-				<tr>
-					<th>Course</th>
-					<th>Time</th>
-					<th>Status</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (Course course in UserLogin.Instance.Courses)
-				{
-					@if (course.Status)
-					{
-						@foreach (var calendar in course.Calendars)
-						{
-							<tr>
-								<td><b>@course.Title</b></td>
-								<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
-								@if (currentTime < calendar.EndTime && currentTime > calendar.StartTime)
-								{
-									<td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
-								}
-								else if (currentTime < calendar.StartTime)
-								{
-									<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
-								}
-								else if (currentTime > calendar.EndTime)
-								{
-									<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
-								}
-							</tr>
-						}
-					}
-				}
-			</tbody>
-		</table>
-	</div>
 </div>
-	<script>
-		var uploadButton = document.getElementById('uploadButtonLecturer');
-		const cancelButton = document.getElementById('cancel-buttonLecturer');
+<script>
+	var uploadButton = document.getElementById('uploadButtonLecturer');
+	const cancelButton = document.getElementById('cancel-buttonLecturer');
 
-		document.getElementById('fileInputStudent').addEventListener('change', function () {
-			var fileName = this.value.split('\\').pop();
-			if (fileName) {
-				uploadButton.classList.remove('d-none');
-				cancelButton.classList.remove('d-none');
-			} else {
-				uploadButton.classList.add('d-none');
-				cancelButton.classList.add('d-none');
-			}
-		});
+	document.getElementById('fileInputStudent').addEventListener('change', function () {
+		var fileName = this.value.split('\\').pop();
+		if (fileName) {
+			uploadButton.classList.remove('d-none');
+			cancelButton.classList.remove('d-none');
+		} else {
+			uploadButton.classList.add('d-none');
+			cancelButton.classList.add('d-none');
+		}
+	});
 
-		cancelButton.addEventListener('click', function () {
-			fileInput.value = '';
-			cancelButton.style.display = 'none';
-		});
-	</script>
+	cancelButton.addEventListener('click', function () {
+		fileInput.value = '';
+		cancelButton.style.display = 'none';
+	});
+</script>

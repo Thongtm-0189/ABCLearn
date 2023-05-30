@@ -39,7 +39,7 @@ namespace ABCLearn.DataContext
                 Quiz obj = new Quiz()
                 {
                     Id = Convert.ToInt32(row["IDQuiz"].ToString().Trim()),
-                    IDLecturer = Convert.ToInt32(row["IDLecturer"].ToString().Trim()),
+                    IDCourse = Convert.ToInt32(row["IDCourse"].ToString().Trim()),
                     Question = row["Question"].ToString().Trim(),
                     AnswerA = row["AnswerA"].ToString().Trim(),
                     AnswerB = row["AnswerB"].ToString().Trim(),
@@ -52,7 +52,30 @@ namespace ABCLearn.DataContext
             }
             return quizes;
         }
-
+        public bool UpdateQuiz(Quiz quiz)
+        {
+            int ID = UserLogin.Instance.Id;
+            string query = "UPDATE tblQuiz " +
+                " \nSET Question = @question , AnswerA = @A , AnswerB = @B , AnswerC = @C , AnswerD = @D , CorrectAnswer = @CA " +
+                " \nWHERE IDQuiz = @IDQuiz";
+            bool result = ConectionData.ExecuteUpdate(query, new object[] { quiz.Question, quiz.AnswerA, quiz.AnswerB, quiz.AnswerC, quiz.AnswerD, quiz.CorrectAnswer, quiz.Id });
+            return result;
+        }
+        public bool DeleteQuiz(Quiz quiz)
+        {
+            int ID = UserLogin.Instance.Id;
+            string query = "DELETE FROM tblQuiz WHERE IDQuiz = @idStudent ";
+            bool result = ConectionData.ExecuteUpdate(query, new object[] { quiz.Id });
+            return result;
+        }
+        public bool Addnew(Quiz quiz)
+        {
+            int ID = UserLogin.Instance.Id;
+            string query = "INSERT INTO tblQuiz " +
+                "\nVALUES ( @question , @A , @B , @C , @D , @CA , @Idcourse )";
+            bool result = ConectionData.ExecuteUpdate(query, new object[] { quiz.Question, quiz.AnswerA, quiz.AnswerB, quiz.AnswerC, quiz.AnswerD, quiz.CorrectAnswer, quiz.IDCourse });
+            return result;
+        }
         public void update()
         {
             _quizzes.Clear();

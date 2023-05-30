@@ -17,28 +17,7 @@
 </head>
 
 <body>
-    <div class="container-fluid position-relative p-0">
-        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-            <a href="#" class="navbar-brand p-0 d-flex align-items-center">
-                <img src="~/img/Logo-icon.png" class="fa-font-awesome-logo-full img-fluid" style="height: 200px;" alt="logo-ABCLearn">
-                <h1 class="text-primary m-0">Dmin</h1>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto py-0">
-                    <a href="@Url.Action("Student", "Admin", new{page = 0})" class="nav-item nav-link active">Student</a>
-                    <a href="@Url.Action("Lecturer", "Admin", new{page = 0})" class="nav-item nav-link ">Lecturer</a>
-                    <a href="@Url.Action("Course", "Admin", new{page = 0})" class="nav-item nav-link">Course</a>
-                    <a href="@Url.Action("Calendar", "Admin")" class="nav-item nav-link">Calendar</a>
-                    <a href="#" class="nav-item nav-link">Notification</a>
-
-                </div>
-                <a href="@Url.Action("LogOut","Admin")" class="btn btn-primary rounded-pill py-2 px-4">Join now</a>
-            </div>
-        </nav>
-    </div>
+    @Html.Partial("_navAdmin")
     <!-- tab search dictionary -->
     <div class="container-fluid bg-primary hero-header">
         <div class="container py-5">
@@ -75,7 +54,7 @@
                         <td>@student.DateCreated.Date.ToString()</td>
                         <td>
                             <div class="d-flex row">
-                                <button type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" value="View">View</button>
+                                <a href="@Url.Action("ViewStudent","Admin", new{idStudent = @student.Id})" name="btnStudentAdmin" class="col-6 btn btn-primary">View</a>
                                 <button type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</button>
                             </div>
                         </td>
@@ -84,6 +63,8 @@
                 }
             </tbody>
         </table>
+
+        
         <div class="justify-content-center ">
             @for (int i = 0; i < numOfSutdent; i++)
             {
@@ -91,6 +72,7 @@
             }
         </div>
     </div>
+
 </body>
 
 </html>

@@ -16,7 +16,7 @@ namespace ABCLearn.Controllers
         {
             return View();
         }
-        public IActionResult EditInformation(Profile pro)
+        public IActionResult EditInformation(Profile pro, string admin)
         {
             if (UserLogin.Instance.RoleID.Trim() == "Student")
             {

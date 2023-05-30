@@ -1,6 +1,7 @@
 ﻿using ABCLearn.DataContext;
 using ABCLearn.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ABCLearn.Controllers
@@ -15,6 +16,11 @@ namespace ABCLearn.Controllers
 
         public IActionResult Login(AccountLogin acc)
         {
+            if (acc.Email == "" || acc.Password == "")
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+
             if (AdminDAO.Instence().Login(acc))
             {
                 UserLogin.Instance.Email = acc.Email;
@@ -70,6 +76,27 @@ namespace ABCLearn.Controllers
 
             return View();
         }
+        public IActionResult SetTimeCalendar(Calendar calendar, string btnCalendar)
+        {
+            if (btnCalendar == "Set")
+            {
+                calendar.EndTime = calendar.StartTime + (new TimeSpan(1, 30, 0));
+                if (CourseDAO.Instance.setCalendar(calendar))
+                {
+                    CourseDAO.Instance.Update();
+                    return RedirectToAction("Calendar", "Admin");
+                }
+            }
+            else
+            {
+                if (CourseDAO.Instance.removeCalendar(calendar))
+                {
+                    CourseDAO.Instance.Update();
+                    return RedirectToAction("Calendar", "Admin");
+                }
+            }
+            return Calendar();
+        }
         public IActionResult Nontification()
         {
             if (!UserLogin.Instance.Islogin)
@@ -97,47 +124,56 @@ namespace ABCLearn.Controllers
             }
             return View(@"Views/Admin/AdminPage.cshtml", subList);
         }
-
+        public IActionResult ViewStudent(int idStudent)
+        {
+            Student student = StudentDAO.Instance.Students().Find(x => x.Id == idStudent);
+            student.Courses.ForEach(x => x.Calendars = CourseDAO.Instance.getCalendar(x.Id));
+            return View(student);
+        }
+        public IActionResult updateStudent(Profile pro)
+        {
+            StudentDAO.Instance.editprofile(pro);
+            StudentDAO.Instance.upDate();
+            return RedirectToAction("ViewStudent", "Admin", new { idStudent = pro.Id });
+        }
         public IActionResult StudentAction(int idStudent, string btnStudentAdmin)
         {
-            switch (btnStudentAdmin)
+            if (btnStudentAdmin == "View")
             {
-                case "View":
-                    break;
-                case "Delete":
-                    var isRemove = StudentDAO.Instance.removeStudent(idStudent);
-                    if (isRemove)
-                    {
-                        StudentDAO.Instance.upDate();
-                    }
-                    break;
+
+            }
+            else
+            {
+                var isRemove = StudentDAO.Instance.removeStudent(idStudent);
+                if (isRemove)
+                {
+                    StudentDAO.Instance.upDate();
+                }
             }
             return RedirectToAction("pageStudent", "Admin", new { page = 0 });
         }
-        public IActionResult LecturertAction(int countCourse, int idLecturer, string btnLecturerAdmin)
+        public IActionResult ViewLecturer(int IDLecturer)
         {
-            switch (btnLecturerAdmin)
+            Lecturer lecturer = LecturerDAO.Instance.Lecturers().Find(x => x.Id == IDLecturer);
+            lecturer.Courses.ForEach(x => x.Calendars = CourseDAO.Instance.getCalendar(x.Id));
+            return View(lecturer);
+        }
+        public IActionResult removeLecturer(int idLecturer)
+        {
+            var isRemove = LecturerDAO.Instance.removeLecturer(idLecturer);
+            if (isRemove)
             {
-                case "View":
-                    break;
-                case "Delete":
-                    if (countCourse == 0)
-                    {
-                        var isRemove = LecturerDAO.Instance.removeLecturer(idLecturer);
-                        if (isRemove)
-                        {
-                            LecturerDAO.Instance.Update();
-                        }
-                    }
-                    else
-                    {
-                        TempData["Lecturer"] = "Lecturer still teaching!! can't remove";
-                    }
-                    break;
+                CourseDAO.Instance.Update();
+                LecturerDAO.Instance.Update();
             }
             return RedirectToAction("Lecturer", "Admin");
         }
-
+        public IActionResult updateLecturer(Profile pro)
+        {
+            LecturerDAO.Instance.editprofile(pro);
+            LecturerDAO.Instance.Update();
+            return RedirectToAction("ViewLecturer", "Admin", new { IDLecturer = pro.Id });
+        }
         public IActionResult LogOut()
         {
             UserLogin.Instance.Email = "";

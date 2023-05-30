@@ -3,7 +3,7 @@
     public class Quiz
     {
         public int Id { get; set; }
-        public int IDLecturer { get; set; }
+        public int IDCourse { get; set; }
         public string Question { get; set; }
         public string AnswerA { get; set; }
         public string AnswerB { get; set; }
