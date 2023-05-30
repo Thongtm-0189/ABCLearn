@@ -116,7 +116,7 @@ namespace ABCLearn.DataContext
             string query = "UPDATE tblLecturer " +
                 " \nSET FirstName = @FirstName , LastName = @LastName , Password = @Password , Phone = @Phone , Email = @Email" +
                 " \nWHERE IDlecturer = @IDlecturer";
-            bool result = ConectionData.ExecuteUpdate(query, new object[] { pro.FirstName, pro.LastName, pro.Password, pro.Phone, pro.Email, ID });
+            bool result = ConectionData.ExecuteUpdate(query, new object[] { pro.FirstName, pro.LastName, pro.Password, pro.Phone, pro.Email, pro.Id });
             return result;
         }
         public void Update()
@@ -133,8 +133,11 @@ namespace ABCLearn.DataContext
         }
         public bool removeLecturer(int id)
         {
-            string query = "DELETE FROM tblLecturer WHERE IDLecturer = @IDlecturer ";
+            string query = "UPDATE tblCourse SET IDLecturer = NULL, Status = 0 WHERE IDLecturer = @IDlecturer ";
             bool result = ConectionData.ExecuteUpdate(query, new object[] { id });
+
+            query = "DELETE FROM tblLecturer WHERE IDLecturer = @IDlecturer ";
+            result = ConectionData.ExecuteUpdate(query, new object[] { id });
             return result;
         }
     }

@@ -97,6 +97,7 @@ namespace ABCLearn.Controllers
         public IActionResult Logout()
         {
             UserLogin.Instance.Islogin = false;
+            UserLogin.Instance.RoleID = "Guest";
             return RedirectToAction("Index", "Home");
         }
         private void renderData()

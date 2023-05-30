@@ -2,8 +2,6 @@
 @{
 	string role = UserLogin.Instance.RoleID;
 }
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,116 +32,70 @@
 
 	<!-- Quiz Start -->
 	<div class="container">
+		@if(UserLogin.Instance.RoleID == "Student")
+		{
+			<form action="@Url.Action("Quiz","Quiz")" class="row col-6 justify-content-center" method="post">
+				<div class="form-group col-9">
+					<p>Your course: </p>
+					<select name="courseChoise" class="form-control">
+						@foreach (var courseChoise in UserLogin.Instance.Courses)
+						{
+							<option value="@(courseChoise.Id)">
+								@(courseChoise.Title)
+							</option>
+						}
+					</select>
+				</div>
+				<button id="btnSub" type="submit" class="btn col-3 btn-primary">Change questions by course</button>
+			</form>
+		}
+
 		@if (UserLogin.Instance.RoleID != "Lecturer")
 		{
-			<table class="table table-striped text-center">
-				<tbody>
-					<form action="@Url.Action("SubmitQuiz","Quiz")" class="form-control justify-content-center" method="post">
+			<form action="@Url.Action("SubmitQuiz","Quiz")" class="form-control justify-content-center" method="post">
+				<table class="table table-striped text-center">
+					<tbody>
 						@foreach (var quiz in Model)
 						{
-						<tr>
-							<table class="text-center table-striped table">
-								<thead>
-									<tr>
-										<th>@quiz.Question</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>
-											<input type="radio" class="form-check-input" name="answer[@(quiz.Id)]" value="@quiz.AnswerA" />
-											<label class="form-check-label">
-												A: @quiz.AnswerA
-											</label>
+							<tr>
+								<td colspan="4">@quiz.Question</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="radio" class="form-check-input" name="answer[@(quiz.Id)]" value="@quiz.AnswerA" />
+									<label class="form-check-label">
+										A: @quiz.AnswerA
+									</label>
 
-											<input type="radio" class="form-check-input" name="answer[@(quiz.Id)]" value="@quiz.AnswerB" />
-											<label class="form-check-label">
-												B: @quiz.AnswerB
-											</label>
+									<input type="radio" class="form-check-input" name="answer[@(quiz.Id)]" value="@quiz.AnswerB" />
+									<label class="form-check-label">
+										B: @quiz.AnswerB
+									</label>
 
-											<input type="radio" class="form-check-input" name="answer[@(quiz.Id)]" value="@quiz.AnswerC" />
-											<label class="form-check-label">
-												C: @quiz.AnswerC
-											</label>
+									<input type="radio" class="form-check-input" name="answer[@(quiz.Id)]" value="@quiz.AnswerC" />
+									<label class="form-check-label">
+										C: @quiz.AnswerC
+									</label>
 
-											<input type="radio" class="form-check-input" name="answer[@(quiz.Id)]" value="@quiz.AnswerD" />
-											<label class="form-check-label">
-												D: @quiz.AnswerD
-											</label>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</tr>
+									<input type="radio" class="form-check-input" name="answer[@(quiz.Id)]" value="@quiz.AnswerD" />
+									<label class="form-check-label">
+										D: @quiz.AnswerD
+									</label>
+								</td>
+							</tr>
 						}
-					<tr>
-						<input type="radio" id="checkSubmit" class="form-check-input" />
-						<label class="form-check-label">
-							<b>I was sure to submit the post</b>
-						</label>
-						<div id="btnSubmit" style="display: none" class="container justify-content-center">
-							<input type="submit" class="btn btn-primary" value="Done" />
-						</div>
-					</tr>
-					</form>
-				</tbody>
-			</table>
-		}
-		else
-		{
-			<div class="row">
-				<p class="col-6">NOTE: You can edit it directly and press the Edit button to edit.</p>
-				<div class="col-4"></div>
-				<div class="col-2">
-					<button type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" value="View">ADD NEW</button>
-				</div>
-			</div>
-			<table class="text-center table-striped table">
-				<thead>
-					<tr>
-						<th>Question</th>
-						<th>AnswerA</th>
-						<th>AnswerB</th>
-						<th>AnswerC</th>
-						<th>AnswerD</th>
-						<th>CorrectAnswer</th>
-						<th>ACTION</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (var quiz in Model)
-					{
 						<tr>
-							<form>
-								<td>
-									<input type="text" class="" name="Question" value="@quiz.Question" />
-								</td>
-								<td>
-									A:<input type="text" class="" name="answerA" value="@quiz.AnswerA" />
-								</td>
-								<td>
-									B:<input type="text" class="" name="answerB" value="@quiz.AnswerB" />
-								</td>
-								<td>
-									C:<input type="text" class="" name="answerC" value="@quiz.AnswerC" />
-								</td>
-								<td>
-									D:<input type="text" class="" name="answerD" value="@quiz.AnswerD" />
-								</td>
-								<td>
-									CA:<input type="text" class="" name="CorrectAnswer" value="@quiz.CorrectAnswer" />
-								</td>
-								<td>
-									<div class="row">
-										<button type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" value="View">Edit</button>
-									<button type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</button>
-									</div>
-								</td>
-							</form>
+							<input type="radio" id="checkSubmit" class="form-check-input" />
+							<label class="form-check-label">
+								<b>I was sure to submit the post</b>
+							</label>
+							<div id="btnSubmit" style="display: none" class="container justify-content-center">
+								<input type="submit" class="btn btn-primary" value="Done" />
+							</div>
 						</tr>
-					}
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+			</form>
 		}
 	</div>
 	<!-- Quiz End -->
@@ -163,5 +115,3 @@
 </body>
 
 </html>
-
-

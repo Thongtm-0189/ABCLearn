@@ -69,39 +69,41 @@
 							{
 								<p>@claendar.StartTime - @claendar.EndTime</p>
 							}
-							<div class="d-flex justify-content-center mb-2">
-								<a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 30px;">Enroll Now</a>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-lg-4 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
-					<div class="package-item">
-						<div class="overflow-hidden">
-							<img class="img-fluid" src="~/img/Avatar/Lecturer/@(Model.Lecturer.Avatar)" alt="">
-						</div>
-						<div class="text-center p-4">
-							<h3 class="mb-0"> @Model.Lecturer.FirstName @Model.Lecturer.LastName </h3>
-							<div class="mb-3">
-								<small class="fa fa-star text-primary"></small>
-								<small class="fa fa-star text-primary"></small>
-								<small class="fa fa-star text-primary"></small>
-								<small class="fa fa-star text-primary"></small>
-								<small class="fa fa-star text-primary"></small>
-							</div>
-							<p><b>@Model.Lecturer.Phone</b></p>
-							<p>@Model.Lecturer.Email</p>
-							<!--
+							@if (@Model.Lecturer != null)
+							{
 								<div class="d-flex justify-content-center mb-2">
-								<a href="#" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
-								<a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Book Now</a>
-							</div>
-							-->
-
+									<a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 30px;">Enroll Now</a>
+								</div>
+							}else{
+								<div class="d-flex justify-content-center mb-2">
+									<a class="btn btn-sm btn-primary px-3" style="border-radius: 30px;">Not Yet</a>
+								</div>
+							}
 						</div>
 					</div>
 				</div>
+
+				@if(@Model.Lecturer != null){
+					<div class="col-lg-4 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
+						<div class="package-item">
+							<div class="overflow-hidden">
+								<img class="img-fluid" src="~/img/Avatar/Lecturer/@(Model.Lecturer.Avatar)" alt="">
+							</div>
+							<div class="text-center p-4">
+								<h3 class="mb-0"><a href="@Url.Action("ViewLecturer","Home", new{IDLecturer = Model.Lecturer.Id})">@Model.Lecturer.FirstName @Model.Lecturer.LastName</a></h3>
+								<div class="mb-3">
+									<small class="fa fa-star text-primary"></small>
+									<small class="fa fa-star text-primary"></small>
+									<small class="fa fa-star text-primary"></small>
+									<small class="fa fa-star text-primary"></small>
+									<small class="fa fa-star text-primary"></small>
+								</div>
+								<p><b>@Model.Lecturer.Phone</b></p>
+								<p>@Model.Lecturer.Email</p>
+							</div>
+						</div>
+					</div>
+				}
 			</div>
 			<br />
 			<div class="row  justify-content-center">

@@ -117,7 +117,7 @@ namespace ABCLearn.DataContext
             string query = "UPDATE tblStudent " +
                 " \nSET FirstName = @FirstName , LastName = @LastName , Password = @Password , Phone = @Phone , Email = @Email , Gander = @Gander , DOB = @DOB  " +
                 " \nWHERE IDStudent = @IDStudent";
-            bool result = ConectionData.ExecuteUpdate(query, new object[] { pro.FirstName, pro.LastName, pro.Password, pro.Phone, pro.Email, pro.Gander, pro.DOB.ToString("yyyy-MM-dd"), ID });
+            bool result = ConectionData.ExecuteUpdate(query, new object[] { pro.FirstName, pro.LastName, pro.Password, pro.Phone, pro.Email, pro.Gander, pro.DOB.ToString("yyyy-MM-dd"), pro.Id });
             return result;
         }
 

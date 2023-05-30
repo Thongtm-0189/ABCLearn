@@ -64,6 +64,20 @@ namespace ABCLearn.Controllers
             }
             return View(@"Views/Home/DetailCourse.cshtml", course);
         }
+
+        public IActionResult ViewLecturer(int IDLecturer)
+        {
+            renderData();
+            Lecturer lecturer = LecturerDAO.Instance.Lecturers().Find(x => x.Id == IDLecturer);
+            lecturer.Courses.ForEach(x => x.Calendars = CourseDAO.Instance.getCalendar(x.Id));
+            return View(lecturer);
+        }
+        public IActionResult StudentCourse(int IDCourse)
+        {
+            List<Student> list = CourseDAO.Instance.StudentCourse(IDCourse);
+
+            return View(list);
+        }
         private void renderData()
         {
             LecturerDAO.Instance.Lecturers();

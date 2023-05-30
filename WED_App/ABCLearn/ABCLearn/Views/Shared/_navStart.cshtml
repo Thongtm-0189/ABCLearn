@@ -23,10 +23,17 @@
 <!-- Navbar & Hero Start -->
 <div class="container-fluid position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+        @if(UserLogin.Instance.RoleID != "Lecturer"){
         <a href="@Url.Action("Index", "Home")" class="navbar-brand p-0 d-flex align-items-center">
             <img src="~/img/Logo-icon.png" class="fa-font-awesome-logo-full img-fluid" style="height: 200px;" alt="logo-ABCLearn">
             <h1 class="text-primary m-0">BCLearn</h1>
         </a>
+        }else{
+        <a class="navbar-brand p-0 d-flex align-items-center">
+            <img src="~/img/Logo-icon.png" class="fa-font-awesome-logo-full img-fluid" style="height: 200px;" alt="logo-ABCLearn">
+            <h1 class="text-primary m-0">BCLearn</h1>
+        </a>
+        }
         <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" id="notificationButton" data-toggle="dropdown">
                 <ion-icon name="notifications"></ion-icon> <span class=""></span>

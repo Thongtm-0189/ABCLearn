@@ -1,9 +1,9 @@
 ﻿@using ABCLearn.DataContext
 @{
-    ViewBag.title = "ABC Learn";
-    var Courses = CourseDAO.Instance.Courses();
-    ViewBag.title = "ABC Learn";
-    DateTime nowUtc = DateTime.UtcNow;
+	ViewBag.title = "ABC Learn";
+	var Courses = CourseDAO.Instance.Courses();
+	ViewBag.title = "ABC Learn";
+	DateTime nowUtc = DateTime.UtcNow;
 	TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
 	DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
 	TimeSpan currentTime = vietnamTime.TimeOfDay;
@@ -12,63 +12,82 @@
 <html lang="en">
 
 <head>
-    @Html.Partial("_head")
+	@Html.Partial("_head")
 </head>
 
 <body>
-    @Html.Partial("_navAdmin")
-    <!-- tab search dictionary -->
-    <div class="container-fluid bg-primary hero-header">
-        <div class="container py-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-10 text-center">
-                    <h1 class="display-3 text-white"></h1>
-                </div>
-            </div>
-        </div>
-    </div>
+	@Html.Partial("_navAdmin")
+	<!-- tab search dictionary -->
+	<div class="container-fluid bg-primary hero-header">
+		<div class="container py-5">
+			<div class="row justify-content-center">
+				<div class="col-lg-10 text-center">
+					<h1 class="display-3 text-white"></h1>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-    <div class="container">
-        <table class="table table-striped text-center">
-            <thead>
-                <tr>
-                    <th>Course</th>
-                    <th>Lecturer</th>
-                    <th>Time</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var course in Courses)
-                {
-                    @if (course.Status)
-                    {
-                        @foreach (var calendar in course.Calendars)
-                        {
-                            <tr>
-                                <td><b>@course.Title</b></td>
-                                <td>@course.Lecturer.FirstName @course.Lecturer.LastName</td>
-                                <td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
-                                @if (currentTime > calendar.EndTime)
-                                {
-                                    <td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
-                                }
-                                else if (currentTime < calendar.StartTime)
-                                {
-                                    <td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
-                                }
-                                else
-                                {
-                                    <td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
-                                }
-                            </tr>
-                        }
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
+	<div class="container">
+		<h2 class="text-center">Calendar Table</h2>
+		<div class="row">
+			<div class="col-3"></div>
+			<a type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" value="Delete">Add New</a>
+			<div class="col-3"></div>
+		</div>
+		<table class="table table-striped text-center">
+			<thead>
+				<tr>
+					<th>Course</th>
+					<th>Lecturer</th>
+					<th>Time</th>
+					<th>Action</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var course in Courses)
+				{
+					@if (course.Status)
+					{
+						@if(course.Calendars.Count>0){
+							@foreach (var calendar in course.Calendars)
+							{
+								<tr>
+									<td><b>@course.Title</b></td>
+									<td>@course.Lecturer.FirstName @course.Lecturer.LastName</td>
+									<form action="@Url.Action("SetTimeCalendar","Admin")" method="post">
+									<td>
+										<input type="hidden" value="@calendar.Id" name="Id">
+										<input name="StartTime" type="time" class="glyphicon-time" value="@calendar.StartTime.ToString()" />
+										- <p>@calendar.EndTime.ToString()</p>
+									</td>
+									<td>
+										<button type="submit" name="btnCalendar" value="Set" class="col-3 btn btn-primary">Set</button>
+										<button type="submit" name="btnCalendar" value="Delete" href="" class="col-5 btn btn-primary" style="color:red">Delete</button>
+									</td>
+									</form>
+									@if (currentTime > calendar.EndTime)
+									{
+										<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
+									}
+									else if (currentTime < calendar.StartTime)
+									{
+										<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
+									}
+									else
+									{
+										<td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
+									}
+								</tr>
+							}
+						}
+					}
+				}
+			</tbody>
+		</table>
+	</div>
 </body>
 
 </html>

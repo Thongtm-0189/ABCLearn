@@ -115,6 +115,7 @@
 				<div id="EditProfileForm" class="card mb-3 edit-form" style="display:none ;">
 					<div class="card-body">
 						<form action="@Url.Action("EditInformation", "Profile")" method="post">
+							<input type="hidden" name="Id" value="@(UserLogin.Instance.Id)" />
 							<div class="row">
 								<div class="col-sm-3">
 									<h6 class="mb-0">First Name</h6>
@@ -190,49 +191,56 @@
 					<div class="row gutters-sm">
 					</div>
 				</div>
+				@if (UserLogin.Instance.Courses.Count>0)
+				{
+					<div class="container">
+						<table class="table table-striped text-center">
+							<thead>
+								<tr>
+									<th>Course</th>
+									<th>Time</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (Course course in UserLogin.Instance.Courses)
+								{
+									@if (course.Status)
+									{
+										@if (course.Calendars.Count>0)
+										{
+											@foreach (Calendar calendar in course.Calendars)
+											{
+												<tr>
+													<td><b>@course.Title</b></td>
+													<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
+													@if (currentTime < calendar.EndTime && currentTime > calendar.StartTime)
+													{
+														<td><a href="#" class="btn-primary px-3" style="border-radius:30px;">Join Now</a></td>
+													}
+													else if (currentTime < calendar.StartTime)
+													{
+														<td class=""><a class="btn-primary px-3" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
+													}
+													else if (currentTime > calendar.EndTime)
+													{
+														<td class=""><a class="btn-primary px-3" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
+													}
+												</tr>
+											}
+										}
+									}
+								}
+							</tbody>
+						</table>
+					</div>
+				}
 			</div>
 
 		</div>
 	</div>
 
-	<div class="container">
-		<table class="table table-striped text-center">
-			<thead>
-				<tr>
-					<th>Course</th>
-					<th>Time</th>
-					<th>Status</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (Course course in UserLogin.Instance.Courses)
-				{
-					@if (course.Status)
-					{
-						@foreach (Calendar calendar in course.Calendars)
-						{
-							<tr>
-								<td><b>@course.Title</b></td>
-								<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
-								@if (currentTime < calendar.EndTime && currentTime > calendar.StartTime)
-								{
-									<td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
-								}
-								else if (currentTime < calendar.StartTime)
-								{
-									<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
-								}
-								else if (currentTime > calendar.EndTime)
-								{
-									<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
-								}
-							</tr>
-						}
-					}
-				}
-			</tbody>
-		</table>
-	</div>
+	
 </div>
 	<script>
 		var listEmail = @Html.Raw(Json.Serialize(UserLogin.Instance.Courses));

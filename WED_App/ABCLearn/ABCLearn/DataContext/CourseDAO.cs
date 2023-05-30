@@ -1,4 +1,5 @@
 ﻿using ABCLearn.Models;
+using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using Calendar = ABCLearn.Models.Calendar;
@@ -37,10 +38,10 @@ namespace ABCLearn.DataContext
                 DataTable dataTable = ConectionData.ExecuteQuery(query);
                 foreach (DataRow row in dataTable.Rows)
                 {
+
                     Course obj = new Course()
                     {
                         Id = Convert.ToInt32(row["IDCourse"].ToString().Trim()),
-                        Lecturer = LecturerDAO.Instance.Lecturers().FirstOrDefault(x => x.Id == Convert.ToInt32(row["IDLecturer"].ToString().Trim())),
                         Title = row["Title"].ToString().Trim(),
                         Detail = row["Detail"].ToString().Trim(),
                         Status = bool.Parse(row["Status"].ToString().Trim()),
@@ -49,6 +50,10 @@ namespace ABCLearn.DataContext
                         Students = StudentCourse(Convert.ToInt32(row["IDCourse"].ToString().Trim())),
                         Sale = float.Parse(row["Sale"].ToString().Trim())
                     };
+                    if (row["IDLecturer"].ToString().Trim() != "")
+                    {
+                        obj.Lecturer = LecturerDAO.Instance.Lecturers().FirstOrDefault(x => x.Id == Convert.ToInt32(row["IDLecturer"].ToString().Trim()));
+                    }
 
                     _coureses.Add(obj);
                 }
@@ -79,12 +84,31 @@ namespace ABCLearn.DataContext
             }
             return comments;
         }
-        public int StudentCourse(int id)
+        public List<Student> StudentCourse(int id)
         {
-            List<Student> comments = new List<Student>();
+            List<Student> StudentCourse = new List<Student>();
             string query = "SELECT * FROM tblCourseOfStudent, tblStudent WHERE tblStudent.IDStudent = tblCourseOfStudent.IDStudent AND IDCourse = @id";
             DataTable dataTable = ConectionData.ExecuteQuery(query, new object[] { id });
-            return dataTable.Rows.Count;
+            foreach (DataRow row in dataTable.Rows)
+            {
+                Student obj = new Student()
+                {
+                    Id = Convert.ToInt32(row["IDStudent"].ToString().Trim()),
+                    FirstName = row["FirstName"].ToString().Trim(),
+                    LastName = row["LastName"].ToString().Trim(),
+                    RoleID = row["RoleID"].ToString().Trim(),
+                    Password = row["Password"].ToString().Trim(),
+                    Email = row["Email"].ToString().Trim(),
+                    Phone = row["Phone"].ToString().Trim(),
+                    Avatar = row["Avatar"].ToString().Trim(),
+                    Gander = row["Gander"].ToString().Trim(),
+                    DOB = DateTime.Parse(row["DOB"].ToString().Trim()),
+                    IsConfirmEmail = Boolean.Parse(row["ConfirmEmail"].ToString().Trim()),
+                    DateCreated = DateTime.Parse(row["DateCreate"].ToString().Trim())
+                };
+                StudentCourse.Add(obj);
+            }
+            return StudentCourse;
         }
         public List<Calendar> getCalendar(int id)
         {
@@ -103,7 +127,6 @@ namespace ABCLearn.DataContext
 
                 calendar.Add(obj);
             }
-
             return calendar;
         }
 
@@ -111,6 +134,16 @@ namespace ABCLearn.DataContext
         {
             string query = "INSERT INTO tblCommentOfStudent VALUES ( @IDStudent , @IDCourse , @Comment , @TimeDate ) ";
             return ConectionData.ExecuteUpdate(query, new object[] { IDStudent, IDCourse, comment, DateTime.Now });
+        }
+        public bool setCalendar(Calendar calendar)
+        {
+            string query = "UPDATE tblCalendar SET TimeStart = @start , TimeEnd = @end WHERE IDCalendar = @IDCalendar ";
+            return ConectionData.ExecuteUpdate(query, new object[] { calendar.StartTime.ToString(@"hh\:mm\:ss"), calendar.EndTime.ToString(@"hh\:mm\:ss"), calendar.Id });
+        }
+        public bool removeCalendar(Calendar calendar)
+        {
+            string query = "DELETE FROM tblCalendar WHERE IDCalendar = @IDCalendar ";
+            return ConectionData.ExecuteUpdate(query, new object[] { calendar.Id });
         }
         public void Update()
         {
