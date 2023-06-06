@@ -1,4 +1,5 @@
 ﻿using ABCLearn.DataContext;
+using ABCLearn.Extend;
 using ABCLearn.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,18 +15,31 @@ namespace ABCLearn.Controllers
         }
         public IActionResult Index()
         {
+            if (HttpContext.Session.GetObject<UserLogin>("User") == null)
+            {
+                UserLogin.Instance = null;
+            }
+            SessionUser();
             return View();
         }
         public IActionResult EditInformation(Profile pro, string admin)
         {
-            if (UserLogin.Instance.RoleID.Trim() == "Student")
+            var user = HttpContext.Session.GetObject<UserLogin>("User");
+            if (user == null)
+            {
+                UserLogin.Instance = null;
+            }
+            SessionUser();
+            if (user.RoleID.Trim() == "Student")
             {
                 bool checkEdited = StudentDAO.Instance.editprofile(pro);
                 if (checkEdited)
                 {
-                    int idUserLgin = UserLogin.Instance.Id;
-                    UserLogin.Instance.RoleID = "Student";
+                    int idUserLgin = user.Id;
+                    user.RoleID = "Student";
                     UserLogin.updateIfor(idUserLgin, "Student");
+
+                    StudentDAO.Instance.upDate();
                 }
             }
             else
@@ -33,37 +47,77 @@ namespace ABCLearn.Controllers
                 bool checkEdited = LecturerDAO.Instance.editprofile(pro);
                 if (checkEdited)
                 {
-                    UserLogin.Instance.RoleID = "Lecturer";
-                    int idUserLgin = UserLogin.Instance.Id;
+                    user.RoleID = "Lecturer";
+                    int idUserLgin = user.Id;
                     UserLogin.updateIfor(idUserLgin, "Lecturer");
+
+                    LecturerDAO.Instance.Update();
                 }
             }
             UserLogin.Instance.Islogin = true;
             UserLogin.Instance.Courses.ForEach(course => course.Calendars = CourseDAO.Instance.getCalendar(course.Id));
+            HttpContext.Session.Clear();
+            HttpContext.Session.SetObject("User", UserLogin.Instance);
+            SessionUser();
             return View("Views/Home/Profile.cshtml");
         }
         public IActionResult UploadAvatar(IFormFile image)
         {
-            var roleID = UserLogin.Instance.RoleID;
-            var id = UserLogin.Instance.Id;
+            var user = HttpContext.Session.GetObject<UserLogin>("User");
+            if (user == null)
+            {
+                UserLogin.Instance = null;
+            }
+
+            renderData();
+            SessionUser();
+            var roleID = user.RoleID;
+            var id = user.Id;
             if (image != null && image.Length > 0)
             {
                 ViewBag.fail = "not fail";
                 var fileName = $"{roleID}-{id}{Path.GetExtension(image.FileName)}";
                 //var fileName = Path.GetFileName(image.FileName);
-                var path = Path.Combine(_environment.WebRootPath, "img\\Avatar\\Student", fileName);
+                var path = Path.Combine(_environment.WebRootPath, $"img\\Avatar\\{user.RoleID}", fileName);
                 using (var fileStream = new FileStream(path, FileMode.Create))
                 {
                     image.CopyTo(fileStream);
                 }
-                StudentDAO.Instance.uploadAvatar(fileName);
-                UserLogin.Instance.Avatar = fileName;
+                if (user.RoleID == "Student")
+                {
+                    StudentDAO.Instance.uploadAvatar(fileName, user.Id);
+                }
+                else
+                {
+                    LecturerDAO.Instance.uploadAvatar(fileName, user.Id);
+                }
+                user.Avatar = fileName;
+                HttpContext.Session.SetObject("User", user);
             }
             else
             {
                 ViewBag.fail = "fail";
             }
+            SessionUser();
             return View("Views/Home/ProFile.cshtml");
+        }
+        private void renderData()
+        {
+            LecturerDAO.Instance.getLecturer();
+            StudentDAO.Instance.getStudents();
+            CourseDAO.Instance.getCourse();
+            QuizDAO.Instance.GetQuiz();
+        }
+        private void SessionUser()
+        {
+            var user = HttpContext.Session.GetObject<UserLogin>("User");
+            if (user != null)
+            {
+                ViewBag.Role = user.RoleID;
+                ViewBag.login = true;
+                ViewBag.user = user;
+
+            }
         }
     }
 }

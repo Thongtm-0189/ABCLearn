@@ -31,6 +31,10 @@
 
     <div class="container">
         <h2 class="text-center" >Student Table</h2>
+        <form action="@Url.Action("searchStudentByLastname","Student")" method="post">
+			<input type="text" class="btn btn-primary" name="LastName" value="" />
+			<button id="btnSub" type="submit" class="btn col-3 btn-primary">Search by Last name</button>
+		</form>
         <table class="table table-striped text-center">
             <thead>
                 <tr>
@@ -45,7 +49,7 @@
             <tbody>
                 @foreach (var student in Students)
                 {
-                    <form action="@Url.Action("StudentAction","Admin")" method="post">
+                    <form action="@Url.Action("StudentAction","Student")" method="post">
                     <tr>
                         <td>@student.Id<input type="hidden" name="idStudent" value="@student.Id" /></td>
                         <td>@student.FirstName</td>
@@ -54,7 +58,7 @@
                         <td>@student.DateCreated.Date.ToString()</td>
                         <td>
                             <div class="d-flex row">
-                                <a href="@Url.Action("ViewStudent","Admin", new{idStudent = @student.Id})" name="btnStudentAdmin" class="col-6 btn btn-primary">View</a>
+                                <a href="@Url.Action("ViewStudent","Student", new{idStudent = @student.Id})" name="btnStudentAdmin" class="col-6 btn btn-primary">View</a>
                                 <button type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</button>
                             </div>
                         </td>
@@ -72,7 +76,7 @@
             }
         </div>
     </div>
-
+    @Html.Partial("_endScript")
 </body>
 
 </html>

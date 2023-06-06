@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "XReHy7ZZcZ5Yuq5zmljKWhzyMciFukFZfTmFIsGfyGg=",
+  "Hash": "VgRKKtiD/MsKEpczceSnzf2HbtMuKAmjKC5fSpgn29A=",
   "Source": "ABCLearn",
   "BasePath": "_content/ABCLearn",
   "Mode": "Default",
@@ -204,6 +204,23 @@
       "OriginalItemSpec": "wwwroot\\img\\about.jpg"
     },
     {
+      "Identity": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\img\\Avatar\\Lecturer\\Lecturer.png",
+      "SourceId": "ABCLearn",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\",
+      "BasePath": "_content/ABCLearn",
+      "RelativePath": "img/Avatar/Lecturer/Lecturer.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\Avatar\\Lecturer\\Lecturer.png"
+    },
+    {
       "Identity": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\img\\Avatar\\Lecturer\\Lecturer-1.jpg",
       "SourceId": "ABCLearn",
       "SourceType": "Discovered",
@@ -219,6 +236,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\Avatar\\Lecturer\\Lecturer-1.jpg"
+    },
+    {
+      "Identity": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\img\\Avatar\\Lecturer\\Lecturer-1.png",
+      "SourceId": "ABCLearn",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\",
+      "BasePath": "_content/ABCLearn",
+      "RelativePath": "img/Avatar/Lecturer/Lecturer-1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\Avatar\\Lecturer\\Lecturer-1.png"
     },
     {
       "Identity": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\img\\Avatar\\Lecturer\\Lecturer-2.jpg",
@@ -680,6 +714,23 @@
       "OriginalItemSpec": "wwwroot\\img\\Logo-icon32x32.png"
     },
     {
+      "Identity": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\img\\MOMO.PNG",
+      "SourceId": "ABCLearn",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\",
+      "BasePath": "_content/ABCLearn",
+      "RelativePath": "img/MOMO.PNG",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\MOMO.PNG"
+    },
+    {
       "Identity": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\img\\team-1.jpg",
       "SourceId": "ABCLearn",
       "SourceType": "Discovered",
@@ -814,6 +865,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\testimonial-4.jpg"
+    },
+    {
+      "Identity": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\img\\VNPAY.png",
+      "SourceId": "ABCLearn",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\",
+      "BasePath": "_content/ABCLearn",
+      "RelativePath": "img/VNPAY.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\VNPAY.png"
+    },
+    {
+      "Identity": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\js\\AdminSet.js",
+      "SourceId": "ABCLearn",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\",
+      "BasePath": "_content/ABCLearn",
+      "RelativePath": "js/AdminSet.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\AdminSet.js"
     },
     {
       "Identity": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\js\\bootstrap.min.js",

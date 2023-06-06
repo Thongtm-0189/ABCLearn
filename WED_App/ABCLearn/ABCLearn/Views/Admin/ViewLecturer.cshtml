@@ -28,14 +28,7 @@
 					<div class="card">
 						<div class="card-body">
 							<div class="d-flex flex-column align-items-center text-center">
-								@if (Model.Avatar != null)
-								{
-									<img src="~/img/Avatar/Lecturer/@(Model.Avatar)" alt="Admin" class="rounded-circle" width="242">
-								}
-								else
-								{
-									<img src="~/img/Avatar/Male.jpg" alt="Admin" class="rounded-circle" width="242">
-								}
+								<img src="~/img/Avatar/Lecturer/@(Model.Avatar)" alt="Admin" class="rounded-circle" width="242">
 								<div class="mt-3">
 									<h4>@Model.FirstName @Model.LastName</h4>
 									<p class="text-secondary mb-1">@Model.RoleID</p>
@@ -105,7 +98,7 @@
 
 					<div id="EditProfileFormlt" class="card mb-3 edit-form" style="display:none ;">
 						<div class="card-body">
-							<form action="@Url.Action("updateLecturer", "Admin")" method="post">
+							<form action="@Url.Action("updateLecturer", "Lecturer")" method="post">
 								<input type="hidden" name="Id" value="@(Model.Id)" />
 								<div class="row">
 									<div class="col-sm-3">
@@ -222,6 +215,7 @@
 				document.getElementById("EditProfileFormlt").style.display = "none";
 			}
 		</script>
+		@Html.Partial("_endScript")
 </body>
 
 </html>

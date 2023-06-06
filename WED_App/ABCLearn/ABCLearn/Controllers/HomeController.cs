@@ -11,43 +11,46 @@ namespace ABCLearn.Controllers
     {
         public IActionResult Index()
         {
-            renderData();
+            SessionUser();
             return View();
         }
         public IActionResult About()
         {
-            renderData();
+            SessionUser();
             return View();
         }
         public IActionResult Course()
         {
-            renderData();
+            SessionUser();
             return View();
         }
         public IActionResult CourseDetail(int id)
         {
-            renderData();
+            SessionUser();
             Course course = CourseDAO.Instance.Courses().FirstOrDefault(x => x.Id == id);
             course.Comments = CourseDAO.Instance.getComment(course.Id);
             return View(@"Views/Home/DetailCourse.cshtml", course);
         }
         public IActionResult Contact()
         {
+            SessionUser();
             return View();
         }
         public IActionResult CheckGarmarly()
         {
+            SessionUser();
             return View();
         }
         public IActionResult Calendar()
         {
-            renderData();
+            SessionUser();
             return View();
         }
         public IActionResult Profile()
         {
-            renderData();
-            if (!UserLogin.Instance.Islogin)
+            SessionUser();
+            var user = HttpContext.Session.GetObject<UserLogin>("User");
+            if (user == null)
             {
                 return RedirectToAction("Index", "Login");
             }
@@ -55,35 +58,58 @@ namespace ABCLearn.Controllers
         }
         public IActionResult Commemt(int IDStudent, int IDCourse, string comment)
         {
-            renderData();
+            SessionUser();
             Course course = new Course();
             if (CourseDAO.Instance.Comment(IDStudent, IDCourse, comment))
             {
                 course = CourseDAO.Instance.Courses().FirstOrDefault(x => x.Id == IDCourse);
                 course.Comments = CourseDAO.Instance.getComment(course.Id);
+                CourseDAO.Instance.Update();
+                LecturerDAO.Instance.Update();
             }
             return View(@"Views/Home/DetailCourse.cshtml", course);
         }
 
         public IActionResult ViewLecturer(int IDLecturer)
         {
-            renderData();
+            SessionUser();
             Lecturer lecturer = LecturerDAO.Instance.Lecturers().Find(x => x.Id == IDLecturer);
             lecturer.Courses.ForEach(x => x.Calendars = CourseDAO.Instance.getCalendar(x.Id));
             return View(lecturer);
         }
         public IActionResult StudentCourse(int IDCourse)
         {
+            if (HttpContext.Session.GetObject<UserLogin>("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            SessionUser();
             List<Student> list = CourseDAO.Instance.StudentCourse(IDCourse);
-
+            ViewBag.IdCourse = IDCourse;
             return View(list);
+        }
+        public IActionResult searchStudentByLastname(string LastName, int IDCourse)
+        {
+            SessionUser();
+            List<Student> list = CourseDAO.Instance.StudentCourse(IDCourse).Where(x => x.LastName.Contains(LastName)).ToList();
+            return View("Views/Home/StudentCourse.cshtml", list);
         }
         private void renderData()
         {
-            LecturerDAO.Instance.Lecturers();
-            StudentDAO.Instance.Students();
-            CourseDAO.Instance.Courses();
-            QuizDAO.Instance.quizzes();
+            LecturerDAO.Instance.getLecturer();
+            StudentDAO.Instance.getStudents();
+            CourseDAO.Instance.getCourse();
+            QuizDAO.Instance.GetQuiz();
+        }
+        private void SessionUser()
+        {
+            var user = HttpContext.Session.GetObject<UserLogin>("User");
+            if (user != null)
+            {
+                ViewBag.Role = user.RoleID;
+                ViewBag.login = true;
+                ViewBag.user = user;
+            }
         }
     }
 }

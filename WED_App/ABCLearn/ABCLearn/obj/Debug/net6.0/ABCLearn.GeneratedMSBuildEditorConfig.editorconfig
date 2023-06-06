@@ -11,7 +11,7 @@ build_property.RootNamespace = ABCLearn
 build_property.ProjectDir = D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
-build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = true
 build_property.MSBuildProjectDirectory = D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn
 build_property._RazorSourceGeneratorDebug = 
 
@@ -51,8 +51,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlld1N0dWRlbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Course/ViewCourse.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXFZpZXdDb3Vyc2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Dictionary/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGljdGlvbmFyeVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/EnrollCourse/PaymentCallBackMomo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5yb2xsQ291cnNlXFBheW1lbnRDYWxsQmFja01vbW8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/EnrollCourse/PaymentCallbackVNpay.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW5yb2xsQ291cnNlXFBheW1lbnRDYWxsYmFja1ZOcGF5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Home/About.cshtml]

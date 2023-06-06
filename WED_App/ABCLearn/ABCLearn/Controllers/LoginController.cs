@@ -1,7 +1,9 @@
-﻿using ABCLearn.DAO;
-using ABCLearn.DataContext;
+﻿using ABCLearn.DataContext;
+using ABCLearn.Extend;
 using ABCLearn.Models;
+using ABCLearn.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace ABCLearn.Controllers
 {
@@ -14,22 +16,25 @@ namespace ABCLearn.Controllers
 
         public IActionResult forgotPass()
         {
+            if (HttpContext.Session.GetObject<UserLogin>("User") == null)
+            {
+                UserLogin.Instance = null;
+            }
             return View();
         }
         public IActionResult Login(AccountLogin acc, string submitButton)
         {
-            ViewData["check"] = submitButton;
             if (submitButton == "Sutdent")
             {
                 if (StudentDAO.Instance.login(acc))
                 {
                     UserLogin.Instance.Islogin = true;
                     UserLogin.Instance.RoleID = "Student";
-                    UserLogin.Instance.TimeLogin = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
                     foreach (var course in UserLogin.Instance.Courses)
                     {
                         course.Calendars = CourseDAO.Instance.getCalendar(course.Id);
                     }
+                    HttpContext.Session.SetObject("User", UserLogin.Instance);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -49,6 +54,7 @@ namespace ABCLearn.Controllers
                     {
                         course.Calendars = CourseDAO.Instance.getCalendar(course.Id);
                     }
+                    HttpContext.Session.SetObject("User", UserLogin.Instance);
                     return RedirectToAction("Profile", "Home");
                 }
                 else
@@ -98,18 +104,20 @@ namespace ABCLearn.Controllers
         {
             UserLogin.Instance.Islogin = false;
             UserLogin.Instance.RoleID = "Guest";
+            HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
         private void renderData()
         {
-            LecturerDAO.Instance.Lecturers();
-            StudentDAO.Instance.Students();
-            CourseDAO.Instance.Courses();
-            QuizDAO.Instance.quizzes();
+            LecturerDAO.Instance.getLecturer();
+            StudentDAO.Instance.getStudents();
+            CourseDAO.Instance.getCourse();
+            QuizDAO.Instance.GetQuiz();
         }
         public IActionResult ResetPassword(string Password)
         {
-            if (Profile.Instance.Role == "Student")
+            var user = HttpContext.Session.GetObject<UserLogin>("User");
+            if (user.RoleID == "Student")
             {
                 Profile.Instance.Password = Password;
                 if (StudentDAO.Instance.resetPassword(Profile.Instance))
