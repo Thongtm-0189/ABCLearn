@@ -91,6 +91,33 @@ namespace ABCLearn.DataContext
             }
             _student.Reverse();
         }
+        public Student findStudent(int id)
+        {
+            string query = "SELECT * FROM tblStudent WHERE IDStudent = @id ";
+            DataTable tb = ConectionData.ExecuteQuery(query, new object[] { id });
+            foreach (DataRow row in tb.Rows)
+            {
+                Student obj = new Student()
+                {
+                    Id = Convert.ToInt32(row["IDStudent"].ToString().Trim()),
+                    FirstName = row["FirstName"].ToString().Trim(),
+                    LastName = row["LastName"].ToString().Trim(),
+                    RoleID = row["RoleID"].ToString().Trim(),
+                    Password = row["Password"].ToString().Trim(),
+                    Email = row["Email"].ToString().Trim(),
+                    Phone = row["Phone"].ToString().Trim(),
+                    Avatar = row["Avatar"].ToString().Trim(),
+                    Courses = GetCourses(Convert.ToInt32(row["IDStudent"].ToString().Trim())),
+                    Gander = row["Gander"].ToString().Trim(),
+                    DOB = DateTime.Parse(row["DOB"].ToString().Trim()),
+                    IsConfirmEmail = Boolean.Parse(row["ConfirmEmail"].ToString().Trim()),
+                    DateCreated = DateTime.Parse(row["DateCreate"].ToString().Trim())
+                };
+                if (obj != null)
+                    return obj;
+            }
+            return null;
+        }
         public List<Course> GetCourses(int id)
         {
             List<Course> _courseStudents = new List<Course>();
@@ -139,11 +166,13 @@ namespace ABCLearn.DataContext
         }
         public bool insertStudent(Profile pro)
         {
-            DateTime dateTime = DateTime.Now;
+            DateTime nowUtc = DateTime.UtcNow;
+            TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
+            DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
             bool result = false;
             string query = "INSERT INTO tblStudent " +
                 "\nVALUES ( @FirstName , @Lastname , 'Student' , @Password , @emil , @phone , 1 , @datecreate , @gander , @DOB , NULL)";
-            result = ConectionData.ExecuteUpdate(query, new object[] { pro.FirstName, pro.LastName, pro.Password, pro.Email, pro.Phone, dateTime.ToString("yyyy-MM-dd HH:mm:ss"), pro.Gander, pro.DOB.ToString("yyyy-MM-dd") });
+            result = ConectionData.ExecuteUpdate(query, new object[] { pro.FirstName, pro.LastName, pro.Password, pro.Email, pro.Phone, vietnamTime.ToString("yyyy-MM-dd HH:mm:ss"), pro.Gander, pro.DOB.ToString("yyyy-MM-dd") });
             return result;
         }
         public bool resetPassword(Profile pro)

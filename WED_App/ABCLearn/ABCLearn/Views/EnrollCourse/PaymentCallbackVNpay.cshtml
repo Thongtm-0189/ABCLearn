@@ -50,7 +50,7 @@
             var seconds = 10; // Số giây cần đếm ngược
             var timer = setInterval(function () {
                 seconds--;
-                document.querySelector("#atten").innerHTML = `Back to home page in ${seconds}s`;
+                document.querySelector("#atten").innerHTML = `<strong>Back to home page in ${seconds}s</strong>`;
                 if (seconds <= 0) {
                     clearInterval(timer);
                     // Chuyển hướng về trang Home/Index

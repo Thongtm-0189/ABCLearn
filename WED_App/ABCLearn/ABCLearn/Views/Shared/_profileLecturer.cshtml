@@ -170,7 +170,7 @@
 													<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
 													@if (currentTime < calendar.EndTime && currentTime > calendar.StartTime)
 													{
-														<td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
+														<td><a href="@Url.Action("Index", "MeetingRoom", new {idCourse = course.Id})" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
 													}
 													else if (currentTime < calendar.StartTime)
 													{

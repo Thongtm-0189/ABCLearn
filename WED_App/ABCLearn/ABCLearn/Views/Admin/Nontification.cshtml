@@ -1,6 +1,14 @@
-﻿@using ABCLearn.DataContext
+﻿@using ABCLearn.DataAccess
+@using ABCLearn.DataContext
 @{
     ViewBag.title = "ABC Learn";
+    var Courses = CourseDAO.Instance.Courses();
+    DateTime nowUtc = DateTime.UtcNow;
+    TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
+    DateTime currectDate = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
+    DateTime newCurrentDate = currectDate.AddDays(1);
+    ViewBag.title = "ABC Learn";
+    var notification = NotificationDAO.Instanse.Transactions();
 }
 @model List<Notification>
 <!DOCTYPE html>
@@ -25,16 +33,27 @@
 
     <div class="container mt-5">
         <h1>Notification</h1>
-        <form>
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" placeholder="Enter Dtail">
+        <form method="post" action="@Url.Action("addnewNotification","Notification")">
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" name="Title" id="title" placeholder="Enter Dtail" required/>
+                </div>
+                <div class="col-md-4">
+                    <label for="StartDate">Date Start</label>
+                    <input name="StartDate" min="@currectDate.ToString("yyyy-MM-dd")" id="StartDate" class="form-control" type="date" required />
+                </div>
+                <div class="col-md-4">
+                    <label for="EndtDate">End date</label>
+                    <input name="EndDate" min="@newCurrentDate.ToString("yyyy-MM-dd")" id="EndDate" class="form-control" type="date" required />
+                </div>
+
             </div>
             <div class="form-group">
                 <label for="message">Content</label>
-                <textarea class="form-control" id="message" rows="3" placeholder="Enter Content"></textarea>
+                <textarea class="form-control" id="message" name="Detail" rows="3" placeholder="Enter Content" required></textarea>
             </div>
-            <button type="button" class="btn btn-primary" onclick="showNotification()">Create New Notification
+            <button type="submit" class="btn btn-primary" onclick="">Create New Notification
         </form>
     </div>
 
@@ -42,14 +61,27 @@
         <table class="table table-striped text-center">
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Title</th>
                     <th>Detail</th>
                     <th>Date Create</th>
+                    <th>Date End</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
-                
+                @if(notification.Count>0){
+                    @foreach(var noti in notification){
+                        <tr>
+                            <td>@noti.Title</td>
+                            <td style="width:20%">@noti.Detail</td>
+                            <td>@noti.StartDate.ToString("yyyy-MM-dd")</td>
+                            <td>@noti.EndDate.ToString("yyyy-MM-dd")</td>
+                            <td>
+                                <a href="@Url.Action("delete","Notification", new{idNotification = noti.Id})" name="btnLecturerAdmin" type="submit" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                }
             </tbody>
         </table>
     </div>

@@ -29,7 +29,7 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
-                <p id="atten"><strong>Back to home page in 5s</strong></p>
+                <p id="atten"><strong>Back to home page in 10s</strong></p>
                 <h5 class="card-title">Payment Details</h5>
                 <p class="card-text">Order ID: <strong>@Model.OrderId</strong></p>
                 <p class="card-text">Amount: <strong>@Model.Amount VND</strong></p>
@@ -41,7 +41,24 @@
     @Html.Partial("_footer")
     @Html.Partial("_endScript")
     <script>
+        // Hàm đếm ngược
+        function countdown() {
+            var seconds = 10; // Số giây cần đếm ngược
+            var timer = setInterval(function () {
+                seconds--;
+                document.querySelector("#atten").innerHTML = `<strong>Back to home page in ${seconds}s</strong>`;
+                if (seconds <= 0) {
+                    clearInterval(timer);
+                    // Chuyển hướng về trang Home/Index
+                    window.location.href = '@Url.Action("Index", "Home")';
+                }
+            }, 1000); // 1000 milliseconds = 1 giây
+        }
 
+        // Gọi hàm đếm ngược khi trang được tải
+        document.addEventListener('DOMContentLoaded', function () {
+            countdown();
+        });
     </script>
 </body>
 

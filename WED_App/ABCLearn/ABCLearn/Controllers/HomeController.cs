@@ -1,4 +1,5 @@
-﻿using ABCLearn.DataContext;
+﻿using ABCLearn.DataAccess;
+using ABCLearn.DataContext;
 using ABCLearn.Extend;
 using ABCLearn.Models;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,7 @@ namespace ABCLearn.Controllers
     {
         public IActionResult Index()
         {
+            //renderData();
             SessionUser();
             return View();
         }
@@ -54,7 +56,13 @@ namespace ABCLearn.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            return View();
+            List<Transaction> trans = new List<Transaction>();
+
+            if (user.RoleID == "Student")
+            {
+                trans = TransactionDAO.Instanse.Transactions().Where(x => x.IdStudent == user.Id).ToList();
+            }
+            return View(trans);
         }
         public IActionResult Commemt(int IDStudent, int IDCourse, string comment)
         {
@@ -100,6 +108,7 @@ namespace ABCLearn.Controllers
             StudentDAO.Instance.getStudents();
             CourseDAO.Instance.getCourse();
             QuizDAO.Instance.GetQuiz();
+            TransactionDAO.Instanse.Transactions();
         }
         private void SessionUser()
         {

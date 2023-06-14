@@ -99,7 +99,7 @@ namespace ABCLearn.Controllers
                 ViewBag.fail = "fail";
             }
             SessionUser();
-            return View("Views/Home/ProFile.cshtml");
+            return RedirectToAction("Profile", "Home");
         }
         private void renderData()
         {

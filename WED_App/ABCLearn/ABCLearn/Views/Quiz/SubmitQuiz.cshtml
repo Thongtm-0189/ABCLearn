@@ -4,6 +4,7 @@
 @using ABCLearn.DataContext
 @model Dictionary<int, string>
 @{
+	ViewBag.title = "ABC Learn";
 	var Quzss = QuizDAO.Instance.quizzes();
 }
 <!DOCTYPE html>
@@ -14,6 +15,7 @@
 </head>
 
 <body>
+	@Html.Partial("_spanner")
 	@Html.Partial("_navStart")
 	@if (UserLogin.Instance.RoleID != "Lecturer")
 	{
@@ -39,41 +41,102 @@
 	}else{
 		<a href="@Url.Action("Index", "Login", new {page = "Index", control = "Home", Id = 0})" class="btn btn-primary rounded-pill py-2 px-4">Login For more</a>
 	}
+	<br />
 	<div class="container">
-		<table class="table table-striped text-center">
-			<thead>
+		<table class="table table-striped">
+			@foreach (KeyValuePair<int, string> entry in Model)
+			{
+				int idQuiz = entry.Key;
+				string answer = entry.Value;
+				Quiz quiz = Quzss.Find(x => x.Id == idQuiz);
+				bool check = quiz.CorrectAnswer == answer;
 				<tr>
-					<th>QUESTION</th>
-					<th>CORRECT ANSWER</th>
-					<th>YOUR ANSWER</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (KeyValuePair<int, string> entry in Model)
-				{
-					int idQuiz = entry.Key;
-					string answer = entry.Value;
-					Quiz quiz = Quzss.Find(x => x.Id == idQuiz);
-					bool check = quiz.CorrectAnswer == answer;
-					<tr>
-						<td>
-							<b>@(quiz.Question)</b>
-						</td>
-						<td>
-							<b>@(quiz.CorrectAnswer)</b>
-						</td>
-						@if(check){
-							<td style="color: forestgreen"> 
-								@(quiz.CorrectAnswer)
-							</td>
-						}else{
-							<td style="color: red">
-								<del>@(answer)</del>
-							</td>
+					<td>
+						<label style="margin-top:20px">@(quiz.Question)</label>
+						<br />
+						@if (answer == quiz.AnswerA)
+						{
+							@if (check)
+							{
+								<label style="color: forestgreen">
+									<strong>A: @(answer)</strong>
+								</label>
+							}
+							else
+							{
+								<label style="color: red">
+									<del>A: @(answer)</del>
+								</label>
+							}
 						}
-					</tr>
-				}
-			</tbody>
+						else
+						{
+							<label>A: @(quiz.AnswerA)</label>
+						}
+						<br />
+						@if (answer == quiz.AnswerB)
+						{
+							@if (check)
+							{
+								<label style="color: forestgreen">
+									<strong>B: @(answer)</strong>
+								</label>
+							}
+							else
+							{
+								<label style="color: red">
+									<del>B: @(answer)</del>
+								</label>
+							}
+						}
+						else
+						{
+							<label>B: @(quiz.AnswerB)</label>
+						}
+						<br />
+						@if (answer == quiz.AnswerC)
+						{
+							@if (check)
+							{
+								<label style="color: forestgreen">
+									<strong>C: @(answer)</strong>
+								</label>
+							}
+							else
+							{
+								<label style="color: red">
+									<del>C: @(answer)</del>
+								</label>
+							}
+						}
+						else
+						{
+							<label>C: @(quiz.AnswerC)</label>
+						}
+						<br />
+						@if (answer == quiz.AnswerD)
+						{
+							@if (check)
+							{
+								<p style="color: forestgreen">
+									<strong>D: @(answer)</strong>
+								</p>
+							}
+							else
+							{
+								<label style="color: red">
+									<del>D: @(answer)</del>
+								</label>
+							}
+						}
+						else
+						{
+							<label>D: @(quiz.AnswerD)</label>
+						}
+						<br />
+					</td>
+				</tr>
+			}
 		</table>
 	</div>
 

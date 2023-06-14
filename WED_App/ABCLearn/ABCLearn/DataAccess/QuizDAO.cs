@@ -68,6 +68,12 @@ namespace ABCLearn.DataContext
             bool result = ConectionData.ExecuteUpdate(query, new object[] { quiz.Id });
             return result;
         }
+        public bool DeleteAllQuiz(int Idcourse)
+        {
+            string query = "DELETE FROM tblQuiz WHERE IDCourse = @id ";
+            bool result = ConectionData.ExecuteUpdate(query, new object[] { Idcourse });
+            return result;
+        }
         public bool Addnew(Quiz quiz)
         {
             int ID = UserLogin.Instance.Id;

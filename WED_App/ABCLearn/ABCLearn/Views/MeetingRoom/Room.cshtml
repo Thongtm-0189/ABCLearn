@@ -1,0 +1,386 @@
+﻿@{
+	ViewBag.room = "meet";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link href="~/css/MettingRoom.css" rel="stylesheet">
+	@Html.Partial("_head")
+
+	<style>
+		body, html {
+			height: 100%;
+			margin: 0;
+		}
+
+		.card {
+			position: fixed;
+			top: 50%;
+			right: 0;
+			width: inherit;
+			height: 100%;
+			transform: translateY(-50%);
+		}
+	</style>
+</head>
+<body>
+	@Html.Partial("_spanner")
+	<!--<h1 style="text-align: center">@ViewBag.roomid</h1>-->
+	<div class="container-fluid row" style="height:inherit;">
+		<div class="row">
+			<div class="col-md-9 position-relative" style="height: 100%">
+				<!-- Rest of your webpage content -->
+				<h3>Room meet: @(ViewBag.roomid)</h3>
+				<div video-grid>
+				</div>
+				<div my-video class="position-absolute">
+				</div>
+				<!--<button id="toggle-microphone" class="mute">Toggle Microphone</button>-->
+			</div>
+			<div class="col-md-3">
+				<div class="card">
+					<div class="card-header row">
+						<div class="col-md-1"></div>
+						<button id="btnChatBox" class="btn btn-primary col-md-5" style="border-radius: 30px 0 0 30px;">Chat Box</button>
+
+						<button id="btnDictionary" class="btn btn-primary col-md-5" style="border-radius: 0 30px 30px 0;">Dictionary</button>
+						<div class="col-md-1"></div>
+					</div>
+
+					<div id="chatboxcard" class="card-body">
+						<div id="messagesList" class="card-body" style="height: 90%; overflow-y: auto;">
+						</div>
+
+						<div class="card-footer">
+							<div class="input-group">
+								<input id="messageInput" type="text" class="form-control border-0 rounded-pill" placeholder="Type your message">
+								<div class="input-group-append">
+									<button id="sendButton" class="btn btn-primary rounded-pill">Send</butto>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="dictionarycard" class="card-body" style="display: none">
+						<div id="contentDictionary" class="card-body" style="height: 80vh; overflow-y: auto;">
+							<h6 id="title" class="text-primary m-0 text-center text-decoration-underline" style=""></h6>
+							<div id="phonetic"></div>
+							<div id="meaning"></div>
+						</div>
+
+						<div class="card-footer">
+							<div class="input-group">
+								<!--<button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;">Search</button>-->
+								<input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" id="word" type="text" value="@ViewBag.word" placeholder="Eg: Vocabulary">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-9 button-container fixed-bottom d-flex justify-content-center" style="background: #4d8347; padding: 0.5% 0; opacity: 0.85;">
+			<button class="btn btn-primary mute rounded p-3 m-1" id="toggle-microphone"><i class="bi bi-mic" id="microphone"></i></button>
+			<button class="btn btn-primary rounded p-3 m-1" id="toggle-camera"><i class="bi bi-camera-video" id="camera"></i></button>
+			<a href="@Url.Action("Index", "Home")" class="btn btn-primary rounded p-3 m-1"><i class="bi bi-telephone" id="phone"></i></a>
+		</div>
+	</div>
+
+
+	<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+	<script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	@Html.Partial("_endScript")
+
+	<script>
+		const RoomID = '@ViewBag.roomid';
+		let userId = "";
+		let localStream = null;
+		const Peers = {};
+		const Mutes = {};
+		var mic = document.querySelector("#microphone");
+		var cam = document.querySelector("#camera");
+
+		//tạo confign cho signlR mới
+		var connection = new signalR.HubConnectionBuilder().withUrl("/meeting").build();
+
+		const myPeer = new Peer()
+
+		myPeer.on('open', id => {
+			userId = id;
+			const startSignalR = async () => {
+				await connection.start();
+				await connection.invoke("JoinRoom", RoomID, userId);
+			}
+			startSignalR(); // Thêm dòng này để bắt đầu kết nối SignalR
+		})
+
+		const videoGrid = document.querySelector('[video-grid]');
+		const MYvideoGrid = document.querySelector('[my-video]');
+		const myVideo = document.createElement('video');
+		myVideo.muted = true;
+
+		navigator.mediaDevices.getUserMedia({//set audio and video in here
+			audio: true,
+			video: true
+		}).then(stream => {
+			addMyVideoStream(myVideo, stream);
+			localStream = stream;
+		})
+
+		//sự kiện khi có 1 user connect mới
+		connection.on('user-connected', (id) => {
+			if (userId === id) return;
+			console.log("use id connectrd: " + id);
+			connectNewUser(id, localStream);
+		})
+
+		// Mute microphone
+		connection.on("MuteMicrophone", (id) => {
+			if (Peers[id].userVideo) {
+				Peers[id].userVideo.srcObject.getAudioTracks().forEach(track => {
+					track.enabled = false;
+				});
+			}
+		});
+
+		// Unmute microphone
+		connection.on("UnmuteMicrophone", (id) => {
+			if (Peers[id].userVideo) {
+				Peers[id].userVideo.srcObject.getAudioTracks().forEach(track => {
+					track.enabled = true;
+				});
+			}
+		});
+		// Mute camera
+		connection.on("MuteCamera", (id) => {
+			if (Peers[id].userVideo) {
+				Peers[id].userVideo.srcObject.getVideoTracks().forEach(track => {
+					track.enabled = false;
+				});
+			}
+		});
+
+		// Unmute camera
+		connection.on("UnmuteCamera", (id) => {
+			if (Peers[id].userVideo) {
+				Peers[id].userVideo.srcObject.getVideoTracks().forEach(track => {
+					track.enabled = true;
+				});
+			}
+		});
+		//tạo sự kiện khi có người out khỏi room
+		connection.on('user-disconnected', (id) => {
+			console.log("user disConnectrd: " + id);
+			if (Peers[id].call) Peers[id].call.close();
+		})
+
+		//tạo sự kiện khi có người mới vào room
+		myPeer.on('call', call => {
+			call.answer(localStream);
+
+			const userVideo = document.createElement('video');
+			call.on('stream', userVideoStream => {
+				addVideoStream(userVideo, userVideoStream);
+			})
+		})
+
+		//add new video call
+		const addVideoStream = (video, stream) => {
+			video.srcObject = stream;
+			video.addEventListener('loadedmetadata', () => {
+				video.play();
+			})
+			videoGrid.appendChild(video);
+		}
+		const addMyVideoStream = (video, stream) => {
+			video.srcObject = stream;
+			video.addEventListener('loadedmetadata', () => {
+				video.play();
+			})
+			MYvideoGrid.appendChild(video);
+		}
+
+		//khi có người mới tham gia vào trong room tạo và insert new video call
+		const connectNewUser = (userId, localStream) => {
+			const userVideo = document.createElement('video');
+			const call = myPeer.call(userId, localStream);
+
+			call.userVideo = userVideo;
+
+			call.on('stream', userVideoStream => {
+				addVideoStream(userVideo, userVideoStream);
+			});
+
+			call.on('close', () => {
+				console.log("Someone left the room");
+				userVideo.parentNode.removeChild(userVideo);
+				delete Peers[userId]; // Xóa đối tượng khỏi Peers khi người dùng rời khỏi phòng
+			});
+
+			Peers[userId] = { call, userVideo };
+		}
+
+		// Sự kiện click cho button toggle microphone
+		//var btn = document.getElementById('toggle-microphone');
+		var micBtn = document.getElementById('toggle-microphone');
+		micBtn.addEventListener('click', () => {
+			if (localStream) {
+				const audioTrack = localStream.getAudioTracks()[0];
+
+				if (audioTrack) {
+					audioTrack.enabled = !audioTrack.enabled; // Toggle audio track enabled state
+					micBtn.classList.toggle('mute'); // Toggle CSS class for button styling
+
+					// Send microphone state to other users in the room
+					if (audioTrack.enabled) {
+						mic.classList.add("bi-mic");
+						mic.classList.remove("bi-mic-mute");
+						connection.invoke("UnmuteMicrophone", userId, RoomID);
+					} else {
+						mic.classList.remove("bi-mic");
+						mic.classList.add("bi-mic-mute");
+						connection.invoke("MuteMicrophone", userId, RoomID);
+					}
+				}
+			}
+		});
+
+		var cameraBtn = document.getElementById('toggle-camera');
+		cameraBtn.addEventListener('click', () => {
+			if (localStream) {
+				const videoTrack = localStream.getVideoTracks()[0];
+
+				if (videoTrack) {
+					videoTrack.enabled = !videoTrack.enabled; // Toggle video track enabled state
+					cameraBtn.classList.toggle('camera-off'); // Toggle CSS class for button styling
+
+					// Send camera state to other users in the room
+					if (videoTrack.enabled) {
+						cam.classList.remove("bi-camera-video-off");
+						cam.classList.add("bi-camera-video");
+						connection.invoke("UnmuteCamera", userId, RoomID);
+					} else {
+						cam.classList.add("bi-camera-video-off");
+						cam.classList.remove("bi-camera-video");
+						connection.invoke("MuteCamera", userId, RoomID);
+					}
+				}
+			}
+		});
+
+	</script>
+	<script>
+		@{
+			DateTime nowUtc = DateTime.UtcNow;
+			TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
+			DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
+			TimeSpan currentTime = vietnamTime.TimeOfDay;
+		}
+										var connectionChat = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+
+		document.getElementById("sendButton").disabled = true;
+
+		connectionChat.on("ReceiveMessage", function (user, message) {
+			var li = document.createElement("li");
+			document.getElementById("messagesList").appendChild(li);
+			li.textContent = `${user} says: ${message} (@(currentTime))`;
+			document.getElementById("messageInput").value = "";
+		});
+
+		connectionChat.start().then(function () {
+			document.getElementById("sendButton").disabled = false;
+		}).catch(function (err) {
+			return console.error(err.toString());
+		});
+
+		document.getElementById("sendButton").addEventListener("click", sendMessage);
+		function sendMessage(event) {
+			var user = "@ViewBag.nameUser";//document.getElementById("userInput").value;
+			var message = document.getElementById("messageInput").value;
+			connectionChat.invoke("SendMessage", user, message).catch(function (err) {
+				return console.error(err.toString());
+			});
+			event.preventDefault();
+		}
+
+		const inputElement = document.getElementById("messageInput");
+
+		inputElement.addEventListener("keydown", function (event) {
+			if (event.keyCode === 13) {
+				event.preventDefault(); // Ngăn chặn hành vi mặc định của phím "Enter" (như submit form)
+
+				const inputValue = inputElement.value.trim();
+
+				if (inputValue != "") {
+					sendMessage();
+				}
+			}
+		});
+	</script>
+	<script>
+		document.querySelector("#btnChatBox").addEventListener("click", () => {
+			document.querySelector("#chatboxcard").style.display = "block";
+			document.querySelector("#dictionarycard").style.display = "none";
+		})
+		document.querySelector("#btnDictionary").addEventListener("click", () => {
+			document.querySelector("#chatboxcard").style.display = "none";
+			document.querySelector("#dictionarycard").style.display = "block";
+		})
+	</script>
+	<script>
+		let word = "";
+		let meaning = [];
+		let phonetic = [];
+		document.getElementById("word").addEventListener('change', (e) => {
+			if (e != null) word = e.target.value;
+			//console.log("hehe");
+
+			axios.get(
+				`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+			).then(
+				(res) => {
+					tempPhonetic = "<h5>Phonology</h5>";
+					for (let index = 1; index < res.data[0].phonetics.length; index++) {
+						tempPhonetic += `<i class="phonic">${res.data[0].phonetics[index].text}</br></i>`;
+					}
+
+					function PrintDefi(data) {
+						//console.log(data.definitions[0])
+						tempDefinition = "";
+						for (let index = 0; index < data.definitions.length; index++) {
+							tempDefinition += `<p class="definition">${data.definitions[index].definition}</p>`;
+						}
+						return tempDefinition;
+					}
+
+					tempMeaning = "";
+					for (let index = 0; index < res.data[0].meanings.length; index++) {
+						tempMeaning += `<div class="wrap-meaning">
+																	<h5 class="part-of-speech">${res.data[0].meanings[index].partOfSpeech}</h5>
+																	 <p class="definition">
+																		 ${PrintDefi(res.data[0].meanings[index])}
+																	 </p>
+																</div>`;
+					}
+					//console.log(res.data[0]);
+					//console.log(res.data[0].phonetics[0].text);
+					document.getElementById("title").innerText = res.data[0].word;
+					document.getElementById("phonetic").innerHTML = tempPhonetic + "<hr/>";
+					document.getElementById("meaning").innerHTML = tempMeaning + "<hr/>";
+					document.querySelector(".definition").innerHTML = tempDefinition + "<hr/>";
+					//document.querySelector("#contentDictionary").style.height = "46%";
+				}
+			).catch(() => {
+				document.getElementById("title").innerText = `NOT FOUND THE WORD ${word}`;
+				document.getElementById("phonetic").innerHTML = "";
+				document.getElementById("meaning").innerHTML = "";
+				document.querySelector(".definition").innerHTML = "";
+				//document.querySelector("#contentDictionary").style.height = "90%";
+			})
+		});
+	</script>
+</body>
+
+</html>

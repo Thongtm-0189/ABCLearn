@@ -1,4 +1,5 @@
 ﻿using ABCLearn.DataContext;
+using ABCLearn.Extend;
 using ABCLearn.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -24,6 +25,7 @@ namespace ABCLearn.Controllers
                 UserLogin.Instance.Password = acc.Password;
                 UserLogin.Instance.RoleID = "Admin";
                 UserLogin.Instance.Islogin = true;
+                HttpContext.Session.SetObject("ADMIN", UserLogin.Instance);
                 return RedirectToAction("Student", "Admin", new { page = 0 });
             }
             return RedirectToAction("Index", "Admin");
@@ -31,7 +33,7 @@ namespace ABCLearn.Controllers
         public IActionResult Lecturer(int page = 0, int max = 1)
         {
             renderData();
-            if (!UserLogin.Instance.Islogin || UserLogin.Instance.RoleID != "Admin")
+            if (HttpContext.Session.GetObject<UserLogin>("ADMIN") == null)
             {
                 return RedirectToAction("Index", "Admin");
             }
@@ -50,7 +52,7 @@ namespace ABCLearn.Controllers
         public IActionResult Course(int page = 0, int max = 1)
         {
             renderData();
-            if (!UserLogin.Instance.Islogin || UserLogin.Instance.RoleID != "Admin")
+            if (HttpContext.Session.GetObject<UserLogin>("ADMIN") == null)
             {
                 return RedirectToAction("Index", "Admin");
             }
@@ -69,7 +71,7 @@ namespace ABCLearn.Controllers
         public IActionResult Calendar()
         {
             renderData();
-            if (!UserLogin.Instance.Islogin || UserLogin.Instance.RoleID != "Admin")
+            if (HttpContext.Session.GetObject<UserLogin>("ADMIN") == null)
             {
                 return RedirectToAction("Index", "Admin");
             }
@@ -78,7 +80,7 @@ namespace ABCLearn.Controllers
         }
         public IActionResult Nontification()
         {
-            if (!UserLogin.Instance.Islogin || UserLogin.Instance.RoleID != "Admin")
+            if (HttpContext.Session.GetObject<UserLogin>("ADMIN") == null)
             {
                 return RedirectToAction("Index", "Admin");
             }
@@ -88,7 +90,7 @@ namespace ABCLearn.Controllers
         public IActionResult Student(int page = 0, int max = 0)
         {
             renderData();
-            if (!UserLogin.Instance.Islogin || UserLogin.Instance.RoleID != "Admin")
+            if (HttpContext.Session.GetObject<UserLogin>("ADMIN") == null)
             {
                 return RedirectToAction("Index", "Admin");
             }

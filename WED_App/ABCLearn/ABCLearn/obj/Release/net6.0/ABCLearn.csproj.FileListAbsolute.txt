@@ -533,8 +533,6 @@ D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\refs\System.Text.Encoding.CodePages.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\refs\System.Text.Encoding.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\refs\System.Text.Encoding.Extensions.dll
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\refs\System.Text.Encodings.Web.dll
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\refs\System.Text.Json.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\refs\System.Text.RegularExpressions.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\refs\System.Threading.Channels.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\refs\System.Threading.dll
@@ -566,3 +564,8 @@ D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\Microsoft.Extensions.DependencyModel.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\ABCLearn.MvcApplicationPartsAssemblyInfo.cs
+D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\libman.json
+D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\RestSharp.dll
+D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\System.Text.Encodings.Web.dll
+D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\System.Text.Json.dll
+D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll

@@ -6,7 +6,7 @@
         public string Title { get; set; }
         public string Detail { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndtDate { get; set; }
+        public DateTime EndDate { get; set; }
 
     }
 }

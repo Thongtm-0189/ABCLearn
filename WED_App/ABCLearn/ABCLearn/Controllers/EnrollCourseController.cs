@@ -1,4 +1,5 @@
-﻿using ABCLearn.DataContext;
+﻿using ABCLearn.DataAccess;
+using ABCLearn.DataContext;
 using ABCLearn.Extend;
 using ABCLearn.Models;
 using ABCLearn.Models.MOMO;
@@ -14,6 +15,7 @@ namespace ABCLearn.Controllers
         private readonly IMomoService _momoService;
         private static Course course;
         private static bool paiedVNpay = false;
+        private static bool paiedMomo = false;
         public EnrollCourseController(IVnPayService vnPayService, IMomoService momoService)
         {
             _vnPayService = vnPayService;
@@ -23,12 +25,13 @@ namespace ABCLearn.Controllers
         public async Task<IActionResult> CreatePaymentUrlMOMO(int IdCourse)
         {
             course = CourseDAO.Instance.Courses().FirstOrDefault(x => x.Id == IdCourse);
+            var user = HttpContext.Session.GetObject<UserLogin>("User");
             OrderInfoModel model = new OrderInfoModel();
-            UserLogin user = UserLogin.Instance;
             model.FullName = user.FirstName + " " + user.LastName;
             model.Amount = Double.Parse(course.Price + "000");
             model.OrderInfo = $"{model.FullName} bought the course {course.Title} at ACBLearn";
             var response = await _momoService.CreatePaymentAsync(model);
+            paiedMomo = false;
             return Redirect(response.PayUrl);
         }
         [HttpPost]
@@ -36,9 +39,10 @@ namespace ABCLearn.Controllers
         {
             course = CourseDAO.Instance.Courses().FirstOrDefault(x => x.Id == IdCourse);
             PaymentInformationModel model = new PaymentInformationModel();
-            UserLogin user = UserLogin.Instance;
+            UserLogin user = HttpContext.Session.GetObject<UserLogin>("User");
+            double price = course.Price - (course.Price * course.Sale) / 100;
             model.Name = user.FirstName + " " + user.LastName;
-            model.Amount = Double.Parse(course.Price + "000");
+            model.Amount = Double.Parse(price + "000");
             model.OrderDescription = $"{model.Name} bought the course {course.Title} at ACBLearn";
             var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
             paiedVNpay = false;
@@ -70,10 +74,12 @@ namespace ABCLearn.Controllers
             course = CourseDAO.Instance.Courses().FirstOrDefault(x => x.Id == idcourse);
             var user = HttpContext.Session.GetObject<UserLogin>("User");
             OrderInfoModel model = new OrderInfoModel();
+            double price = course.Price - (course.Price * course.Sale) / 100;
             model.FullName = user.FirstName + " " + user.LastName;
-            model.Amount = Double.Parse(course.Price + "000");
+            model.Amount = Double.Parse(price + "000");
             model.OrderInfo = $"{model.FullName} bought the course {course.Title} at ACBLearn";
             var response = await _momoService.CreatePaymentAsync(model);
+
             return Redirect(response.PayUrl);
         }
 
@@ -87,13 +93,21 @@ namespace ABCLearn.Controllers
             }
             if (response.TransactionId == "0")
             {
+                paiedVNpay = true;
                 ViewBag.check = "Fail!!";
             }
             else
             {
                 paiedVNpay = true;
+                double price = course.Price - (course.Price * course.Sale) / 100;
                 CourseDAO.Instance.enrollCourse(course.Id, user.Id);
-                CourseDAO.Instance.Update();
+                int id = user.Id;
+                HttpContext.Session.Clear();
+                var updatedUser = StudentDAO.Instance.findStudent(id);
+                updatedUser.Courses.ForEach(x => x.Calendars = CourseDAO.Instance.getCalendar(x.Id));
+                HttpContext.Session.SetObject("User", updatedUser);
+                TransactionDAO.Instanse.insertTransaction(id, course.Title, price, "VNPAY", response.TransactionId);
+                TransactionDAO.Instanse.Update();
                 ViewBag.check = "Success";
             }
             SessionUser();
@@ -113,14 +127,30 @@ namespace ABCLearn.Controllers
         }
         public IActionResult PaymentCallBackMomo()
         {
+            var user = HttpContext.Session.GetObject<UserLogin>("User");
             var response = _momoService.PaymentExecuteAsync(HttpContext.Request.Query);
+            if (paiedMomo)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (response.ErrorCode == 0)
             {
-                ViewBag.check = "thanh cong";
+                paiedMomo = true;
+                double price = course.Price - (course.Price * course.Sale) / 100;
+                CourseDAO.Instance.enrollCourse(course.Id, user.Id);
+                int id = user.Id;
+                HttpContext.Session.Clear();
+                var updatedUser = StudentDAO.Instance.findStudent(id);
+                updatedUser.Courses.ForEach(x => x.Calendars = CourseDAO.Instance.getCalendar(x.Id));
+                HttpContext.Session.SetObject("User", updatedUser);
+                TransactionDAO.Instanse.insertTransaction(id, course.Title, price, "MOMO", response.OrderId);
+                TransactionDAO.Instanse.Update();
+                ViewBag.check = "Success";
             }
             else
             {
-                ViewBag.check = "that bai";
+                paiedMomo = true;
+                ViewBag.check = "Fail!!";
             }
             return View(response);
         }

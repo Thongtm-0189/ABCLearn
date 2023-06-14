@@ -1,6 +1,7 @@
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\ABCLearn.exe
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\appsettings.Development.json
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\appsettings.json
+D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\libman.json
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\refs\Microsoft.AspNetCore.Antiforgery.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\refs\Microsoft.AspNetCore.Authentication.Abstractions.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\refs\Microsoft.AspNetCore.Authentication.Cookies.dll
@@ -264,8 +265,6 @@ D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\refs\System.Text.Encoding.CodePages.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\refs\System.Text.Encoding.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\refs\System.Text.Encoding.Extensions.dll
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\refs\System.Text.Encodings.Web.dll
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\refs\System.Text.Json.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\refs\System.Text.RegularExpressions.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\refs\System.Threading.Channels.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\refs\System.Threading.dll
@@ -355,6 +354,7 @@ D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\NuGet.ProjectModel.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\NuGet.Protocol.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\NuGet.Versioning.dll
+D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\RestSharp.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\System.Composition.AttributedModel.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\System.Composition.Convention.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\System.Composition.Hosting.dll
@@ -369,6 +369,8 @@ D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\System.Runtime.Caching.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\System.Security.Cryptography.ProtectedData.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\System.Security.Permissions.dll
+D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\System.Text.Encodings.Web.dll
+D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\System.Text.Json.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\System.Windows.Extensions.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\cs\Microsoft.CodeAnalysis.resources.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\de\Microsoft.CodeAnalysis.resources.dll
@@ -542,5 +544,6 @@ D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\ABCLearn.deps.json

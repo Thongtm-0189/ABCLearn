@@ -1,5 +1,7 @@
+using ABCLearn.Hubs;
 using ABCLearn.Models.MOMO;
 using ABCLearn.Services;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
@@ -9,12 +11,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
+builder.Services.AddSignalR();
 builder.Services.AddSession();
 builder.Services.AddScoped<IVnPayService, VnPayService>();
 
 builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
 builder.Services.AddScoped<IMomoService, MomoService>();
-
+builder.Services.Configure<FormOptions>(options => { options.MultipartBodyLengthLimit = 104857600; });
+builder.Services.Configure<IISServerOptions>(options => { options.AllowSynchronousIO = true; });
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     options.DefaultRequestCulture = new RequestCulture("vi-VN", "Asia/Ho_Chi_Minh");
@@ -46,5 +50,15 @@ app.UseEndpoints(endpoints =>
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseEndpoints(endpoint =>
+{
+    endpoint.MapHub<HubMetting>("meeting");
+});
+
+app.UseEndpoints(endpoint =>
+{
+    endpoint.MapHub<ChatHub>("chatHub");
+});
 
 app.Run();

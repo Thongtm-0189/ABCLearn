@@ -4,7 +4,53 @@
 	DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
 	TimeSpan currentTime = vietnamTime.TimeOfDay;
 }
+@model List<Transaction>
 <div class="container">
+	<button id="transaction" onclick="formTable()" class="btn btn-primary px-5">transaction</button>
+	<div id="addModal" class="modal fade p-lg-5" role="dialog">
+		<div class="modal-dialog modal-lg" role="content">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title text-dark">Transaction History</h4>
+					<ion-icon class="closeForm" style="cursor: pointer;" onclick="formTable()" name="close-outline"></ion-icon>
+				</div>
+				<div class="modal-body">
+					<div class="form-row row" style="display: block; height: 300px; overflow: auto;">
+						<table class="table table-striped text-center">
+							<thead>
+								<tr>
+									<th>Order ID</th>
+									<th>Course Title</th>
+									<th>Price</th>
+									<th>Date</th>
+									<th>Method</th>
+								</tr>
+							</thead>
+							<tbody >
+								@if (Model.Count > 0)
+								{
+									@foreach (var course in Model)
+									{
+										<tr>
+											<td>@course.OrderID</td>
+											<td>@course.CourseTitle</td>
+											<td>@course.Price</td>
+											<td>@course.Created</td>
+											<td>@course.Method</td>
+										</tr>
+									}
+								}
+							</tbody>
+						</table>
+					</div>
+					<div class="form-row p-md-3 center">
+						<button type="button" onclick="formTable()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="main-body">
 		<div class="row gutters-sm">
 			<div class="col-md-4 mb-3">
@@ -191,7 +237,7 @@
 					<div class="row gutters-sm">
 					</div>
 				</div>
-				@if (ViewBag.user.Courses.Count>0)
+				@if (ViewBag.user.Courses.Count > 0)
 				{
 					<div class="container">
 						<table class="table table-striped text-center">
@@ -207,7 +253,7 @@
 								{
 									@if (course.Status)
 									{
-										@if (course.Calendars.Count>0)
+										@if (course.Calendars.Count > 0)
 										{
 											@foreach (Calendar calendar in course.Calendars)
 											{
@@ -216,7 +262,7 @@
 													<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
 													@if (currentTime < calendar.EndTime && currentTime > calendar.StartTime)
 													{
-														<td><a href="#" class="btn-primary px-3" style="border-radius:30px;">Join Now</a></td>
+														<td><a href="@Url.Action("Index", "MeetingRoom", new {idCourse = course.Id})" class="btn-primary px-3" style="border-radius:30px;">Join Now</a></td>
 													}
 													else if (currentTime < calendar.StartTime)
 													{
@@ -240,27 +286,29 @@
 		</div>
 	</div>
 
-	
-</div>
-	<script>
-		var listEmail = @Html.Raw(Json.Serialize(ViewBag.user.Courses));
-		console.log(listEmail);
-		var uploadButton = document.getElementById('uploadButtonStudent');
-		const cancelButton = document.getElementById('cancel-buttonStudent');
-		console.log("@ViewBag.fail")
-		document.getElementById('fileInputStudent').addEventListener('change', function () {
-			var fileName = this.value.split('\\').pop();
-			if (fileName) {
-				uploadButton.classList.remove('d-none');
-				cancelButton.classList.remove('d-none');
-			} else {
-				uploadButton.classList.add('d-none');
-				cancelButton.classList.add('d-none');
-			}
-		});
 
-		cancelButton.addEventListener('click', function () {
-			fileInput.value = '';
-			cancelButton.style.display = 'none';
-		});
-	</script>
+</div>
+<script src="~/js/AdminSet.js"></script>
+<script>
+	var listEmail = @Html.Raw(Json.Serialize(ViewBag.user.Courses));
+	console.log(listEmail);
+	var uploadButton = document.getElementById('uploadButtonStudent');
+	const cancelButton = document.getElementById('cancel-buttonStudent');
+	console.log("@ViewBag.fail")
+	document.getElementById('fileInputStudent').addEventListener('change', function () {
+		var fileName = this.value.split('\\').pop();
+		if (fileName) {
+			uploadButton.classList.remove('d-none');
+			cancelButton.classList.remove('d-none');
+		} else {
+			uploadButton.classList.add('d-none');
+			cancelButton.classList.add('d-none');
+		}
+	});
+
+	cancelButton.addEventListener('click', function () {
+		fileInput.value = '';
+		cancelButton.style.display = 'none';
+	});
+
+</script>

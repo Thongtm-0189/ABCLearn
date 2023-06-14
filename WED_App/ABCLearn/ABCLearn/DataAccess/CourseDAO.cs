@@ -134,8 +134,11 @@ namespace ABCLearn.DataContext
 
         public bool Comment(int IDStudent, int IDCourse, string comment)
         {
+            DateTime nowUtc = DateTime.UtcNow;
+            TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
+            DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
             string query = "INSERT INTO tblCommentOfStudent VALUES ( @IDStudent , @IDCourse , @Comment , @TimeDate ) ";
-            return ConectionData.ExecuteUpdate(query, new object[] { IDStudent, IDCourse, comment, DateTime.Now });
+            return ConectionData.ExecuteUpdate(query, new object[] { IDStudent, IDCourse, comment, vietnamTime.ToString("yyyy-MM-dd HH:mm:ss") });
         }
         public bool setCalendar(Calendar calendar)
         {
@@ -189,7 +192,10 @@ namespace ABCLearn.DataContext
             bool result = false;
             string query = "INSERT INTO tblCourseOfStudent VALUES " +
                 " ( @IDstudetn , @Course , @date ) ";
-            result = ConectionData.ExecuteUpdate(query, new object[] { idStudent, idCourse, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") });
+            DateTime nowUtc = DateTime.UtcNow;
+            TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
+            DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
+            result = ConectionData.ExecuteUpdate(query, new object[] { idStudent, idCourse, vietnamTime.ToString("yyyy-MM-dd HH:mm:ss") });
             return result;
         }
         public void Update()
