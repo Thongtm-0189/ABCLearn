@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj": {}
+    "I:\\Desktop\\ABC\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj": {}
   },
   "projects": {
-    "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj": {
+    "I:\\Desktop\\ABC\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj",
+        "projectUniqueName": "I:\\Desktop\\ABC\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj",
         "projectName": "ABCLearn",
-        "projectPath": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj",
-        "packagesPath": "C:\\Users\\thong\\.nuget\\packages\\",
-        "outputPath": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\obj\\",
+        "projectPath": "I:\\Desktop\\ABC\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj",
+        "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
+        "outputPath": "I:\\Desktop\\ABC\\WED_App\\ABCLearn\\ABCLearn\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\thong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,13 +40,35 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "EPPlus": {
+              "target": "Package",
+              "version": "[6.2.4, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
+              "target": "Package",
+              "version": "[6.0.16, )"
+            },
+            "Microsoft.AspNetCore.Session": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[6.0.16, )"
             },
+            "Microsoft.TypeScript.MSBuild": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.4, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[6.0.13, )"
+            },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[110.2.0, )"
             },
             "System.Data.SqlClient": {
               "target": "Package",
@@ -72,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }
