@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ABCLearn.Controllers.LecturerController">
+    <Position X="5.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAQAAAAAAAAgIAAAAAEAAAAIQAA=</HashCode>
+      <FileName>Controllers\LecturerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ABCLearn.DataContext.LecturerDAO">
+    <Position X="3.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAACAAAEAAAAgCAAAAAAIAAAEAAQAIQgABAAAAEAA=</HashCode>
+      <FileName>DataAccess\LecturerDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ABCLearn.Models.Lecturer">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEIAACAAAAAgAAQAAAAAAAAAAAACAAAAIBAAAAg=</HashCode>
+      <FileName>Models\Lecturer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Object" Collapsed="true">
+    <Position X="5.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="ABCLearn.DataAccess.IUserDAO&lt;t&gt;">
+    <Position X="0.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAAAAEAAAAAAAAAAAAAAAAFAAAAAQgAAAAAAAAA=</HashCode>
+      <FileName>DataAccess\IUserDAO.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

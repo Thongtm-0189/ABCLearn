@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ABCLearn.DataAccess.NotificationDAO">
+    <Position X="3" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MASEAAAAAEAAAAAAAAAAAAAAAAEAAEAAAgAAAAAAAAA=</HashCode>
+      <FileName>DataAccess\NotificationDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ABCLearn.Controllers.NotificationController">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAQAAQAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\NotificationController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ABCLearn.Services.Email">
+    <Position X="7.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgBAAAAAQCAAAAAAAAA=</HashCode>
+      <FileName>Services\Email.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ABCLearn.Models.Notification" Collapsed="true">
+    <Position X="7.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAEAAAAAAAAAgAAAAAAAAAAAAAEAACAA=</HashCode>
+      <FileName>Models\Notification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Object" Collapsed="true">
+    <Position X="5.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="ABCLearn.DataAccess.IServiceDAO&lt;T, P&gt;">
+    <Position X="0.75" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAAAAEAAAAAAAAAAAAAAAAFAAAAAQgAAAAAAAAA=</HashCode>
+      <FileName>DataAccess\IServiceDAO.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,23 @@
+﻿<div class="nav-item dropdown">
+	<a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+	<div class="dropdown-menu m-0">
+		<a href="@Url.Action("Index", "Dictionary", new {searchDictionary = "Welcome"})" class="dropdown-item">Dictionary</a>
+		<a href="@Url.Action("CheckGarmarly", "Home")" class="dropdown-item">Grammar check</a>
+		<a href="@Url.Action("Calendar", "Home")" class="dropdown-item">Calendar</a>
+		<a href="@Url.Action("Quiz", "Quiz")" class="dropdown-item">Quiz</a>
+	</div>
+</div>
+			</div>
+			@if (ViewBag.login == true)
+			{
+	<a href="@Url.Action("Profile", "Home")" class="nav-item nav-link">@ViewBag.user.FirstName @ViewBag.user.LastName</a>
+				<a href="@Url.Action("Logout", "Login")" class="btn btn-primary rounded-pill py-2 px-4">Logout</a>
+			}
+			else
+			{
+				<a href="@Url.Action("Index", "Login")" class="btn btn-primary rounded-pill py-2 px-4">Join now</a>
+			}
+		</div>
+	</nav>
+</div>
+<!-- Navbar & Hero End -->

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ABCLearn.Controllers.EnrollCourseController">
+    <Position X="1.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAgACAAAkAAAAwCAAAAAAAAAAAAAMAgAA=</HashCode>
+      <FileName>Controllers\EnrollCourseController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ABCLearn.DataAccess.TransactionDAO">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASEAAAAAEAAAAAAAAAAAAIAAAEAAEAAAgAAAAAAAAA=</HashCode>
+      <FileName>DataAccess\TransactionDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ABCLearn.Extend.ExtendSession" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Extend\ExtendSession.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ABCLearn.Models.Transaction" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACABAAIQAAAAAAAAAgAAAAAIAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Transaction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Object" Collapsed="true">
+    <Position X="8.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="ABCLearn.DataAccess.IServiceDAO&lt;T, P&gt;">
+    <Position X="3.5" Y="1.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAAAAEAAAAAAAAAAAAAAAAFAAAAAQgAAAAAAAAA=</HashCode>
+      <FileName>DataAccess\IServiceDAO.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

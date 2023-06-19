@@ -1,0 +1,150 @@
+﻿@model List<Quiz>
+@using ABCLearn.DataAccess
+@{
+	string role = ViewBag.Role;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	@Html.Partial("_head")
+</head>
+
+<body>
+	@Html.Partial("_navStart")
+	@if (ViewBag.Role != "Lecturer")
+	{
+		<a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
+		<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+		<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+	}
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+	@Html.Partial("_navEnd")
+	<!-- tab search dictionary -->
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-1">
+			<div class="row justify-content-center" style="margin-top: 100px">
+				<div class="col-lg-10 text-center">
+					<h1 class="display-3 text-white animated slideInDown">Manager Quiz of @ViewBag.CourseTitle</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Quiz Start -->
+	<div class="container">
+		<div class="row">
+			<p class="col-5">NOTE: You can edit it directly and press the Edit button to edit.</p>
+			<div class="col-6">
+				<form action="@Url.Action("importFileQuiz", "Quiz")" class="row" method="post" enctype="multipart/form-data">
+					<label for="fileInput">Import many Question</label>
+					<input type="hidden" name="CourseID" value="@ViewBag.Idcourse" />
+					<div class="col-md-6">
+						<input type="file" name="fileExcel" id="fileInput" accept=".xls, .xlsx" class="form-control" />
+					</div>
+					<button type="submit" name="btnQuiz" id="SubmitFile" class="d-none col-md-6 btn btn-primary">Import</button>
+				</form>
+			</div>
+			<div class="col-1">
+				<a href="@Url.Action("removeAllQuiz","Quiz", new{CourseID = @ViewBag.Idcourse})" name="btnDeleteAll" class="btn btn-primary" value="Edit">Delete All</a>
+			</div>
+		</div>
+		<table class="text-center table-striped table">
+			<thead>
+				<tr>
+					<th>AnswerA</th>
+					<th>AnswerB</th>
+					<th>AnswerC</th>
+					<th>AnswerD</th>
+					<th>CorrectAnswer</th>
+					<th>ACTION</th>
+				</tr>
+			</thead>
+			<tbody>
+				<form action="@Url.Action("Addnew","Quiz", new{IDCourse = @ViewBag.Idcourse})" method="post">
+				<tr>
+					<td colspan="6">
+						<input type="hidden" name="Id" value="" />
+						<input type="text" class="border-0 rounded-pill w-70 py-2 ps-3 pe-4 col-md-10" name="Question" placeholder="Question" value="" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" class="border-1 rounded-pill" name="AnswerA" placeholder="Answer A" value="" />
+					</td>
+					<td>
+						<input type="text" class="border-1 rounded-pill" name="AnswerB" placeholder="Answer B" value="" />
+					</td>
+					<td>
+						<input type="text" class="border-1 rounded-pill" name="AnswerC" placeholder="Answer C" value="" />
+					</td>
+					<td>
+						<input type="text" class="border-1 rounded-pill" name="AnswerD" placeholder="Answer D" value="" />
+					</td>
+					<td>
+						<input type="text" class="border-1 rounded-pill" name="CorrectAnswer" placeholder="Correct Answer" value="" />
+					</td>
+					<td>
+						<div class="row">
+							<button type="submit" name="btnQuiz" class="col-6 btn btn-primary" value="Edit">ADD NEW</button>
+						</div>
+					</td>
+				</tr>
+				</form>
+				@if (Model.Count > 0)
+				{
+					@foreach (var quiz in Model)
+					{
+						<form action="@Url.Action("EditQuiz","Quiz" , new{IDCourse = quiz.IDCourse})" method="post">
+						<tr>
+							<td colspan="6">
+								<input type="hidden" name="Id" value="@(quiz.Id)" />
+								<input type="text" class="border-0 rounded-pill w-70 py-2 ps-3 pe-4 col-md-10" name="Question" value="@quiz.Question" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="text" class="border-1 rounded-pill" name="AnswerA" value="@quiz.AnswerA" />
+							</td>
+							<td>
+								<input type="text" class="border-1 rounded-pill" name="AnswerB" value="@quiz.AnswerB" />
+							</td>
+							<td>
+								<input type="text" class="border-1 rounded-pill" name="AnswerC" value="@quiz.AnswerC" />
+							</td>
+							<td>
+								<input type="text" class="border-1 rounded-pill" name="AnswerD" value="@quiz.AnswerD" />
+							</td>
+							<td>
+								<input type="text" class="border-1 rounded-pill" name="CorrectAnswer" value="@quiz.CorrectAnswer" />
+							</td>
+							<td>
+								<div class="row">
+									<button type="submit" name="btnQuiz" class="col-6 btn btn-primary" value="Edit">Edit</button>
+									<button type="submit" name="btnQuiz" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</button>
+								</div>
+							</td>
+						</tr>
+						</form>
+					}
+				}
+			</tbody>
+		</table>
+	</div>
+	<!-- Quiz End -->
+	@Html.Partial("_footer")
+	@Html.Partial("_endScript")
+	<script>
+		var submitfile = document.querySelector("#SubmitFile");
+		document.getElementById('fileInput').addEventListener('change', function () {
+			var fileName = this.value.split('\\').pop();
+			if (fileName) {
+				SubmitFile.classList.remove('d-none');
+			} else {
+				SubmitFile.classList.add('d-none');
+			}
+		});
+	</script>
+</body>
+
+</html>

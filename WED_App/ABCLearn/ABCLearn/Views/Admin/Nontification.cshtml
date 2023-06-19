@@ -1,0 +1,137 @@
+﻿@using ABCLearn.DataAccess
+@using ABCLearn.DataContext
+@{
+    ViewBag.title = "ABC Learn";
+    var Courses = CourseDAO.Instance.Courses();
+    DateTime nowUtc = DateTime.UtcNow;
+    TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
+    DateTime currectDate = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
+    DateTime newCurrentDate = currectDate.AddDays(1);
+    ViewBag.title = "ABC Learn";
+    var notification = NotificationDAO.Instanse.Transactions();
+}
+@model List<Notification>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @Html.Partial("_head")
+</head>
+
+<body>
+    @Html.Partial("_navAdmin")
+    <!-- tab search dictionary -->
+    <div class="container-fluid bg-primary hero-header">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <h1 class="display-3 text-white"></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h1>Notification</h1>
+        <form method="post" action="@Url.Action("addnewNotification","Notification")">
+            <div class="form-group row">
+                <div class="col-md-4">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" name="Title" id="title" placeholder="Enter Dtail" required/>
+                </div>
+                <div class="col-md-4">
+                    <label for="StartDate">Date Start</label>
+                    <input name="StartDate" min="@currectDate.ToString("yyyy-MM-dd")" id="StartDate" class="form-control" type="date" required />
+                </div>
+                <div class="col-md-4">
+                    <label for="EndtDate">End date</label>
+                    <input name="EndDate" min="@newCurrentDate.ToString("yyyy-MM-dd")" id="EndDate" class="form-control" type="date" required />
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="message">Content</label>
+                <textarea class="form-control" id="message" name="Detail" rows="3" placeholder="Enter Content" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="">Create New Notification
+        </form>
+    </div>
+
+    <div class="container">
+        <table class="table table-striped text-center">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Detail</th>
+                    <th>Date Create</th>
+                    <th>Date End</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(notification.Count>0){
+                    @foreach(var noti in notification){
+                        <tr>
+                            <td>@noti.Title</td>
+                            <td style="width:20%">@noti.Detail</td>
+                            <td>@noti.StartDate.ToString("yyyy-MM-dd")</td>
+                            <td>@noti.EndDate.ToString("yyyy-MM-dd")</td>
+                            <td>
+                                <button name="btnLecturerAdmin" type="button" onclick="acceptDelete(@noti.Id)" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+        <div id="DeleteForm" class="modal fade p-lg-5" role="dialog">
+			<div class="modal-dialog modal-lg" role="content">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title text-dark">Delete</h4>
+						<ion-icon class="closeForm" style="cursor: pointer;" onclick="acceptDelete()" name="close-outline"></ion-icon>
+					</div>
+					<div class="modal-body">
+                        <form action="@Url.Action("delete","Notification")" method="post">
+                            <input type="hidden" id="idNotificationDelete" name="idNotification" value="" />
+							<input type="hidden" name="btnStudentAdmin" value="Delete" />
+							<h3 id="formDeleteForm">Are you sure delete</h3>
+							<div class="form-row p-md-3 center">
+								<button type="button" onclick="acceptDelete()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
+								<button type="submit" class="btn btn-primary btn-sm ml-1">Yes</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+
+    <script>
+        function acceptDelete(id = null) {
+            if (id != null) {
+                document.querySelector("#idNotificationDelete").value = id;
+            }
+            $('#DeleteForm').modal('toggle');
+        }
+        function showNotification() {
+            var title = document.getElementById("title").value;
+            var message = document.getElementById("message").value;
+
+            var notification = `<div class="alert alert-success alert-dismissible fade show" role="alert">
+                                  <strong>${title}</strong> - ${message}
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>`;
+
+            var notificationContainer = document.getElementById("notification-container");
+            notificationContainer.innerHTML = notification;
+        }
+    </script>
+    @Html.Partial("_endScript")
+</body>
+
+</html>

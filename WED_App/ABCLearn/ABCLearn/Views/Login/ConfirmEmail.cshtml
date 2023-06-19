@@ -1,0 +1,71 @@
+﻿
+@{
+	string forgot = Model;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	@Html.Partial("_head")
+</head>
+<body class=" hero-header">
+	@Html.Partial("_navStart")
+	<a href="@Url.Action("Index", "Home")" class="nav-item nav-link">Home</a>
+	<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+	<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+	@Html.Partial("_navEnd")
+
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-1 justify-content-center">
+			<div class="row justify-content-center py-5">
+				<h1 class="text-center text-white animated slideInDown">Welcome to ABC-Learning</h1>
+			</div>
+
+			<div id="forgotPass" style="margin: 50px 0 160px 0" class="col-md-12 title">
+				<div class="row ">
+					<div class="col-3"></div>
+					<form action="@Url.Action("AcceptanceEmail","Register")" class="row col-6 justify-content-center">
+						<h2 class="text-center text-white">Verify your email address</h2>
+						<div id="left-form" class="col-10 col-md-10 justify-content-center">
+							<div class="form-group">
+								<label for="registerUsername"><b>OTP sent and your Email: @(ViewBag.Email) </b></label>
+								<input type="number" class="form-control" id="OTP" placeholder="Enter OTP" required>
+								<span id="spanOTP" style="display:none; color:red"><small>OTP code is incorrect!!</small></span>
+								@if (forgot == "reset"){
+									<input type="hidden" value="reset" name="forgot" />
+								}
+								else
+								{
+									<input type="hidden" value="@forgot" name="id" />
+								}
+							</div>
+							<button id="btnSub" type="button" class="btn btn-primary">Confirm</button>
+							<p>If you can not see it, you should check it in spam Email</p>
+						</div>
+					</form>
+					<div class="col-3"></div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	@Html.Partial("_endScript")
+	<script>
+		var inputOTP = document.querySelector("#OTP")
+		var btn = document.querySelector("#btnSub")
+		var spanOPT = document.querySelector('#spanOTP')
+		inputOTP.addEventListener('change',()=>{
+			if (inputOTP.value == "@ViewBag.OTP") {
+				btn.setAttribute("type", "submit");
+				spanOPT.style.display = "none"
+			}else{
+				spanOPT.style.display = "block"
+				btn.setAttribute("type", "button");
+			}
+		})
+	</script>
+</body>
+</html>

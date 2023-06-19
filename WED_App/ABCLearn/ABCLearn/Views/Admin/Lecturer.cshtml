@@ -1,0 +1,205 @@
+﻿@using ABCLearn.DataContext
+@using ABCLearn.DataAccess
+@{
+	ViewBag.title = "ABC Learn";
+	List<string> LecturerEmail = new List<string>();
+	LecturerDAO.Instance.Lecturers().ForEach(x => LecturerEmail.Add(x.Email));
+	var Lecturers = Model;
+	int numOflecturer = LecturerDAO.Instance.Lecturers().Count;
+	if (numOflecturer % 8 == 0)
+	{
+		numOflecturer = numOflecturer / 8;
+	}
+	else
+	{
+		numOflecturer = (numOflecturer / 8) + 1;
+	}
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	@Html.Partial("_head")
+</head>
+
+<body class="">
+	@Html.Partial("_navAdmin")
+	<!-- tab search dictionary -->
+	<div class=" bg-primary hero-header">
+		<div class="container py-5">
+			<div class="row justify-content-center">
+				<div class="col-lg-10 text-center">
+					<h1 class="display-3 text-white"></h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container ">
+		<h2 class="text-center">Lecturer Table</h2>
+		<div class="row">
+			<div class="col-3"></div>
+			<a type="submit" name="btnStudentAdmin" onclick="formTable()" class="addModelbtn col-6 btn btn-primary" value="Delete">Add New</a>
+			<div class="col-3"></div>
+		</div>
+
+		<div id="addModal" class="modal fade p-lg-5" role="dialog">
+			<div class="modal-dialog modal-lg" role="content">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title text-dark">ADD New Lecturer</h4>
+						<ion-icon class="closeForm" style="cursor: pointer;" onclick="formTable()" name="close-outline"></ion-icon>
+					</div>
+					<div class="modal-body">
+						<form action="@Url.Action("AddNewLecturer","Lecturer")" enctype="multipart/form-data">
+							<div class="form-row row">
+								<div class="row col-6">
+									<div class="form-group p-md-2">
+										<label class="sr-only" for="Firstname">First Name</label>
+										<input type="text" name="FirstName" class="form-control text-secondary form-control-sm mr-1"
+											   id="Firstname" placeholder="Enter FirstName" required>
+									</div>
+									<div class="form-group p-md-2">
+										<label class="sr-only" for="LastName">Last Name</label>
+										<input type="text" name="LastName" class="form-control text-secondary form-control-sm mr-1"
+											   id="LastName" placeholder="Enter LastName" required>
+									</div>
+									<div class="form-group p-md-2">
+										<label class="sr-only" for="Phone">Number Phone</label>
+										<input type="tel" name="Phone" class="form-control text-secondary form-control-sm mr-1"
+											   id="Phone" placeholder="Enter Phone" required>
+									</div>
+								</div>
+
+								<div class="row col-6">
+									<div class="form-group p-md-2">
+										<label class="sr-only" for="EmailLecturer">Email address</label>
+										<input type="email" name="Email" class="form-control text-secondary form-control-sm mr-1"
+											   id="EmailLecturer" placeholder="Enter email" required>
+										<span id="spanEmail" style="color: red; display:none">E-mail is being used</span>
+									</div>
+									<div class="form-group p-md-2">
+										<label class="sr-only" for="password">Password</label>
+										<input type="text" name="Password" class="form-control text-secondary form-control-sm mr-1"
+											   id="password" placeholder="Password" required>
+									</div>
+									<div class="form-group p-md-2">
+										<label class="sr-only" for="Avatar">Avatar</label>
+										<input type="file" name="image" accept="image/*" class="form-control form-control-sm mr-1" id="Avatar" placeholder="Avatar">
+									</div>
+								</div>
+							</div>
+							<div class="form-row p-md-3 center">
+								<button type="button" onclick="formTable()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
+								<button type="submit" class="btn btn-primary btn-sm ml-1">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<table class="table table-striped text-center">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Number Of course</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var lecturer in Lecturers)
+				{
+					<form action="@Url.Action("LecturertAction", "Admin")" method="post">
+					<tr>
+						<td>@lecturer.Id<input type="hidden" name="idLecturer" value="@lecturer.Id" /></td>
+						<td>@lecturer.FirstName</td>
+						<td>@lecturer.LastName</td>
+						<td>@lecturer.Courses.Count <input type="hidden" name="countCourse" value="@lecturer.Courses.Count" /></td>
+						<td>
+							<div class="d-flex row">
+								<a href="@Url.Action("ViewLecturer","Lecturer", new{IDLecturer = lecturer.Id})" name="btnLecturerAdmin" type="submit" class="col-6 btn btn-primary" value="View">View</a>
+								<button name="btnLecturerAdmin" type="button" onclick="acceptDelete(@lecturer.Id)" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</button>
+							</div>
+						</td>
+					</tr>
+					</form>
+				}
+			</tbody>
+		</table>
+		<div class="justify-content-center ">
+			@for (int i = 0; i < numOflecturer; i++)
+			{
+				<a href="@Url.Action("Lecturer", "Admin", new{page = i, max = numOflecturer})">@(i + 1)</a>
+			}
+		</div>
+		<div id="DeleteForm" class="modal fade p-lg-5" role="dialog">
+			<div class="modal-dialog modal-lg" role="content">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title text-dark">Delete</h4>
+						<ion-icon class="closeForm" style="cursor: pointer;" onclick="acceptDelete()" name="close-outline"></ion-icon>
+					</div>
+					<div class="modal-body">
+						<form action="@Url.Action("removeLecturer","Lecturer")" method="post">
+							<input type="hidden" id="idLecturerToDelete" name="IDLecturer" value="" />
+							<input type="hidden" name="btnStudentAdmin" value="Delete" />
+							<h3 id="formDeleteForm">Are you sure delete</h3>
+							<div class="form-row p-md-3 center">
+								<button type="button" onclick="acceptDelete()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
+								<button type="submit" class="btn btn-primary btn-sm ml-1">Yes</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function acceptDelete(id = null) {
+			if (id != null) {
+				document.querySelector("#idLecturerToDelete").value = id;
+			}
+			$('#DeleteForm').modal('toggle');
+		}
+		if ("@TempData["Lecturer"]") {
+			console.log("@TempData["Lecturer"]");
+		}
+	</script>
+	@Html.Partial("_endScript")
+
+	<script src="~/js/AdminSet.js"></script>
+	<script>
+		var listEmailLT = @Html.Raw(Json.Serialize(LecturerEmail));
+
+		document.querySelector("#EmailLecturer").addEventListener('change', (e) => {
+			var value = e.target.value;
+			function check() { return listEmailLT.includes(value) }
+			checked("#spanEmail", check, value)
+
+		})
+
+		function checked(span, callback, value) {
+			if (value) {
+				var check = callback()
+				if (check) {
+					document.querySelector(span).style.display = "block";
+					return false;
+				} else {
+					document.querySelector(span).style.display = "none";
+					return true;
+				}
+			} else {
+				document.querySelector(span).style.display = "none";
+				return false;
+			}
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,145 @@
+﻿@using ABCLearn.Services
+@using ABCLearn.DataAccess
+@{
+	ViewBag.title = "ABC Learn";
+	DateTime vietnamTime = CurrentDateTime.GetcurrentDateTime;
+	TimeSpan currentTime = vietnamTime.TimeOfDay;
+}
+@model Lecturer
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	@Html.Partial("_head")
+</head>
+
+<body>
+	@Html.Partial("_spanner")
+	@Html.Partial("_navStart")
+	<a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
+	<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+	<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+	@Html.Partial("_navEnd")
+	<!-- tab search dictionary -->
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-1">
+			<div class="row justify-content-center" style="margin-top: 100px">
+				<div class="col-lg-10 text-center">
+					<h1 class="display-3 text-white animated slideInDown">@Model.FirstName @Model.LastName</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Profile in here -->
+
+	<div class="container">
+		<div class="main-body">
+			<div class="row gutters-sm">
+				<div class="col-md-4 mb-3">
+					<div class="card">
+						<div class="card-body">
+							<div class="d-flex flex-column align-items-center text-center">
+								<img class="img-fluid" class="rounded-circle" src="~/img/Avatar/Lecturer/@(Model.Avatar)" alt="">
+								<div class="mt-3">
+									<h4>@Model.FirstName @Model.LastName</h4>
+									<p class="text-secondary mb-1">@Model.RoleID</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-8 ">
+					<div id="ProfileFormlt" class="card mb-3">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">First Name</h6>
+								</div>
+								<div class="col-sm-9 text-secondary">
+									@Model.FirstName
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Last Name</h6>
+								</div>
+								<div class="col-sm-9 text-secondary">
+									@Model.LastName
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Email</h6>
+								</div>
+								<div class="col-sm-9 text-secondary">
+									@Model.Email
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Phone</h6>
+								</div>
+								<div class="col-sm-9 text-secondary">
+									@Model.Phone
+								</div>
+							</div>
+						</div>
+						<div class="row gutters-sm">
+						</div>
+					</div>
+					<div class="container">
+						<table class="table table-striped text-center">
+							<thead>
+								<tr>
+									<th>Course</th>
+									<th>Time</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (Course course in Model.Courses)
+								{
+									@if (course.Status)
+									{
+										@foreach (var calendar in course.Calendars)
+										{
+											<tr>
+												<td><b>@course.Title</b></td>
+												<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
+												@if (currentTime < calendar.EndTime && currentTime > calendar.StartTime)
+												{
+													<td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
+												}
+												else if (currentTime < calendar.StartTime)
+												{
+													<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
+												}
+												else if (currentTime > calendar.EndTime)
+												{
+													<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
+												}
+											</tr>
+										}
+									}
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+	<script>
+
+	</script>
+	@Html.Partial("_footer")
+	@Html.Partial("_endScript")
+</body>
+
+</html>

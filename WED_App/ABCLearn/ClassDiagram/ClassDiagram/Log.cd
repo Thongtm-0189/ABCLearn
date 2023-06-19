@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ABCLearn.Controllers.LoginController">
+    <Position X="1.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAQAAAIAAAAAAAAAAAEQAAAAAAA=</HashCode>
+      <FileName>Controllers\LoginController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ABCLearn.DataContext.StudentDAO">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAYAAAIAAEAAAAACAAAAAAAwAAFAAQCAQgAAAAAAEAA=</HashCode>
+      <FileName>DataAccess\StudentDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ABCLearn.Extend.ExtendSession">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAgAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Extend\ExtendSession.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ABCLearn.Models.AccountLogin" Collapsed="true">
+    <Position X="8.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Models\AccountLogin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ABCLearn.Models.UserLogin" Collapsed="true">
+    <Position X="8.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAIAAQAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Models\UserLogin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ABCLearn.Models.Student" Collapsed="true">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEIACCAAAAAAAAQAAAAAAAAAACACCAAEIBAAIAg=</HashCode>
+      <FileName>Models\Student.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ABCLearn.Models.Lecturer" Collapsed="true">
+    <Position X="10.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEIAACAAAAAgAAQAAAAAAAAAAAACAAAAIBAAAAg=</HashCode>
+      <FileName>Models\Lecturer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Object" Collapsed="true">
+    <Position X="7" Y="4" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="ABCLearn.DataAccess.IUserDAO&lt;t&gt;">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAAAAEAAAAAAAAAAAAAAAAFAAAAAQgAAAAAAAAA=</HashCode>
+      <FileName>DataAccess\IUserDAO.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

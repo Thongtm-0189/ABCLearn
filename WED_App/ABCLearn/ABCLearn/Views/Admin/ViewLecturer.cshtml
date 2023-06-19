@@ -1,0 +1,222 @@
+﻿@model Lecturer
+@using ABCLearn.DataAccess
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	@Html.Partial("_head")
+</head>
+
+<body>
+
+
+	<!-- tab search dictionary -->
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-1">
+			<div class="row justify-content-center" style="margin-top: 100px">
+				<div class="col-lg-10 text-center">
+					<h1 class="display-3 text-white animated slideInDown">@Model.FirstName @Model.LastName</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Profile in here -->
+
+	<div class="container">
+		<div class="main-body">
+			<div class="row gutters-sm">
+				<div class="col-md-4 mb-3">
+					<div class="card">
+						<div class="card-body">
+							<div class="d-flex flex-column align-items-center text-center">
+								<img src="~/img/Avatar/Lecturer/@(Model.Avatar)" alt="Admin" class="rounded-circle" width="242">
+								<div class="mt-3">
+									<h4>@Model.FirstName @Model.LastName</h4>
+									<p class="text-secondary mb-1">@Model.RoleID</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-8 ">
+					<div id="ProfileFormlt" class="card mb-3">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">First Name</h6>
+								</div>
+								<div class="col-sm-9 text-secondary">
+									@Model.FirstName
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Last Name</h6>
+								</div>
+								<div class="col-sm-9 text-secondary">
+									@Model.LastName
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Password</h6>
+								</div>
+								<div class="col-sm-9 text-secondary">
+									*********
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Email</h6>
+								</div>
+								<div class="col-sm-9 text-secondary">
+									@Model.Email
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Phone</h6>
+								</div>
+								<div class="col-sm-9 text-secondary">
+									@Model.Phone
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-12">
+									<a onclick="showProfileFormlt()" class="btn btn-primary px-5">Edit</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="row gutters-sm">
+						</div>
+					</div>
+
+					<div id="EditProfileFormlt" class="card mb-3 edit-form" style="display:none ;">
+						<div class="card-body">
+							<form action="@Url.Action("updateLecturer", "Lecturer")" method="post">
+								<input type="hidden" name="Id" value="@(Model.Id)" />
+								<div class="row">
+									<div class="col-sm-3">
+										<h6 class="mb-0">First Name</h6>
+									</div>
+									<input class="col-sm-9 text-secondary" placeholder="First Name" name="FirstName" value="@Model.FirstName">
+
+									</input>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-3">
+										<h6 class="mb-0">Last Name</h6>
+									</div>
+									<input class="col-sm-9 text-secondary" placeholder="Last Name" name="LastName" value="@Model.LastName">
+
+									</input>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-3">
+										<h6 class="mb-0">Password</h6>
+									</div>
+									<input class="col-sm-9 text-secondary" name="Password" placeholder="Password" value="@Model.Password">
+
+									</input>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-3">
+										<h6 class="mb-0">Email</h6>
+									</div>
+									<input class="col-sm-9 text-secondary" name="Email" placeholder="Email" type="email" value="@Model.Email">
+									</input>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-3">
+										<h6 class="mb-0">Phone</h6>
+									</div>
+									<input class="col-sm-9 text-secondary" name="Phone" type="tel" placeholder="Phone Number" value="@Model.Phone">
+									</input>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-12">
+										<input type="submit" class="btn btn-primary px-5" />
+										<a onclick="showEditProfileFormlt()" class="btn btn-primary px-5">Cancer</a>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="row gutters-sm">
+						</div>
+					</div>
+
+					@if (Model.Courses.Count > 0)
+					{
+						<div class="container">
+							<table class="table table-striped text-center">
+								<thead>
+									<tr>
+										<th>Course</th>
+										<th>Time</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (Course course in Model.Courses)
+									{
+										@if (course.Status)
+										{
+											@if (course.Calendars.Count > 0)
+											{
+												@foreach (Calendar calendar in course.Calendars)
+												{
+													<tr>
+														<td><b>@course.Title</b></td>
+														<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
+													</tr>
+												}
+											}
+										}
+									}
+								</tbody>
+							</table>
+						</div>
+					}
+				</div>
+
+			</div>
+		</div>
+
+		<script>
+			console.log("@Model.FirstName")
+		</script>
+		<script>
+			document.getElementById("dobInput").value = dobValue;
+
+			function showProfileForm() {
+				document.getElementById("ProfileForm").style.display = "none";
+				document.getElementById("EditProfileForm").style.display = "block";
+			}
+			function showEditProfileForm() {
+				document.getElementById("ProfileForm").style.display = "block";
+				document.getElementById("EditProfileForm").style.display = "none";
+			}
+
+			function showProfileFormlt() {
+				document.getElementById("ProfileFormlt").style.display = "none";
+				document.getElementById("EditProfileFormlt").style.display = "block";
+			}
+			function showEditProfileFormlt() {
+				document.getElementById("ProfileFormlt").style.display = "block";
+				document.getElementById("EditProfileFormlt").style.display = "none";
+			}
+		</script>
+		@Html.Partial("_endScript")
+</body>
+
+</html>
