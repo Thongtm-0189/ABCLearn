@@ -1,10 +1,11 @@
 ﻿@using ABCLearn.DataContext
+@using ABCLearn.Services
+@using ABCLearn.DataAccess
 @{
 	ViewBag.title = "ABC Learn";
+	List<Calendar> calendares = CalendarDAO.Instance.Calendars();
 	var Courses = CourseDAO.Instance.Courses();
-	DateTime nowUtc = DateTime.UtcNow;
-	TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
-	DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
+	DateTime vietnamTime = CurrentDateTime.GetcurrentDateTime;
 	TimeSpan currentTime = vietnamTime.TimeOfDay;
 }
 <!DOCTYPE html>
@@ -70,7 +71,7 @@
 							</div>
 							<div class="form-row p-md-3 center">
 								<button type="button" onclick="formTable()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
-								<button type="submit" class="btn btn-primary btn-sm ml-1">submit</button>
+								<button type="submit" class="btn btn-primary btn-sm ml-1">Submit</button>
 							</div>
 						</form>
 					</div>
@@ -88,43 +89,37 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (var course in Courses)
+				@foreach (Calendar calendar in calendares)
 				{
-					@if (course.Status)
-					{
-						@if(course.Calendars.Count>0){
-							@foreach (var calendar in course.Calendars)
-							{
-								<tr>
-									<td><b>@course.Title</b></td>
-									<td>@course.Lecturer.FirstName @course.Lecturer.LastName</td>
-									<form action="@Url.Action("SetTimeCalendar","Calendar")" method="post">
-									<td>
-										<input type="hidden" value="@calendar.Id" name="Id">
-										<input name="StartTime" type="time" class="glyphicon-time" value="@calendar.StartTime.ToString()" />
-										- <p>@calendar.EndTime.ToString()</p>
-									</td>
-									<td>
-										<button type="submit" name="btnCalendar" value="Set" class="col-3 btn btn-primary">Set</button>
-										<button type="submit" name="btnCalendar" value="Delete" href="" class="col-5 btn btn-primary" style="color:red">Delete</button>
-									</td>
-									</form>
-									@if (currentTime > calendar.EndTime)
-									{
-										<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
-									}
-									else if (currentTime < calendar.StartTime)
-									{
-										<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
-									}
-									else
-									{
-										<td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
-									}
-								</tr>
-							}
+					Course cor = CourseDAO.Instance.Courses().First(x => x.Id == calendar.IDCourse);
+					var NameLecturer = cor.Lecturer.FirstName + " " + cor.Lecturer.LastName;
+					<tr>
+						<td><b>@calendar.NameCourse</b></td>
+						<td>@NameLecturer</td>
+						<form action="@Url.Action("SetTimeCalendar","Calendar")" method="post">
+						<td>
+							<input type="hidden" value="@calendar.Id" name="Id">
+							<input name="StartTime" type="time" class="glyphicon-time" value="@calendar.StartTime.ToString()" />
+							- <p>@calendar.EndTime.ToString()</p>
+						</td>
+						<td>
+							<button type="submit" name="btnCalendar" value="Set" class="col-3 btn btn-primary">Set</button>
+							<button type="submit" name="btnCalendar" value="Delete" href="" class="col-5 btn btn-primary" style="color:red">Delete</button>
+						</td>
+						</form>
+						@if (currentTime > calendar.EndTime)
+						{
+							<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
 						}
-					}
+						else if (currentTime < calendar.StartTime)
+						{
+							<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
+						}
+						else
+						{
+							<td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
+						}
+					</tr>
 				}
 			</tbody>
 		</table>

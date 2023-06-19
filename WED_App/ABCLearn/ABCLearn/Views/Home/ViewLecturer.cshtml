@@ -1,8 +1,8 @@
-﻿@{
+﻿@using ABCLearn.Services
+@using ABCLearn.DataAccess
+@{
 	ViewBag.title = "ABC Learn";
-	DateTime nowUtc = DateTime.UtcNow;
-	TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
-	DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
+	DateTime vietnamTime = CurrentDateTime.GetcurrentDateTime;
 	TimeSpan currentTime = vietnamTime.TimeOfDay;
 }
 @model Lecturer

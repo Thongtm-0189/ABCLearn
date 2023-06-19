@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
 @{
 	string forgot = Model;
 }
@@ -29,7 +27,7 @@
 			<div id="forgotPass" style="margin: 50px 0 160px 0" class="col-md-12 title">
 				<div class="row ">
 					<div class="col-3"></div>
-					<form action="@Url.Action("AcceptanceEmail","Login")" class="row col-6 justify-content-center">
+					<form action="@Url.Action("AcceptanceEmail","Register")" class="row col-6 justify-content-center">
 						<h2 class="text-center text-white">Verify your email address</h2>
 						<div id="left-form" class="col-10 col-md-10 justify-content-center">
 							<div class="form-group">
@@ -38,6 +36,10 @@
 								<span id="spanOTP" style="display:none; color:red"><small>OTP code is incorrect!!</small></span>
 								@if (forgot == "reset"){
 									<input type="hidden" value="reset" name="forgot" />
+								}
+								else
+								{
+									<input type="hidden" value="@forgot" name="id" />
 								}
 							</div>
 							<button id="btnSub" type="button" class="btn btn-primary">Confirm</button>

@@ -1,4 +1,6 @@
-﻿@{
+﻿@using ABCLearn.Services
+@using ABCLearn.DataAccess
+@{
 	ViewBag.room = "meet";
 }
 <!DOCTYPE html>
@@ -29,14 +31,9 @@
 	<!--<h1 style="text-align: center">@ViewBag.roomid</h1>-->
 	<div class="container-fluid row" style="height:inherit;">
 		<div class="row">
-			<div class="col-md-9 position-relative" style="height: 100%">
-				<!-- Rest of your webpage content -->
-				<h3>Room meet: @(ViewBag.roomid)</h3>
-				<div video-grid>
+			<div class="col-md-9 position-relative" style="height: 80vh">
+                <div video-grid>
 				</div>
-				<div my-video class="position-absolute">
-				</div>
-				<!--<button id="toggle-microphone" class="mute">Toggle Microphone</button>-->
 			</div>
 			<div class="col-md-3">
 				<div class="card">
@@ -80,6 +77,8 @@
 			</div>
 		</div>
 		<div class="col-md-9 button-container fixed-bottom d-flex justify-content-center" style="background: #4d8347; padding: 0.5% 0; opacity: 0.85;">
+			<div my-video class="position-absolute">
+			</div>
 			<button class="btn btn-primary mute rounded p-3 m-1" id="toggle-microphone"><i class="bi bi-mic" id="microphone"></i></button>
 			<button class="btn btn-primary rounded p-3 m-1" id="toggle-camera"><i class="bi bi-camera-video" id="camera"></i></button>
 			<a href="@Url.Action("Index", "Home")" class="btn btn-primary rounded p-3 m-1"><i class="bi bi-telephone" id="phone"></i></a>
@@ -92,189 +91,217 @@
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	@Html.Partial("_endScript")
 
-	<script>
-		const RoomID = '@ViewBag.roomid';
-		let userId = "";
-		let localStream = null;
-		const Peers = {};
-		const Mutes = {};
-		var mic = document.querySelector("#microphone");
-		var cam = document.querySelector("#camera");
+    <script>
+        const RoomID = '@ViewBag.roomid';
+        let userId = "";
+        let localStream = null;
+        const Peers = {};
+        const Mutes = {};
+        var listUserVideo = {}
+        var mic = document.querySelector("#microphone");
+        var cam = document.querySelector("#camera");
+        // Create a new signalR connection
+        var connection = new signalR.HubConnectionBuilder().withUrl("/meeting").build();
 
-		//tạo confign cho signlR mới
-		var connection = new signalR.HubConnectionBuilder().withUrl("/meeting").build();
+        const myPeer = new Peer();
 
-		const myPeer = new Peer()
+        myPeer.on('open', id => {
+            userId = id;
+            const startSignalR = async () => {
+                await connection.start();
+                await connection.invoke("JoinRoom", RoomID, userId);
+            };
+            startSignalR(); // Start SignalR connection
+        });
 
-		myPeer.on('open', id => {
-			userId = id;
-			const startSignalR = async () => {
-				await connection.start();
-				await connection.invoke("JoinRoom", RoomID, userId);
-			}
-			startSignalR(); // Thêm dòng này để bắt đầu kết nối SignalR
-		})
+        const videoGrid = document.querySelector('[video-grid]');
+        const MYvideoGrid = document.querySelector('[my-video]');
+        const myVideo = document.createElement('video');
+        myVideo.muted = true;
 
-		const videoGrid = document.querySelector('[video-grid]');
-		const MYvideoGrid = document.querySelector('[my-video]');
-		const myVideo = document.createElement('video');
-		myVideo.muted = true;
+        navigator.mediaDevices.getUserMedia({
+            audio: true,
+            video: true
+        }).then(stream => {
+            addMyVideoStream(myVideo, stream);
+            localStream = stream;
+        });
 
-		navigator.mediaDevices.getUserMedia({//set audio and video in here
-			audio: true,
-			video: true
-		}).then(stream => {
-			addMyVideoStream(myVideo, stream);
-			localStream = stream;
-		})
+        // Event when a new user connects
+        connection.on('user-connected', (id) => {
+            if (userId === id) return;
+            console.log("User connected: " + id);
+            connectNewUser(id, localStream);
+        });
 
-		//sự kiện khi có 1 user connect mới
-		connection.on('user-connected', (id) => {
-			if (userId === id) return;
-			console.log("use id connectrd: " + id);
-			connectNewUser(id, localStream);
-		})
+        // Mute microphone
+        connection.on("MuteMicrophone", (id) => {
+            if (Peers[id]?.userVideo) {
+                Peers[id].userVideo.srcObject.getAudioTracks().forEach(track => {
+                    track.enabled = false;
+                });
+            }
+        });
 
-		// Mute microphone
-		connection.on("MuteMicrophone", (id) => {
-			if (Peers[id].userVideo) {
-				Peers[id].userVideo.srcObject.getAudioTracks().forEach(track => {
-					track.enabled = false;
-				});
-			}
-		});
+        // Unmute microphone
+        connection.on("UnmuteMicrophone", (id) => {
+            if (Peers[id]?.userVideo) {
+                Peers[id].userVideo.srcObject.getAudioTracks().forEach(track => {
+                    track.enabled = true;
+                });
+            }
+        });
 
-		// Unmute microphone
-		connection.on("UnmuteMicrophone", (id) => {
-			if (Peers[id].userVideo) {
-				Peers[id].userVideo.srcObject.getAudioTracks().forEach(track => {
-					track.enabled = true;
-				});
-			}
-		});
-		// Mute camera
-		connection.on("MuteCamera", (id) => {
-			if (Peers[id].userVideo) {
-				Peers[id].userVideo.srcObject.getVideoTracks().forEach(track => {
-					track.enabled = false;
-				});
-			}
-		});
+        // Mute camera
+        connection.on("MuteCamera", (id) => {
+            if (Peers[id]?.userVideo) {
+                Peers[id].userVideo.srcObject.getVideoTracks().forEach(track => {
+                    track.enabled = false;
+                });
+            }
+        });
 
-		// Unmute camera
-		connection.on("UnmuteCamera", (id) => {
-			if (Peers[id].userVideo) {
-				Peers[id].userVideo.srcObject.getVideoTracks().forEach(track => {
-					track.enabled = true;
-				});
-			}
-		});
-		//tạo sự kiện khi có người out khỏi room
-		connection.on('user-disconnected', (id) => {
-			console.log("user disConnectrd: " + id);
-			if (Peers[id].call) Peers[id].call.close();
-		})
+        // Unmute camera
+        connection.on("UnmuteCamera", (id) => {
+            if (Peers[id]?.userVideo) {
+                Peers[id].userVideo.srcObject.getVideoTracks().forEach(track => {
+                    track.enabled = true;
+                });
+            }
+        });
 
-		//tạo sự kiện khi có người mới vào room
-		myPeer.on('call', call => {
-			call.answer(localStream);
+        // Event when a user disconnects
+        connection.on('user-disconnected', (id) => {
+            console.log("User disconnected: " + id);
+            if (Peers[id]?.call) {
+                Peers[id].call.close();
+                delete listUserVideo[id]
+                delete Peers[id];
+            }
+        });
 
-			const userVideo = document.createElement('video');
-			call.on('stream', userVideoStream => {
-				addVideoStream(userVideo, userVideoStream);
-			})
-		})
+        // Event when a new user joins the room
+        myPeer.on('call', call => {
+            call.answer(localStream);
 
-		//add new video call
-		const addVideoStream = (video, stream) => {
-			video.srcObject = stream;
-			video.addEventListener('loadedmetadata', () => {
-				video.play();
-			})
-			videoGrid.appendChild(video);
-		}
-		const addMyVideoStream = (video, stream) => {
-			video.srcObject = stream;
-			video.addEventListener('loadedmetadata', () => {
-				video.play();
-			})
-			MYvideoGrid.appendChild(video);
-		}
+            const userVideo = document.createElement('video');
+            userVideo.id = call.peer;
 
-		//khi có người mới tham gia vào trong room tạo và insert new video call
-		const connectNewUser = (userId, localStream) => {
-			const userVideo = document.createElement('video');
-			const call = myPeer.call(userId, localStream);
+            call.on('stream', userVideoStream => {
+                addVideoStream(userVideo, userVideoStream, userId);
+            });
+        });
 
-			call.userVideo = userVideo;
+        // Add new video stream
+        const addVideoStream = (video, stream, id) => {
+            video.srcObject = stream;
+            video.addEventListener('loadedmetadata', () => {
+                video.play();
+            });
+            if (listUserVideo[id]){
+                var box = listUserVideo[id];
+                box.appendChild(video);
+            }
+            else
+            {
+                var box = document.createElement("div");
+                box.className = "box";
+                box.appendChild(video);
+                videoGrid.appendChild(box);
+                listUserVideo[id] = box;
+            }
+        };
 
-			call.on('stream', userVideoStream => {
-				addVideoStream(userVideo, userVideoStream);
-			});
+        // Add local video stream
+        const addMyVideoStream = (video, stream) => {
+            video.srcObject = stream;
+            video.addEventListener('loadedmetadata', () => {
+                video.play();
+            });
+            MYvideoGrid.appendChild(video);
+        };
 
-			call.on('close', () => {
-				console.log("Someone left the room");
-				userVideo.parentNode.removeChild(userVideo);
-				delete Peers[userId]; // Xóa đối tượng khỏi Peers khi người dùng rời khỏi phòng
-			});
+        // Connect with a new user in the room
+        const connectNewUser = (userId, localStream) => {
+            const userVideo = document.createElement('video');
+            const call = myPeer.call(userId, localStream);
 
-			Peers[userId] = { call, userVideo };
-		}
+            call.userVideo = userVideo;
 
-		// Sự kiện click cho button toggle microphone
-		//var btn = document.getElementById('toggle-microphone');
-		var micBtn = document.getElementById('toggle-microphone');
-		micBtn.addEventListener('click', () => {
-			if (localStream) {
-				const audioTrack = localStream.getAudioTracks()[0];
+            call.on('stream', userVideoStream => {
+                addVideoStream(userVideo, userVideoStream, userId);
+            });
 
-				if (audioTrack) {
-					audioTrack.enabled = !audioTrack.enabled; // Toggle audio track enabled state
-					micBtn.classList.toggle('mute'); // Toggle CSS class for button styling
+            call.on('close', () => {
+                console.log("Someone left the room");
+                userVideo.parentNode.parentNode.removeChild(userVideo.parentNode);
+                delete Peers[userId]; // Remove the user from Peers when they leave the room
+            });
 
-					// Send microphone state to other users in the room
-					if (audioTrack.enabled) {
-						mic.classList.add("bi-mic");
-						mic.classList.remove("bi-mic-mute");
-						connection.invoke("UnmuteMicrophone", userId, RoomID);
-					} else {
-						mic.classList.remove("bi-mic");
-						mic.classList.add("bi-mic-mute");
-						connection.invoke("MuteMicrophone", userId, RoomID);
-					}
-				}
-			}
-		});
+            Peers[userId] = { call, userVideo };
+        };
 
-		var cameraBtn = document.getElementById('toggle-camera');
-		cameraBtn.addEventListener('click', () => {
-			if (localStream) {
-				const videoTrack = localStream.getVideoTracks()[0];
+        // Toggle microphone state
+        var micBtn = document.getElementById('toggle-microphone');
+        micBtn.addEventListener('click', () => {
+            if (localStream) {
+                const audioTrack = localStream.getAudioTracks()[0];
 
-				if (videoTrack) {
-					videoTrack.enabled = !videoTrack.enabled; // Toggle video track enabled state
-					cameraBtn.classList.toggle('camera-off'); // Toggle CSS class for button styling
+                if (audioTrack) {
+                    audioTrack.enabled = !audioTrack.enabled; // Toggle audio track enabled state
+                    micBtn.classList.toggle('mute'); // Toggle CSS class for button styling
 
-					// Send camera state to other users in the room
-					if (videoTrack.enabled) {
-						cam.classList.remove("bi-camera-video-off");
-						cam.classList.add("bi-camera-video");
-						connection.invoke("UnmuteCamera", userId, RoomID);
-					} else {
-						cam.classList.add("bi-camera-video-off");
-						cam.classList.remove("bi-camera-video");
-						connection.invoke("MuteCamera", userId, RoomID);
-					}
-				}
-			}
-		});
+                    // Send microphone state to other users in the room
+                    if (audioTrack.enabled) {
+                        mic.classList.add("bi-mic");
+                        mic.classList.remove("bi-mic-mute");
+                        connection.invoke("UnmuteMicrophone", userId, RoomID);
+                    } else {
+                        mic.classList.remove("bi-mic");
+                        mic.classList.add("bi-mic-mute");
+                        connection.invoke("MuteMicrophone", userId, RoomID);
+                    }
+                }
+            }
+        });
 
-	</script>
+        // Toggle camera state
+        var cameraBtn = document.getElementById('toggle-camera');
+        cameraBtn.addEventListener('click', () => {
+            if (localStream) {
+                const videoTrack = localStream.getVideoTracks()[0];
+
+                if (videoTrack) {
+                    videoTrack.enabled = !videoTrack.enabled; // Toggle video track enabled state
+                    cameraBtn.classList.toggle('camera-off'); // Toggle CSS class for button styling
+
+                    // Send camera state to other users in the room
+                    if (videoTrack.enabled) {
+                        cam.classList.remove("bi-camera-video-off");
+                        cam.classList.add("bi-camera-video");
+                        connection.invoke("UnmuteCamera", userId, RoomID);
+                    } else {
+                        cam.classList.add("bi-camera-video-off");
+                        cam.classList.remove("bi-camera-video");
+                        connection.invoke("MuteCamera", userId, RoomID);
+                    }
+                }
+            }
+        });
+
+        function setWidthVideo(){
+            var listVideo = document.querySelectorAll("video");
+            var countBox = document.querySelectorAll(".box").length;
+            listVideo.forEach(x =>{
+                x.style.width = (100/countBox)+"%";
+            })
+            listVideo[listVideo.length-1].style.width = "100%";
+        }
+    </script>
+
 	<script>
 		@{
-			DateTime nowUtc = DateTime.UtcNow;
-			TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
-			DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
+			DateTime vietnamTime = CurrentDateTime.GetcurrentDateTime;
 			TimeSpan currentTime = vietnamTime.TimeOfDay;
 		}
 										var connectionChat = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
@@ -328,58 +355,6 @@
 			document.querySelector("#chatboxcard").style.display = "none";
 			document.querySelector("#dictionarycard").style.display = "block";
 		})
-	</script>
-	<script>
-		let word = "";
-		let meaning = [];
-		let phonetic = [];
-		document.getElementById("word").addEventListener('change', (e) => {
-			if (e != null) word = e.target.value;
-			//console.log("hehe");
-
-			axios.get(
-				`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-			).then(
-				(res) => {
-					tempPhonetic = "<h5>Phonology</h5>";
-					for (let index = 1; index < res.data[0].phonetics.length; index++) {
-						tempPhonetic += `<i class="phonic">${res.data[0].phonetics[index].text}</br></i>`;
-					}
-
-					function PrintDefi(data) {
-						//console.log(data.definitions[0])
-						tempDefinition = "";
-						for (let index = 0; index < data.definitions.length; index++) {
-							tempDefinition += `<p class="definition">${data.definitions[index].definition}</p>`;
-						}
-						return tempDefinition;
-					}
-
-					tempMeaning = "";
-					for (let index = 0; index < res.data[0].meanings.length; index++) {
-						tempMeaning += `<div class="wrap-meaning">
-																	<h5 class="part-of-speech">${res.data[0].meanings[index].partOfSpeech}</h5>
-																	 <p class="definition">
-																		 ${PrintDefi(res.data[0].meanings[index])}
-																	 </p>
-																</div>`;
-					}
-					//console.log(res.data[0]);
-					//console.log(res.data[0].phonetics[0].text);
-					document.getElementById("title").innerText = res.data[0].word;
-					document.getElementById("phonetic").innerHTML = tempPhonetic + "<hr/>";
-					document.getElementById("meaning").innerHTML = tempMeaning + "<hr/>";
-					document.querySelector(".definition").innerHTML = tempDefinition + "<hr/>";
-					//document.querySelector("#contentDictionary").style.height = "46%";
-				}
-			).catch(() => {
-				document.getElementById("title").innerText = `NOT FOUND THE WORD ${word}`;
-				document.getElementById("phonetic").innerHTML = "";
-				document.getElementById("meaning").innerHTML = "";
-				document.querySelector(".definition").innerHTML = "";
-				//document.querySelector("#contentDictionary").style.height = "90%";
-			})
-		});
 	</script>
 </body>
 

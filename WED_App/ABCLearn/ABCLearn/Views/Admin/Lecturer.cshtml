@@ -1,4 +1,5 @@
 ﻿@using ABCLearn.DataContext
+@using ABCLearn.DataAccess
 @{
 	ViewBag.title = "ABC Learn";
 	List<string> LecturerEmail = new List<string>();
@@ -91,7 +92,7 @@
 							</div>
 							<div class="form-row p-md-3 center">
 								<button type="button" onclick="formTable()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
-								<button type="submit" class="btn btn-primary btn-sm ml-1">submit</button>
+								<button type="submit" class="btn btn-primary btn-sm ml-1">Submit</button>
 							</div>
 						</form>
 					</div>
@@ -121,7 +122,7 @@
 						<td>
 							<div class="d-flex row">
 								<a href="@Url.Action("ViewLecturer","Lecturer", new{IDLecturer = lecturer.Id})" name="btnLecturerAdmin" type="submit" class="col-6 btn btn-primary" value="View">View</a>
-								<a href="@Url.Action("removeLecturer","Lecturer", new{IDLecturer = lecturer.Id})" name="btnLecturerAdmin" type="submit" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</a>
+								<button name="btnLecturerAdmin" type="button" onclick="acceptDelete(@lecturer.Id)" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</button>
 							</div>
 						</td>
 					</tr>
@@ -135,15 +136,43 @@
 				<a href="@Url.Action("Lecturer", "Admin", new{page = i, max = numOflecturer})">@(i + 1)</a>
 			}
 		</div>
+		<div id="DeleteForm" class="modal fade p-lg-5" role="dialog">
+			<div class="modal-dialog modal-lg" role="content">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title text-dark">Delete</h4>
+						<ion-icon class="closeForm" style="cursor: pointer;" onclick="acceptDelete()" name="close-outline"></ion-icon>
+					</div>
+					<div class="modal-body">
+						<form action="@Url.Action("removeLecturer","Lecturer")" method="post">
+							<input type="hidden" id="idLecturerToDelete" name="IDLecturer" value="" />
+							<input type="hidden" name="btnStudentAdmin" value="Delete" />
+							<h3 id="formDeleteForm">Are you sure delete</h3>
+							<div class="form-row p-md-3 center">
+								<button type="button" onclick="acceptDelete()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
+								<button type="submit" class="btn btn-primary btn-sm ml-1">Yes</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
-
 	<script>
+		function acceptDelete(id = null) {
+			if (id != null) {
+				document.querySelector("#idLecturerToDelete").value = id;
+			}
+			$('#DeleteForm').modal('toggle');
+		}
 		if ("@TempData["Lecturer"]") {
 			console.log("@TempData["Lecturer"]");
 		}
 	</script>
 	@Html.Partial("_endScript")
+
 	<script src="~/js/AdminSet.js"></script>
 	<script>
 		var listEmailLT = @Html.Raw(Json.Serialize(LecturerEmail));
@@ -152,7 +181,7 @@
 			var value = e.target.value;
 			function check() { return listEmailLT.includes(value) }
 			checked("#spanEmail", check, value)
-			
+
 		})
 
 		function checked(span, callback, value) {

@@ -77,16 +77,45 @@
                             <td>@noti.StartDate.ToString("yyyy-MM-dd")</td>
                             <td>@noti.EndDate.ToString("yyyy-MM-dd")</td>
                             <td>
-                                <a href="@Url.Action("delete","Notification", new{idNotification = noti.Id})" name="btnLecturerAdmin" type="submit" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</a>
+                                <button name="btnLecturerAdmin" type="button" onclick="acceptDelete(@noti.Id)" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</button>
                             </td>
                         </tr>
                     }
                 }
             </tbody>
         </table>
+
+        <div id="DeleteForm" class="modal fade p-lg-5" role="dialog">
+			<div class="modal-dialog modal-lg" role="content">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title text-dark">Delete</h4>
+						<ion-icon class="closeForm" style="cursor: pointer;" onclick="acceptDelete()" name="close-outline"></ion-icon>
+					</div>
+					<div class="modal-body">
+                        <form action="@Url.Action("delete","Notification")" method="post">
+                            <input type="hidden" id="idNotificationDelete" name="idNotification" value="" />
+							<input type="hidden" name="btnStudentAdmin" value="Delete" />
+							<h3 id="formDeleteForm">Are you sure delete</h3>
+							<div class="form-row p-md-3 center">
+								<button type="button" onclick="acceptDelete()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
+								<button type="submit" class="btn btn-primary btn-sm ml-1">Yes</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
 
     <script>
+        function acceptDelete(id = null) {
+            if (id != null) {
+                document.querySelector("#idNotificationDelete").value = id;
+            }
+            $('#DeleteForm').modal('toggle');
+        }
         function showNotification() {
             var title = document.getElementById("title").value;
             var message = document.getElementById("message").value;

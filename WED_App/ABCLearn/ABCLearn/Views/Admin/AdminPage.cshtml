@@ -1,4 +1,5 @@
 ﻿@using ABCLearn.DataContext
+@using ABCLearn.DataAccess
 @{
     ViewBag.title = "ABC Learn";
     var Students = Model;
@@ -49,9 +50,8 @@
             <tbody>
                 @foreach (var student in Students)
                 {
-                    <form action="@Url.Action("StudentAction","Student")" method="post">
                     <tr>
-                        <td>@student.Id<input type="hidden" name="idStudent" value="@student.Id" /></td>
+                        <td>@student.Id</td>
                         <td>@student.FirstName</td>
                         <td>@student.LastName</td>
                         <td>@student.Courses.Count</td>
@@ -59,11 +59,10 @@
                         <td>
                             <div class="d-flex row">
                                 <a href="@Url.Action("ViewStudent","Student", new{idStudent = @student.Id})" name="btnStudentAdmin" class="col-6 btn btn-primary">View</a>
-                                <button type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</button>
+                                <button type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" onclick="acceptDelete(@student.Id)" value="Delete" style="color: red">Delete</button>
                             </div>
                         </td>
                     </tr>
-                    </form>
                 }
             </tbody>
         </table>
@@ -75,8 +74,39 @@
                 <a href="@Url.Action("Student", "Admin", new{page = i, max = numOfSutdent})">@(i + 1)</a>
             }
         </div>
+        <div id="DeleteForm" class="modal fade p-lg-5" role="dialog">
+			<div class="modal-dialog modal-lg" role="content">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title text-dark">Delete</h4>
+                        <ion-icon class="closeForm" style="cursor: pointer;" onclick="acceptDelete()" name="close-outline"></ion-icon>
+					</div>
+					<div class="modal-body">
+                        <form action="@Url.Action("StudentAction","Student")" method="post">
+                            <input type="hidden" id="idStudentToDelete" name="idStudent" value="" />
+                            <input type="hidden" name="btnStudentAdmin" value="Delete" />
+							<h3 id="formDeleteForm">Are you sure delete</h3>
+							<div class="form-row p-md-3 center">
+                                <button type="button" onclick="acceptDelete()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
+								<button type="submit" class="btn btn-primary btn-sm ml-1">Yes</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
     </div>
+
     @Html.Partial("_endScript")
+    <script>
+        function acceptDelete(id =null){
+            if(id != null){
+                document.querySelector("#idStudentToDelete").value = id;
+            }
+            $('#DeleteForm').modal('toggle');
+        }
+    </script>
 </body>
 
 </html>

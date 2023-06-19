@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "IqkztrYTdtPINqz0RoGlPmympMEiB9O+OY7Ivl0YecE=",
+  "Hash": "VpYpAf2UaDfuV4TcESMPNlIa216IJ2+cJLPOqwshnb0=",
   "Source": "ABCLearn",
   "BasePath": "_content/ABCLearn",
   "Mode": "Default",
@@ -219,6 +219,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\File\\FileQuiz.xlsx",
+      "SourceId": "ABCLearn",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\",
+      "BasePath": "_content/ABCLearn",
+      "RelativePath": "File/FileQuiz.xlsx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\File\\FileQuiz.xlsx"
     },
     {
       "Identity": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\img\\about.jpg",
@@ -950,6 +967,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\bootstrap.min.js"
+    },
+    {
+      "Identity": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\js\\DictionaryMeet.js",
+      "SourceId": "ABCLearn",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\",
+      "BasePath": "_content/ABCLearn",
+      "RelativePath": "js/DictionaryMeet.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\DictionaryMeet.js"
     },
     {
       "Identity": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\js\\jquery.min.js",

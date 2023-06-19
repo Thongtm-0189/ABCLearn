@@ -1,7 +1,7 @@
-﻿@{
-	DateTime nowUtc = DateTime.UtcNow;
-	TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
-	DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
+﻿@using ABCLearn.Services
+@using ABCLearn.DataAccess
+@{
+	DateTime vietnamTime = CurrentDateTime.GetcurrentDateTime;
 	TimeSpan currentTime = vietnamTime.TimeOfDay;
 }
 <div class="container">
@@ -94,7 +94,7 @@
 								<div class="col-sm-3">
 									<h6 class="mb-0">First Name</h6>
 								</div>
-								<input class="col-sm-9 text-secondary" placeholder="First Name" name="FirstName" value="@ViewBag.user.FirstName">
+								<input maxlength="20" class="col-sm-9 text-secondary" placeholder="First Name" name="FirstName" value="@ViewBag.user.FirstName">
 
 								</input>
 							</div>
@@ -103,7 +103,7 @@
 								<div class="col-sm-3">
 									<h6 class="mb-0">Last Name</h6>
 								</div>
-								<input class="col-sm-9 text-secondary" placeholder="Last Name" name="LastName" value="@ViewBag.user.LastName">
+								<input maxlength="20" class="col-sm-9 text-secondary" placeholder="Last Name" name="LastName" value="@ViewBag.user.LastName">
 
 								</input>
 							</div>
@@ -112,7 +112,7 @@
 								<div class="col-sm-3">
 									<h6 class="mb-0">Password</h6>
 								</div>
-								<input class="col-sm-9 text-secondary" name="Password" placeholder="Password" value="@ViewBag.user.Password">
+								<input maxlength="20" class="col-sm-9 text-secondary" title="Password must be at least 8 characters, including at least one uppercase letter, one lowercase letter, one number and one special character" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$" name="Password" placeholder="Password" value="@ViewBag.user.Password">
 
 								</input>
 							</div>
@@ -121,7 +121,7 @@
 								<div class="col-sm-3">
 									<h6 class="mb-0">Email</h6>
 								</div>
-								<input class="col-sm-9 text-secondary" name="Email" placeholder="Email" type="email" value="@ViewBag.user.Email">
+								<input maxlength="30" class="col-sm-9 text-secondary" name="Email" placeholder="Email" type="email" value="@ViewBag.user.Email">
 								</input>
 							</div>
 							<hr>
@@ -129,7 +129,7 @@
 								<div class="col-sm-3">
 									<h6 class="mb-0">Phone</h6>
 								</div>
-								<input class="col-sm-9 text-secondary" name="Phone" type="tel" placeholder="Phone Number" value="@ViewBag.user.Phone">
+								<input maxlength="10" pattern="[0-9]{10}" class="col-sm-9 text-secondary" name="Phone" type="tel" placeholder="Phone Number" value="@ViewBag.user.Phone">
 								</input>
 							</div>
 							<hr>
