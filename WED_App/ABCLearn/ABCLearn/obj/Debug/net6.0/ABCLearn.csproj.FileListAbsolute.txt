@@ -1880,3 +1880,15 @@ D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.ABCLearn.props
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.ABCLearn.props
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\staticwebassets.pack.json
+I:\Desktop\ABC\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\ABCLearn.csproj.AssemblyReference.cache
+I:\Desktop\ABC\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\ABCLearn.GeneratedMSBuildEditorConfig.editorconfig
+I:\Desktop\ABC\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\ABCLearn.AssemblyInfoInputs.cache
+I:\Desktop\ABC\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\ABCLearn.AssemblyInfo.cs
+I:\Desktop\ABC\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\ABCLearn.csproj.CoreCompileInputs.cache
+I:\Desktop\ABC\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\ABCLearn.MvcApplicationPartsAssemblyInfo.cs
+I:\Desktop\ABC\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\ABCLearn.MvcApplicationPartsAssemblyInfo.cache
+I:\Desktop\ABC\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\ABCLearn.RazorAssemblyInfo.cache
+I:\Desktop\ABC\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\ABCLearn.RazorAssemblyInfo.cs
+I:\Desktop\ABC\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\ABCLearn.dll
+I:\Desktop\ABC\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\refint\ABCLearn.dll
+I:\Desktop\ABC\WED_App\ABCLearn\ABCLearn\obj\Debug\net6.0\ABCLearn.pdb
