@@ -1,4 +1,5 @@
 ﻿@using ABCLearn.DataContext
+@using ABCLearn.DataAccess
 @{
 	ViewBag.title = "ABC Learn";
 	var pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,32}$/";
@@ -15,6 +16,7 @@
 	@Html.Partial("_head")
 </head>
 <body class=" hero-header">
+	@Html.Partial("_spanner")
 	@Html.Partial("_navStart")
 	<a href="@Url.Action("Index", "Home")" class="nav-item nav-link">Home</a>
 	<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
@@ -54,15 +56,16 @@
 					 
 					<div id="registerForm" style="display:none" class="col-md-6 title wow" data-wow-delay="0.2s">
 						<h2 class="text-center text-white">Register</h2>
-						<form action="@Url.Action("ConfirmEmail", "Login")" class="row" method="post">
+						<form action="@Url.Action("ConfirmEmail", "Register")" class="row" method="post">
 							<div id="left-form" class="col-6 col-md-6">
+								<input type="hidden" name="Role" value="Student" />
 								<div class="form-group">
 									<label for="registerUsername">First Name</label>
-									<input type="text" name="FirstName" class="form-control" id="registerFirstname" placeholder="Enter First Name" required>
+									<input type="text" maxlength="20" name="FirstName" class="form-control" id="registerFirstname" placeholder="Enter First Name" required>
 								</div>
 								<div class="form-group">
 									<label for="registerUsername">Last Name</label>
-									<input type="text" name="LastName" class="form-control" id="registerLastname" placeholder="Enter Last Name" required>
+									<input type="text" maxlength="20" name="LastName" class="form-control" id="registerLastname" placeholder="Enter Last Name" required>
 								</div>
 
 								<div class="form-group">
@@ -76,7 +79,7 @@
 								</div>
 								<div class="form-group">
 									<label for="registerEmail">Email</label>
-									<input id="emailRegister" type="email" name="Email" class="form-control" placeholder="Enter Email" required>
+									<input id="emailRegister" onchange="checkEmail(this)" maxlength="30" type="email" name="Email" class="form-control" placeholder="Enter Email" required>
 									<small><span id="spanEmail" style="color:red; display: none">This Mail existed</span></small>
 								</div>
 							</div>
@@ -87,29 +90,29 @@
 									<input type="date" name="DOB" class="form-control" id="registerEmail" placeholder="Enter Email" required>
 								</div>
 								<div class="form-group">
-									<label for="registerPassword">Phone number</label>
-									<input type="tel" name="Phone" class="form-control" id="registerPhonenumber" placeholder="Enter Phone number" required>
+									<label for="registerPhonenumber">Phone number</label>
+									<input type="tel" maxlength="10" name="Phone" pattern="[0-9]{10}" title="Please enter the number phone with 10 digit" class="form-control" id="registerPhonenumber" placeholder="Enter Phone number" required>
 								</div>
 								<div class="form-group">
 									<label for="registerPassword">Password</label>
-									<input type="password" name="Password" class="form-control" id="registerPassword" placeholder="Enter Password EX:Abc123@@" required>
+									<input type="password" maxlength="20" title="Password must be at least 8 characters, including at least one uppercase letter, one lowercase letter, one number and one special character" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$" name="Password" class="form-control" id="registerPassword" placeholder="Enter Password EX:Abc123@@" required>
 									<small><span id="spanPass" style="color:red; display: none">Not correct </span></small>
 								</div>
 								<div class="form-group">
-									<label for="registerPassword">Confirm password</label>
-									<input type="password" class="form-control" id="registerConfirmPassword" placeholder="Enter Confirm password" required>
+									<label for="registerConfirmPassword">Confirm password</label>
+									<input type="password" maxlength="20" class="form-control" id="registerConfirmPassword" title="Re-entered password does not match" onchange="checkPasswordMatch()" placeholder="Enter Confirm password" required>
 									<small><span id="spanConfirmpass" style="color:red; display:none">Password not correct</span></small>
 								</div>
 							</div>
 
-							<button id="btnRegister" type="button" class="btn btn-primary"> Register</button>
+							<button id="btnRegister" type="submit" class="btn btn-primary"> Register</button>
 						</form>
 						<p>Do have an account?<a href="#" onclick="showLoginForm()">Login</a> Or have you <a href="#" onclick="showForgotpass()">forgotten your password</a>?</p>
 					</div>
 					
 					<div id="forgotPass" style="display:none; margin: 50px 0 160px 0" class="col-md-6 title justify-content-center wow" data-wow-delay="0.2s">
 						<h2 class="text-center text-white">Forgot password</h2>
-						<form action="@Url.Action("ConfirmEmail","Login")" class="row col-12 justify-content-center">
+						<form action="@Url.Action("ConfirmEmail","Forgot")" class="row col-12 justify-content-center">
 							<div id="left-form" class="col-10 col-md-10 justify-content-center">
 								<div class="form-group">
 									<label for="registerUsername">Your Email</label>
@@ -125,7 +128,7 @@
 									</select>
 								</div>
 								<button type="button" id="btnReset" class="btn btn-primary">Reset</button>
-								<p>Do have an account?<a href="#" onclick="showLoginForm()">Login</a> Or have you <a href="#" onclick="showForgotpass()">forgotten your password</a>?</p>
+								<p>Do have an account?<a href="#" onclick="showLoginForm()">Login</a> Or Do not have an account? <a href="#" onclick="showRegisterForm()">Register</a></p>
 							</div>
 						</form>
 					</div>
@@ -140,37 +143,29 @@
 		var listEmailLT = @Html.Raw(Json.Serialize(LecturerEmail));
 		var count = 0;
 		var btnRegister = document.querySelector("#btnRegister")
-		var isEmail =false
-		var isPass=false
-		var isRepass = false
-		document.querySelector("#emailRegister").addEventListener('change',(e)=>{
-			var value = e.target.value;
-			function check() { return listEmail.includes(value) }
-			isEmail = checked("#spanEmail", check, value)
-			setSubmit()
-		})
 
-		document.querySelector("#registerPassword").addEventListener('change', (e) => {
-			var value = e.target.value;
-			function check(){return !validatePassword(value) }
-			isPass = checked("#spanPass", check, value)
-			setSubmit()
-		})
-
-		document.querySelector("#registerConfirmPassword").addEventListener('change', (e) => {
-			var value = e.target.value;
-			function check() { return !(value == document.querySelector("#registerPassword").value) }
-			isRepass = checked("#spanConfirmpass", check, value);
-			setSubmit()
-		})
-
-		document.addEventListener('keydown', function () {
-			if(isEmail && isPass && isRepass){
-				//btnRegister.setAttribute("type", "submit");
+		function checkEmail(email) {
+			var value = email.value;
+			var check = listEmail.includes(value);
+			if(check){
+				document.querySelector("#btnRegister").setAttribute("type", "button");
+				document.querySelector("#spanEmail").style.display = "block";
 			}else{
-				//btnRegister.setAttribute("type", "button");
+				document.querySelector("#spanEmail").style.display = "none";
+				document.querySelector("#btnRegister").setAttribute("type", "submit");
 			}
-		});
+		}
+
+		function checkPasswordMatch() {
+			var password = document.getElementById("registerPassword").value;
+			var confirmPassword = document.getElementById("registerConfirmPassword").value;
+
+			if (password === confirmPassword) {
+				document.getElementById("registerConfirmPassword").setCustomValidity("");
+			} else {
+				document.getElementById("registerConfirmPassword").setCustomValidity("Re-entered password does not match");
+			}
+		}
 
 		var roleName = "Student";
 
@@ -204,35 +199,6 @@
 				}
 			}
 		});
-
-		function checked(span, callback, value){
-			if (value) {
-				var check = callback()
-				if (check) {
-					document.querySelector(span).style.display = "block";
-					return false;
-				} else {
-					document.querySelector(span).style.display = "none";
-					return true;
-				}
-			} else {
-				document.querySelector(span).style.display = "none";
-				return false;
-			}
-		}
-
-		function setSubmit(){
-			if (isPass && isRepass && isEmail) {
-				document.querySelector('#btnRegister').setAttribute("type", "submit");
-			} else {
-				document.querySelector('#btnRegister').setAttribute("type", "button");
-			}
-		}
-
-		function validatePassword(password) {
-			var pattern = @pattern;
-		  return pattern.test(password);
-		}
 
 		function showForgotpass(){
 			document.getElementById("forgotPass").style.display = "block";

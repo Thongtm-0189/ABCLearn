@@ -1,6 +1,5 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Course
+@using ABCLearn.DataAccess
 @using ABCLearn.Models
 @{
 	ViewBag.title = "ABC Learn";
@@ -14,8 +13,9 @@
 </head>
 
 <body>
+	@Html.Partial("_spanner")
 	@Html.Partial("_navStart")
-	@if (UserLogin.Instance.RoleID != "Lecturer")
+	@if (ViewBag.Role != "Lecturer")
 	{
 		<a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
 		<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
@@ -61,7 +61,11 @@
 							<small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>All Student</small>
 						</div>
 						<div class="text-center p-4">
-							<h3 class="mb-0"> @Model.Price </h3>
+							@if(Model.Sale >0){
+								<h3 class="mb-0"> <del><i>@Model.Price</i></del> @(Model.Price - (Model.Price * Model.Sale) / 100)</h3>
+							}else{
+								<h3 class="mb-0"> @Model.Price </h3>
+							}
 							<p><b>@Model.Title</b></p>
 							<p>@Model.Detail</p>
 							<p><b>Time line:</b></p>

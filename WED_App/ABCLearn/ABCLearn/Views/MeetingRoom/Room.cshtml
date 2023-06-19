@@ -1,0 +1,361 @@
+﻿@using ABCLearn.Services
+@using ABCLearn.DataAccess
+@{
+	ViewBag.room = "meet";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<link href="~/css/MettingRoom.css" rel="stylesheet">
+	@Html.Partial("_head")
+
+	<style>
+		body, html {
+			height: 100%;
+			margin: 0;
+		}
+
+		.card {
+			position: fixed;
+			top: 50%;
+			right: 0;
+			width: inherit;
+			height: 100%;
+			transform: translateY(-50%);
+		}
+	</style>
+</head>
+<body>
+	@Html.Partial("_spanner")
+	<!--<h1 style="text-align: center">@ViewBag.roomid</h1>-->
+	<div class="container-fluid row" style="height:inherit;">
+		<div class="row">
+			<div class="col-md-9 position-relative" style="height: 80vh">
+                <div video-grid>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card">
+					<div class="card-header row">
+						<div class="col-md-1"></div>
+						<button id="btnChatBox" class="btn btn-primary col-md-5" style="border-radius: 30px 0 0 30px;">Chat Box</button>
+
+						<button id="btnDictionary" class="btn btn-primary col-md-5" style="border-radius: 0 30px 30px 0;">Dictionary</button>
+						<div class="col-md-1"></div>
+					</div>
+
+					<div id="chatboxcard" class="card-body">
+						<div id="messagesList" class="card-body" style="height: 90%; overflow-y: auto;">
+						</div>
+
+						<div class="card-footer">
+							<div class="input-group">
+								<input id="messageInput" type="text" class="form-control border-0 rounded-pill" placeholder="Type your message">
+								<div class="input-group-append">
+									<button id="sendButton" class="btn btn-primary rounded-pill">Send</butto>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div id="dictionarycard" class="card-body" style="display: none">
+						<div id="contentDictionary" class="card-body" style="height: 80vh; overflow-y: auto;">
+							<h6 id="title" class="text-primary m-0 text-center text-decoration-underline" style=""></h6>
+							<div id="phonetic"></div>
+							<div id="meaning"></div>
+						</div>
+
+						<div class="card-footer">
+							<div class="input-group">
+								<!--<button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;">Search</button>-->
+								<input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" id="word" type="text" value="@ViewBag.word" placeholder="Eg: Vocabulary">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-9 button-container fixed-bottom d-flex justify-content-center" style="background: #4d8347; padding: 0.5% 0; opacity: 0.85;">
+			<div my-video class="position-absolute">
+			</div>
+			<button class="btn btn-primary mute rounded p-3 m-1" id="toggle-microphone"><i class="bi bi-mic" id="microphone"></i></button>
+			<button class="btn btn-primary rounded p-3 m-1" id="toggle-camera"><i class="bi bi-camera-video" id="camera"></i></button>
+			<a href="@Url.Action("Index", "Home")" class="btn btn-primary rounded p-3 m-1"><i class="bi bi-telephone" id="phone"></i></a>
+		</div>
+	</div>
+
+
+	<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+	<script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	@Html.Partial("_endScript")
+
+    <script>
+        const RoomID = '@ViewBag.roomid';
+        let userId = "";
+        let localStream = null;
+        const Peers = {};
+        const Mutes = {};
+        var listUserVideo = {}
+        var mic = document.querySelector("#microphone");
+        var cam = document.querySelector("#camera");
+        // Create a new signalR connection
+        var connection = new signalR.HubConnectionBuilder().withUrl("/meeting").build();
+
+        const myPeer = new Peer();
+
+        myPeer.on('open', id => {
+            userId = id;
+            const startSignalR = async () => {
+                await connection.start();
+                await connection.invoke("JoinRoom", RoomID, userId);
+            };
+            startSignalR(); // Start SignalR connection
+        });
+
+        const videoGrid = document.querySelector('[video-grid]');
+        const MYvideoGrid = document.querySelector('[my-video]');
+        const myVideo = document.createElement('video');
+        myVideo.muted = true;
+
+        navigator.mediaDevices.getUserMedia({
+            audio: true,
+            video: true
+        }).then(stream => {
+            addMyVideoStream(myVideo, stream);
+            localStream = stream;
+        });
+
+        // Event when a new user connects
+        connection.on('user-connected', (id) => {
+            if (userId === id) return;
+            console.log("User connected: " + id);
+            connectNewUser(id, localStream);
+        });
+
+        // Mute microphone
+        connection.on("MuteMicrophone", (id) => {
+            if (Peers[id]?.userVideo) {
+                Peers[id].userVideo.srcObject.getAudioTracks().forEach(track => {
+                    track.enabled = false;
+                });
+            }
+        });
+
+        // Unmute microphone
+        connection.on("UnmuteMicrophone", (id) => {
+            if (Peers[id]?.userVideo) {
+                Peers[id].userVideo.srcObject.getAudioTracks().forEach(track => {
+                    track.enabled = true;
+                });
+            }
+        });
+
+        // Mute camera
+        connection.on("MuteCamera", (id) => {
+            if (Peers[id]?.userVideo) {
+                Peers[id].userVideo.srcObject.getVideoTracks().forEach(track => {
+                    track.enabled = false;
+                });
+            }
+        });
+
+        // Unmute camera
+        connection.on("UnmuteCamera", (id) => {
+            if (Peers[id]?.userVideo) {
+                Peers[id].userVideo.srcObject.getVideoTracks().forEach(track => {
+                    track.enabled = true;
+                });
+            }
+        });
+
+        // Event when a user disconnects
+        connection.on('user-disconnected', (id) => {
+            console.log("User disconnected: " + id);
+            if (Peers[id]?.call) {
+                Peers[id].call.close();
+                delete listUserVideo[id]
+                delete Peers[id];
+            }
+        });
+
+        // Event when a new user joins the room
+        myPeer.on('call', call => {
+            call.answer(localStream);
+
+            const userVideo = document.createElement('video');
+            userVideo.id = call.peer;
+
+            call.on('stream', userVideoStream => {
+                addVideoStream(userVideo, userVideoStream, userId);
+            });
+        });
+
+        // Add new video stream
+        const addVideoStream = (video, stream, id) => {
+            video.srcObject = stream;
+            video.addEventListener('loadedmetadata', () => {
+                video.play();
+            });
+            if (listUserVideo[id]){
+                var box = listUserVideo[id];
+                box.appendChild(video);
+            }
+            else
+            {
+                var box = document.createElement("div");
+                box.className = "box";
+                box.appendChild(video);
+                videoGrid.appendChild(box);
+                listUserVideo[id] = box;
+            }
+        };
+
+        // Add local video stream
+        const addMyVideoStream = (video, stream) => {
+            video.srcObject = stream;
+            video.addEventListener('loadedmetadata', () => {
+                video.play();
+            });
+            MYvideoGrid.appendChild(video);
+        };
+
+        // Connect with a new user in the room
+        const connectNewUser = (userId, localStream) => {
+            const userVideo = document.createElement('video');
+            const call = myPeer.call(userId, localStream);
+
+            call.userVideo = userVideo;
+
+            call.on('stream', userVideoStream => {
+                addVideoStream(userVideo, userVideoStream, userId);
+            });
+
+            call.on('close', () => {
+                console.log("Someone left the room");
+                userVideo.parentNode.parentNode.removeChild(userVideo.parentNode);
+                delete Peers[userId]; // Remove the user from Peers when they leave the room
+            });
+
+            Peers[userId] = { call, userVideo };
+        };
+
+        // Toggle microphone state
+        var micBtn = document.getElementById('toggle-microphone');
+        micBtn.addEventListener('click', () => {
+            if (localStream) {
+                const audioTrack = localStream.getAudioTracks()[0];
+
+                if (audioTrack) {
+                    audioTrack.enabled = !audioTrack.enabled; // Toggle audio track enabled state
+                    micBtn.classList.toggle('mute'); // Toggle CSS class for button styling
+
+                    // Send microphone state to other users in the room
+                    if (audioTrack.enabled) {
+                        mic.classList.add("bi-mic");
+                        mic.classList.remove("bi-mic-mute");
+                        connection.invoke("UnmuteMicrophone", userId, RoomID);
+                    } else {
+                        mic.classList.remove("bi-mic");
+                        mic.classList.add("bi-mic-mute");
+                        connection.invoke("MuteMicrophone", userId, RoomID);
+                    }
+                }
+            }
+        });
+
+        // Toggle camera state
+        var cameraBtn = document.getElementById('toggle-camera');
+        cameraBtn.addEventListener('click', () => {
+            if (localStream) {
+                const videoTrack = localStream.getVideoTracks()[0];
+
+                if (videoTrack) {
+                    videoTrack.enabled = !videoTrack.enabled; // Toggle video track enabled state
+                    cameraBtn.classList.toggle('camera-off'); // Toggle CSS class for button styling
+
+                    // Send camera state to other users in the room
+                    if (videoTrack.enabled) {
+                        cam.classList.remove("bi-camera-video-off");
+                        cam.classList.add("bi-camera-video");
+                        connection.invoke("UnmuteCamera", userId, RoomID);
+                    } else {
+                        cam.classList.add("bi-camera-video-off");
+                        cam.classList.remove("bi-camera-video");
+                        connection.invoke("MuteCamera", userId, RoomID);
+                    }
+                }
+            }
+        });
+
+        function setWidthVideo(){
+            var listVideo = document.querySelectorAll("video");
+            var countBox = document.querySelectorAll(".box").length;
+            listVideo.forEach(x =>{
+                x.style.width = (100/countBox)+"%";
+            })
+            listVideo[listVideo.length-1].style.width = "100%";
+        }
+    </script>
+
+	<script>
+		@{
+			DateTime vietnamTime = CurrentDateTime.GetcurrentDateTime;
+			TimeSpan currentTime = vietnamTime.TimeOfDay;
+		}
+										var connectionChat = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+
+		document.getElementById("sendButton").disabled = true;
+
+		connectionChat.on("ReceiveMessage", function (user, message) {
+			var li = document.createElement("li");
+			document.getElementById("messagesList").appendChild(li);
+			li.textContent = `${user} says: ${message} (@(currentTime))`;
+			document.getElementById("messageInput").value = "";
+		});
+
+		connectionChat.start().then(function () {
+			document.getElementById("sendButton").disabled = false;
+		}).catch(function (err) {
+			return console.error(err.toString());
+		});
+
+		document.getElementById("sendButton").addEventListener("click", sendMessage);
+		function sendMessage(event) {
+			var user = "@ViewBag.nameUser";//document.getElementById("userInput").value;
+			var message = document.getElementById("messageInput").value;
+			connectionChat.invoke("SendMessage", user, message).catch(function (err) {
+				return console.error(err.toString());
+			});
+			event.preventDefault();
+		}
+
+		const inputElement = document.getElementById("messageInput");
+
+		inputElement.addEventListener("keydown", function (event) {
+			if (event.keyCode === 13) {
+				event.preventDefault(); // Ngăn chặn hành vi mặc định của phím "Enter" (như submit form)
+
+				const inputValue = inputElement.value.trim();
+
+				if (inputValue != "") {
+					sendMessage();
+				}
+			}
+		});
+	</script>
+	<script>
+		document.querySelector("#btnChatBox").addEventListener("click", () => {
+			document.querySelector("#chatboxcard").style.display = "block";
+			document.querySelector("#dictionarycard").style.display = "none";
+		})
+		document.querySelector("#btnDictionary").addEventListener("click", () => {
+			document.querySelector("#chatboxcard").style.display = "none";
+			document.querySelector("#dictionarycard").style.display = "block";
+		})
+	</script>
+</body>
+
+</html>
