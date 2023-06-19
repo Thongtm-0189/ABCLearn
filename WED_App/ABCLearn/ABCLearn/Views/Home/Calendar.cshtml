@@ -1,12 +1,13 @@
 ﻿@using ABCLearn.DataContext
+@using ABCLearn.Services
+@using ABCLearn.DataAccess;
 @{
 	ViewBag.title = "ABC Learn";
 	var Courses = CourseDAO.Instance.Courses();
-	var User = UserLogin.Instance;
-	DateTime nowUtc = DateTime.UtcNow;
-	TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
-	DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
+	var User = ViewBag.user;
+	DateTime vietnamTime = CurrentDateTime.GetcurrentDateTime;
 	TimeSpan currentTime = vietnamTime.TimeOfDay;
+	List<Calendar> calendares = CalendarDAO.Instance.Calendars();
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -16,8 +17,9 @@
 </head>
 
 <body>
+	@Html.Partial("_spanner")
 	@Html.Partial("_navStart")
-	@if (UserLogin.Instance.RoleID != "Lecturer")
+	@if (ViewBag.Role != "Lecturer")
     {
         <a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
         <a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
@@ -48,29 +50,30 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (var course in Courses)
+				@foreach (Calendar calendar in calendares)
 				{
-					@if(course.Status){
-						@foreach (var calendar in course.Calendars)
-						{
-							<tr>
-								<td><b>@course.Title</b></td>
-								<td>@course.Lecturer.FirstName @course.Lecturer.LastName</td>
-								<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
-								@if (currentTime < calendar.EndTime && currentTime > calendar.StartTime)
-								{
-									<td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
-								}
-								else if (currentTime < calendar.StartTime)
-								{
-									<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
-								}
-								else if (currentTime > calendar.EndTime)
-								{
-									<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
-								}
-							</tr>
-						}
+					var check = CourseDAO.Instance.Courses().First(x => x.Id == calendar.IDCourse).Status;
+					if (check)
+					{
+						Course cor = CourseDAO.Instance.Courses().First(x => x.Id == calendar.IDCourse);
+						var NameLecturer = cor.Lecturer.FirstName + " " + cor.Lecturer.LastName;
+						<tr>
+							<td><b>@calendar.NameCourse</b></td>
+							<td>@NameLecturer</td>
+							<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
+							@if (currentTime < calendar.EndTime && currentTime > calendar.StartTime)
+							{
+								<td><a href="@Url.Action("Index", "MeetingRoom", new {idCourse = calendar.IDCourse})" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
+							}
+							else if (currentTime < calendar.StartTime)
+							{
+								<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
+							}
+							else if (currentTime > calendar.EndTime)
+							{
+								<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
+							}
+						</tr>
 					}
 				}
 			</tbody>

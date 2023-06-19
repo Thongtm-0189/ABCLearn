@@ -10007,19 +10007,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\thong\\.nuget\\packages\\": {}
+    "C:\\Users\\USER\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearnAdmin\\ABCLearnAdmin.csproj",
+      "projectUniqueName": "I:\\Desktop\\ABC\\WED_App\\ABCLearn\\ABCLearnAdmin\\ABCLearnAdmin.csproj",
       "projectName": "ABCLearnAdmin",
-      "projectPath": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearnAdmin\\ABCLearnAdmin.csproj",
-      "packagesPath": "C:\\Users\\thong\\.nuget\\packages\\",
-      "outputPath": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearnAdmin\\obj\\",
+      "projectPath": "I:\\Desktop\\ABC\\WED_App\\ABCLearn\\ABCLearnAdmin\\ABCLearnAdmin.csproj",
+      "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
+      "outputPath": "I:\\Desktop\\ABC\\WED_App\\ABCLearn\\ABCLearnAdmin\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\thong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -10077,7 +10077,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

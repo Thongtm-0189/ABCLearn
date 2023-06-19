@@ -1,0 +1,123 @@
+﻿@model Course
+@using ABCLearn.DataContext
+@using ABCLearn.DataAccess
+@using ABCLearn.Models
+@{
+
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	@Html.Partial("_head")
+</head>
+
+<body>
+	@Html.Partial("_spanner")
+	<!-- tab search dictionary -->
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-1">
+			<div class="row justify-content-center" style="margin-top: 100px">
+				<div class="col-lg-10 text-center">
+					<h1 class="display-3 text-white animated slideInDown">Detail Course</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Profile in here -->
+
+	<div class="container">
+		<div class="main-body">
+			<div class="row gutters-sm">
+				<div class="col-md-8">
+					<div id="EditProfileForm" class="card mb-3 edit-form">
+						<div class="card-body">
+							<form action="@Url.Action("UpdateCourse", "Course")" method="post">
+								<input type="hidden" name="Id" value="@(Model.Id)"></input>
+								<div class="row">
+									<div class="col-sm-3">
+										<h6 class="mb-0">Title</h6>
+									</div>
+									<input class="col-sm-9 text-secondary" name="Title" value="@Model.Title">
+
+									</input>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-3">
+										<h6 class="mb-0">Detail</h6>
+									</div>
+									<input style="height:50px" class="col-sm-9 text-secondary" name="Detail" value="@Model.Detail">
+										
+									</input>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-3">
+										<h6 class="mb-0">Lecturer</h6>
+									</div>
+									<select class="col-sm-9 form-control" name="IDLecturer">
+										@foreach (Lecturer item in LecturerDAO.Instance.Lecturers())
+										{
+											<option value="@item.Id">@item.FirstName @item.LastName</option>
+										}
+									</select>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-3">
+										<h6 class="mb-0">Price</h6>
+									</div>
+									<input id="dobInput" class="col-sm-9 text-secondary datetimepicker-input" name="Price"
+										   data-toggle="datetimepicker" type="number" value="@Model.Price" />
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-3">
+										<h6 class="mb-0">Sale</h6>
+									</div>
+									<input class="col-sm-9 text-secondary" type="number" name="Sale" value="@Model.Sale">
+
+									</input>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-sm-12">
+										<input type="submit" class="btn btn-primary px-5" />
+										<a class="btn btn-primary px-5">Cancer</a>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="row gutters-sm">
+						</div>
+					</div>
+				</div>
+				<div class="container col-3">
+					<table class="table table-striped text-center">
+						<thead>
+							<tr>
+								<th>Student</th>
+							</tr>
+						</thead>
+						<tbody>
+							@if (Model.Students.Count > 0)
+							{
+								@foreach (Student student in Model.Students)
+								{
+									<tr>
+										<td>
+											@student.FirstName @student.LastName
+										</td>
+									</tr>
+								}
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		@Html.Partial("_endScript")
+</body>
+
+</html>
