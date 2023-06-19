@@ -34,6 +34,14 @@
       <FileName>Models\Calendar.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="ABCLearn.DataContext.CourseDAO">
+    <Position X="12.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAAAEAEAAAAgAAEAAAAAAAAEAAEAAQgAAABCAAgA=</HashCode>
+      <FileName>DataAccess\CourseDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Interface Name="ABCLearn.DataAccess.IServiceDAO&lt;T, P&gt;">
     <Position X="5.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
