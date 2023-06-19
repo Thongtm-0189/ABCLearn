@@ -1,0 +1,155 @@
+﻿@using ABCLearn.DataContext
+@using ABCLearn.DataAccess
+@{
+	ViewBag.title = "ABC Learn";
+	var Courses = CourseDAO.Instance.Courses();
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	@Html.Partial("_head")
+</head>
+
+<body>
+	@Html.Partial("_spanner")
+	@Html.Partial("_navStart")
+	@if (ViewBag.Role != "Lecturer")
+	{
+		<a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
+		<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+		<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+	}
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link active">Course</a>
+	@Html.Partial("_navEnd")
+	<!-- tab search dictionary -->
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-5">
+			<div class="row justify-content-center py-5">
+				<div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+					<h1 class="display-3 text-white mb-3 animated slideInDown">Dictionary</h1>
+					<p class="fs-4 text-white mb-4 animated slideInDown">Enter the word to find</p>
+					<div class="position-relative w-75 mx-auto animated slideInDown">
+						<form action="/Dictionary?" method="get">
+							<input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" name="searchDictionary" id="word" type="text" value="@ViewBag.word" placeholder="Eg: Vocabulary">
+							<button type="submit" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;">Search</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Sourse Start -->
+	<div class="container-xxl py-5">
+		<div class="container">
+			<div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+				<h6 class="section-title bg-white text-center text-primary px-3">Course</h6>
+				<h1 class="mb-5">Our Course</h1>
+			</div>
+
+			<div class="row g-4 justify-content-center">
+				@if (Courses.Count > 0)
+				{
+					@for (int i = 0; i < @Courses.Count; i++)
+					{
+						Random random = new Random();
+						int randomNumber = random.Next(1, 11);
+						@if (@Courses[i].Status)
+						{
+							<div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.@(randomNumber)s">
+								<div class="package-item">
+									<div class="overflow-hidden">
+										<img class="img-fluid" src="~/img/Course/package-@(randomNumber).jpg" alt="">
+									</div>
+									<div class="d-flex border-bottom">
+										<small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2"></i>Online</small>
+										<small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2"></i>Every days</small>
+										<small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>All Student</small>
+									</div>
+									<div class="text-center p-4">
+										@if (Courses[i].Sale > 0)
+										{
+											<h3 class="mb-0"> <del><i>@Courses[i].Price</i></del> @(Courses[i].Price - (Courses[i].Price * Courses[i].Sale) / 100)</h3>
+										}
+										else
+										{
+											<h3 class="mb-0"> @Courses[i].Price </h3>
+										}
+										<div class="mb-3">
+											<small class="fa fa-star text-primary"></small>
+											<small class="fa fa-star text-primary"></small>
+											<small class="fa fa-star text-primary"></small>
+											<small class="fa fa-star text-primary"></small>
+											<small class="fa fa-star text-primary"></small>
+										</div>
+										<p><b>@Courses[i].Title</b></p>
+										<p>@Courses[i].Detail</p>
+										<div class="d-flex justify-content-center mb-2">
+											<a href="@Url.Action("CourseDetail", "Home", new{id = Courses[i].Id})" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
+											<button onclick="formTable(@(Courses[i].Id))" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Enroll Now</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						}
+					}
+				}
+			</div>
+		</div>
+	</div>
+
+	<div id="PaymentModel" class="modal fade p-lg-5" role="dialog">
+		<div class="modal-dialog modal-lg" role="content">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 id="payTitle" class="modal-title text-dark">ADD New Calendar</h4>
+					<ion-icon class="closeForm" style="cursor: pointer;" onclick="formTable()" name="close-outline"></ion-icon>
+				</div>
+				<div class="modal-body">
+					<form action="@Url.Action("SelectTypePay", "EnrollCourse")" method="post" enctype="multipart/form-data">
+						<input id="coursepayment" type="hidden" name="IdCourse" value="" />
+						<div class="form-row row">
+							<div class="row col-6">
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="paymentMethod" id="VNPAY" value="VNPAY">
+									<label class="form-check-label" for="VNPAY">
+										<img src="~/img/VNPAY.png" class="img-responsive img-circle" style="width: 20%; height: auto;" />
+									</label>
+								</div>
+							</div>
+							<div class="row col-6">
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="paymentMethod" id="MOMO" value="MOMO">
+									<label class="form-check-label" for="MOMO">
+										<img src="~/img/MOMO.png" class="img-responsive img-circle" style="width: 20%; height: auto; border-radius: 10px" />
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="form-row p-md-3 center">
+							<button type="button" onclick="formTable()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
+							<button type="submit" class="btn btn-primary btn-sm ml-1">submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Sourse End -->
+	@Html.Partial("_footer")
+	@Html.Partial("_endScript")
+	<script>
+		
+		function formTable(id) {
+			document.querySelector("#coursepayment").value = id;
+			document.querySelector("#payTitle").innerHTML = "Choose a payment method to pay for the course ";
+			console.log(id)
+			$('#PaymentModel').modal('toggle');
+
+		}
+	</script>
+</body>
+
+</html>

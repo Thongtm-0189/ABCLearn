@@ -1,0 +1,65 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @Html.Partial("_head")
+</head>
+
+<body>
+    @Html.Partial("_navStart")
+    <a href="@Url.Action("Index", "Home")" class="nav-item nav-link">Home</a>
+    <a href="@Url.Action("About", "Home")" id="About" class="nav-item nav-link">About US</a>
+    <a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+    <a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+    @Html.Partial("_navEnd")
+    <div class="container-fluid bg-primary mb-5 hero-header">
+        <div class="container py-1">
+            <div class="row justify-content-center" style="margin-top: 100px">
+                <div class="col-lg-10 text-center">
+                    <h1 class="display-3 text-white animated slideInDown">@ViewBag.check</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <p id="atten"><strong>Back to home page in 10s</strong></p>
+                <h5 class="card-title">Payment Details</h5>
+                <p class="card-text">Order Description: @Model.OrderDescription</p>
+                <p class="card-text">Transaction ID: @Model.TransactionId</p>
+                <p class="card-text">Order ID: @Model.OrderId</p>
+                <p class="card-text">Payment Method: @Model.PaymentMethod</p>
+                <p class="card-text">Payment ID: @Model.PaymentId</p>
+                <p class="card-text">Success: @Model.Success</p>
+                <p class="card-text">Token: @Model.Token</p>
+                <p class="card-text">VnPay Response Code: @Model.VnPayResponseCode</p>
+            </div>
+        </div>
+    </div>
+    @Html.Partial("_footer")
+    @Html.Partial("_endScript")
+    <script>
+        // Hàm đếm ngược
+        function countdown() {
+            var seconds = 10; // Số giây cần đếm ngược
+            var timer = setInterval(function () {
+                seconds--;
+                document.querySelector("#atten").innerHTML = `<strong>Back to home page in ${seconds}s</strong>`;
+                if (seconds <= 0) {
+                    clearInterval(timer);
+                    // Chuyển hướng về trang Home/Index
+                    window.location.href = '@Url.Action("Index", "Home")';
+                }
+            }, 1000); // 1000 milliseconds = 1 giây
+        }
+
+        // Gọi hàm đếm ngược khi trang được tải
+        document.addEventListener('DOMContentLoaded', function () {
+            countdown();
+        });
+    </script>
+</body>
+
+</html>

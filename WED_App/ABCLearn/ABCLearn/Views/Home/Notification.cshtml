@@ -1,0 +1,70 @@
+﻿@using ABCLearn.DataAccess
+@{
+	DateTime nowUtc = DateTime.UtcNow;
+	TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
+	DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
+	var notiList = NotificationDAO.Instanse.Transactions().Where(x => x.EndDate > vietnamTime).ToList();
+	ViewBag.title = "ABC Learn";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	@Html.Partial("_head")
+</head>
+
+<body>
+	@Html.Partial("_spanner")
+	@Html.Partial("_navStart")
+	@if (ViewBag.Role != "Lecturer")
+	{
+		<a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
+		<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+		<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+	}
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+	@Html.Partial("_navEnd")
+	<!-- tab search dictionary -->
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-1">
+			<div class="row justify-content-center" style="margin-top: 100px">
+				<div class="col-lg-10 text-center">
+					<h1 class="display-3 text-white animated slideInDown">Hot News</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+		<div class="container">
+			<div class="text-center">
+				<h6 class="section-title bg-white text-center text-primary px-3">NEWS</h6>
+				<h1 class="mb-5"></h1>
+			</div>
+			@if (notiList.Count > 0)
+			{
+				<div class="owl-carousel testimonial-carousel position-relative">
+					@foreach (var noti in notiList)
+					{
+						Random random = new Random();
+						int randomNumber = random.Next(1, 11);
+						<div class="testimonial-item bg-white text-center border p-4">
+							<img class="bg-white rounded-circle shadow p-1 mx-auto mb-3" src="~/img/Course/package-@(randomNumber).jpg" style="width: 80px; height: 80px;">
+							<h5 class="mb-0">@noti.Title</h5>
+							<p>@noti.StartDate.ToString("yyyy-MM-dd")</p>
+							<p class="mb-0">@noti.Detail</p>
+						</div>
+					}
+				</div>
+			}
+			else
+			{
+				<h6 class="mb-1 text-center">Nothing</h6>
+			}
+
+		</div>
+	</div>
+	@Html.Partial("_footer")
+	@Html.Partial("_endScript")
+</body>
+
+</html>

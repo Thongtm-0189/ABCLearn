@@ -1,0 +1,78 @@
+﻿@using ABCLearn.DataAccess
+@{
+	string role = ViewBag.user.RoleID;
+}
+@model List<Student>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	@Html.Partial("_head")
+</head>
+
+<body>
+	@Html.Partial("_spanner")
+	@Html.Partial("_navStart")
+	@if (ViewBag.Role != "Lecturer")
+	{
+		<a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
+		<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+		<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+	}
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+	@Html.Partial("_navEnd")
+	<!-- tab search dictionary -->
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-1">
+			<div class="row justify-content-center" style="margin-top: 100px">
+				<div class="col-lg-10 text-center">
+					<h1 class="display-3 text-white animated slideInDown">Students</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Student Start -->
+	<div class="container">
+		<form action="@Url.Action("searchStudentByLastname","Home")" method="post">
+			<input type="text" class="btn btn-primary" name="LastName" value="" />
+			<input type="hidden" class="btn btn-primary" name="IDCourse" value="@(ViewBag.IdCourse)" />
+			<button id="btnSub" type="submit" class="btn col-3 btn-primary">Search by Last name</button>
+		</form>
+		<table class="table table-striped text-center">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Phone</th>
+					<th>Email</th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (Model.Count > 0)
+				{
+					@foreach (var student in Model)
+					{
+						<form action="@Url.Action("StudentAction","Admin")" method="post">
+						<tr>
+							<td>@student.Id</td>
+							<td>@student.FirstName</td>
+							<td>@student.LastName</td>
+							<td>@student.Phone</td>
+							<td>@student.Email</td>
+						</tr>
+						</form>
+					}
+				}
+			</tbody>
+		</table>
+	</div>
+	<!-- Student End -->
+	@Html.Partial("_footer")
+	@Html.Partial("_endScript")
+	<script>
+	</script>
+</body>
+
+</html>

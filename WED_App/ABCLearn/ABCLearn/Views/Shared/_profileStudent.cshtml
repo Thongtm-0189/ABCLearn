@@ -1,0 +1,314 @@
+﻿@using ABCLearn.Services
+@using ABCLearn.DataAccess
+@{
+	DateTime vietnamTime = CurrentDateTime.GetcurrentDateTime;
+	TimeSpan currentTime = vietnamTime.TimeOfDay;
+}
+@model List<Transaction>
+<div class="container">
+	<button id="transaction" onclick="formTable()" class="btn btn-primary px-5">transaction</button>
+	<div id="addModal" class="modal fade p-lg-5" role="dialog">
+		<div class="modal-dialog modal-lg" role="content">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title text-dark">Transaction History</h4>
+					<ion-icon class="closeForm" style="cursor: pointer;" onclick="formTable()" name="close-outline"></ion-icon>
+				</div>
+				<div class="modal-body">
+					<div class="form-row row" style="display: block; height: 300px; overflow: auto;">
+						<table class="table table-striped text-center">
+							<thead>
+								<tr>
+									<th>Order ID</th>
+									<th>Course Title</th>
+									<th>Price</th>
+									<th>Date</th>
+									<th>Method</th>
+								</tr>
+							</thead>
+							<tbody >
+								@if (Model.Count > 0)
+								{
+									@foreach (var course in Model)
+									{
+										<tr>
+											<td>@course.OrderID</td>
+											<td>@course.CourseTitle</td>
+											<td>@course.Price</td>
+											<td>@course.Created</td>
+											<td>@course.Method</td>
+										</tr>
+									}
+								}
+							</tbody>
+						</table>
+					</div>
+					<div class="form-row p-md-3 center">
+						<button type="button" onclick="formTable()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="main-body">
+		<div class="row gutters-sm">
+			<div class="col-md-4 mb-3">
+				<div class="card">
+					<div class="card-body">
+						<div class="d-flex flex-column align-items-center text-center">
+							@if (ViewBag.user.Avatar.Length > 2)
+							{
+								<img src="~/img/Avatar/Student/@(ViewBag.user.Avatar)" alt="Admin" class="rounded-circle" width="242">
+							}
+							else
+							{
+								<img src="~/img/Avatar/Student/@(ViewBag.user.Gander.Trim()).jpg" alt="Admin" class="rounded-circle" width="242">
+							}
+							<div class="mt-3">
+								<h4>@ViewBag.user.FirstName @ViewBag.user.LastName</h4>
+								<p class="text-secondary mb-1">@ViewBag.user.RoleID</p>
+								<form method="post" action="@Url.Action("UploadAvatar","Profile")" enctype="multipart/form-data">
+									<div class="mb-3">
+										<input id="fileInputStudent" class="form-control" type="file" accept="image/*" name="image" />
+									</div>
+									<button id="uploadButtonStudent" class="btn d-none btn-primary" type="submit">Upload</button>
+									<button id="cancel-buttonStudent" class="btn d-none btn-primary">Cancel</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-8 ">
+				<div id="ProfileForm" class="card mb-3">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-sm-3">
+								<h6 class="mb-0">First Name</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								@ViewBag.user.FirstName
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-3">
+								<h6 class="mb-0">Last Name</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								@ViewBag.user.LastName
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-3">
+								<h6 class="mb-0">Gander</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								@ViewBag.user.Gander
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-3">
+								<h6 class="mb-0">DOB</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								@ViewBag.user.DOB
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-3">
+								<h6 class="mb-0">Password</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								*********
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-3">
+								<h6 class="mb-0">Email</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								@ViewBag.user.Email
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-3">
+								<h6 class="mb-0">Phone</h6>
+							</div>
+							<div class="col-sm-9 text-secondary">
+								@ViewBag.user.Phone
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-sm-12">
+								<a onclick="showProfileForm()" class="btn btn-primary px-5">Edit</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="row gutters-sm">
+					</div>
+				</div>
+
+				<div id="EditProfileForm" class="card mb-3 edit-form" style="display:none ;">
+					<div class="card-body">
+						<form action="@Url.Action("EditInformation", "Profile")" method="post">
+							<input type="hidden" name="Id" value="@(ViewBag.user.Id)" />
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">First Name</h6>
+								</div>
+								<input maxlength="20" class="col-sm-9 text-secondary" placeholder="First Name" name="FirstName" value="@ViewBag.user.FirstName">
+
+								</input>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Last Name</h6>
+								</div>
+								<input maxlength="20" class="col-sm-9 text-secondary" placeholder="Last Name" name="LastName" value="@ViewBag.user.LastName">
+
+								</input>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Gander</h6>
+								</div>
+								<select class="col-sm-9 text-secondary" name="Gander" placeholder="First Name">
+									<option value="Male">
+										Male
+									</option>
+									<option value="Female">
+										Female
+									</option>
+								</select>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Day of Birthday</h6>
+								</div>
+								<input id="dobInput" class="col-sm-9 text-secondary datetimepicker-input" name="DOB" data-toggle="datetimepicker" type="date" placeholder="Last Name" value="@ViewBag.user.DOB.ToString("dd-MM-yyyy")" />
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Password</h6>
+								</div>
+								<input maxlength="20" class="col-sm-9 text-secondary" title="Password must be at least 8 characters, including at least one uppercase letter, one lowercase letter, one number and one special character" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$" name="Password" placeholder="Password" value="@ViewBag.user.Password">
+
+								</input>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Email</h6>
+								</div>
+								<input maxlength="30" class="col-sm-9 text-secondary" name="Email" placeholder="Email" type="email" value="@ViewBag.user.Email">
+								</input>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-3">
+									<h6 class="mb-0">Phone</h6>
+								</div>
+								<input maxlength="10" pattern="[0-9]{10}" maxlength="20" class="col-sm-9 text-secondary" name="Phone" type="tel" placeholder="Phone Number" value="@ViewBag.user.Phone">
+								</input>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-sm-12">
+									<input type="submit" class="btn btn-primary px-5" />
+									<a onclick="showEditProfileForm()" class="btn btn-primary px-5">Cancer</a>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="row gutters-sm">
+					</div>
+				</div>
+				@if (ViewBag.user.Courses.Count > 0)
+				{
+					<div class="container">
+						<table class="table table-striped text-center">
+							<thead>
+								<tr>
+									<th>Course</th>
+									<th>Time</th>
+									<th>Status</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (Course course in ViewBag.user.Courses)
+								{
+									@if (course.Status)
+									{
+										@if (course.Calendars.Count > 0)
+										{
+											@foreach (Calendar calendar in course.Calendars)
+											{
+												<tr>
+													<td><b>@course.Title</b></td>
+													<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
+													@if (currentTime < calendar.EndTime && currentTime > calendar.StartTime)
+													{
+														<td><a href="@Url.Action("Index", "MeetingRoom", new {idCourse = course.Id})" class="btn-primary px-3" style="border-radius:30px;">Join Now</a></td>
+													}
+													else if (currentTime < calendar.StartTime)
+													{
+														<td class=""><a class="btn-primary px-3" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
+													}
+													else if (currentTime > calendar.EndTime)
+													{
+														<td class=""><a class="btn-primary px-3" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
+													}
+												</tr>
+											}
+										}
+									}
+								}
+							</tbody>
+						</table>
+					</div>
+				}
+			</div>
+
+		</div>
+	</div>
+
+
+</div>
+<script src="~/js/AdminSet.js"></script>
+<script>
+	var listEmail = @Html.Raw(Json.Serialize(ViewBag.user.Courses));
+	console.log(listEmail);
+	var uploadButton = document.getElementById('uploadButtonStudent');
+	const cancelButton = document.getElementById('cancel-buttonStudent');
+	console.log("@ViewBag.fail")
+	document.getElementById('fileInputStudent').addEventListener('change', function () {
+		var fileName = this.value.split('\\').pop();
+		if (fileName) {
+			uploadButton.classList.remove('d-none');
+			cancelButton.classList.remove('d-none');
+		} else {
+			uploadButton.classList.add('d-none');
+			cancelButton.classList.add('d-none');
+		}
+	});
+
+	cancelButton.addEventListener('click', function () {
+		fileInput.value = '';
+		cancelButton.style.display = 'none';
+	});
+
+</script>

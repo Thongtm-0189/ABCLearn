@@ -1,0 +1,78 @@
+﻿@using ABCLearn.DataAccess
+@{
+	DateTime nowUtc = DateTime.UtcNow;
+	TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
+	DateTime vietnamTime = TimeZoneInfo.ConvertTimeFromUtc(nowUtc, vietnamTimeZone);
+	var notiList = NotificationDAO.Instanse.Transactions().Where(x => x.EndDate > vietnamTime).ToList();
+}
+<!-- Topbar Start -->
+<div class="container-fluid bg-dark px-5 d-none d-lg-block">
+	<div class="row gx-0">
+		<div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
+			<div class="d-inline-flex align-items-center" style="height: 45px;">
+				<small class="me-3 text-light"><i class="fa fa-map-marker-alt me-2"></i>123 Street, City, VietNam</small>
+				<small class="me-3 text-light"><i class="fa fa-phone-alt me-2"></i>035-979-1037</small>
+				<small class="text-light"><i class="fa fa-envelope-open me-2"></i>abclearneducation@gmail.com</small>
+			</div>
+		</div>
+		<div class="col-lg-4 text-center text-lg-end">
+			<div class="d-inline-flex align-items-center" style="height: 45px;">
+				<a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
+				<a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
+				<a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
+				<a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
+				<a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Topbar End -->
+<!-- Navbar & Hero Start -->
+<div class="container-fluid position-relative p-0">
+	<nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+		@if (ViewBag.Role != "Lecturer")
+		{
+			<a href="@Url.Action("Index", "Home")" class="navbar-brand p-0 d-flex align-items-center">
+				<img src="~/img/Logo-icon.png" class="fa-font-awesome-logo-full img-fluid" style="height: 200px;" alt="logo-ABCLearn">
+				<h1 class="text-primary m-0">BCLearn</h1>
+			</a>
+		}
+		else
+		{
+			<a class="navbar-brand p-0 d-flex align-items-center">
+				<img src="~/img/Logo-icon.png" class="fa-font-awesome-logo-full img-fluid" style="height: 200px;" alt="logo-ABCLearn">
+				<h1 class="text-primary m-0">BCLearn</h1>
+			</a>
+		}
+		<div class="dropdown">
+			<a class="btn btn-primary dropdown-toggle" href="@Url.Action("ViewNotification", "Notification")" id="notificationButton" data-toggle="dropdown">
+				<ion-icon name="notifications"></ion-icon> <span class="caret"></span>
+				@if(notiList.Count >0)
+				{
+					<span style="position: absolute;  top: 10px;  right: 50%;  width: 15%;  height: 8px;  background-color: red;  border-radius: 50%;"></span>
+				}
+			</a>
+			<div class="dropdown-menu" aria-labelledby="notificationButton">
+				@if (notiList.Count > 0)
+				{
+					@foreach (var noti in notiList)
+					{
+						<div class="dropdown-item">
+							<h6 class="mb-1">@noti.Title</h6>
+							<p class="text-muted mb-0" style="font-size:10px"><small>@noti.StartDate.ToString("yyyy-MM-dd")</small></p>
+						</div>
+					}
+				}
+				else
+				{
+					<h6 class="mb-1 text-center">Nothing</h6>
+				}
+			</div>
+		</div>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+			<span class="fa fa-bars"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarCollapse">
+			<div class="navbar-nav ms-auto py-0">
+
+

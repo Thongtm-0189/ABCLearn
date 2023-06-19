@@ -1,0 +1,66 @@
+﻿@{
+	var pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,32}$/";
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	@Html.Partial("_head")
+</head>
+<body class=" hero-header">
+	@Html.Partial("_navStart")
+	<a href="@Url.Action("Index", "Home")" class="nav-item nav-link">Home</a>
+	<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+	<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+	@Html.Partial("_navEnd")
+
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-1 justify-content-center">
+			<div class="row justify-content-center py-5">
+				<h1 class="text-center text-white animated slideInDown">Welcome to ABC-Learning</h1>
+			</div>
+
+			<div id="forgotPass" style="margin: 50px 0 160px 0" class="col-md-12 title">
+				<div class="row ">
+					<div class="col-3"></div>
+					<form action="@Url.Action("ResetPassword","Login")" class="row col-6 justify-content-center">
+						<h2 class="text-center text-white">Verify your email address</h2>
+						<div id="left-form" class="col-10 col-md-10 justify-content-center">
+							<div class="form-group">
+								<label for="registerPassword">New Password</label>
+								<input type="password" name="Password" class="form-control" maxlength="20" title="Password must be at least 8 characters, including at least one uppercase letter, one lowercase letter, one number and one special character" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$" id="registerPassword" placeholder="Enter Password EX:Abc123@@" required>
+								<small><span id="spanPass" style="color:red; display: none">Not correct </span></small>
+							</div>
+							<div class="form-group">
+								<label for="registerConfirmPassword">Confirm password</label>
+								<input type="password" onchange="checkPasswordMatch()" class="form-control" id="registerConfirmPassword" placeholder="Enter Confirm password" required>
+								<small><span id="spanConfirmpass" style="color:red; display:none">Password not correct</span></small>
+							</div>
+							<input type="hidden" value="reset" name="forgot" />
+							<button id="btnSub" type="submit" class="btn btn-primary">Confirm</button>
+							<p>If you can not see it, you should check it in spam Email</p>
+						</div>
+					</form>
+					<div class="col-3"></div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	@Html.Partial("_endScript")
+	<script>
+		function checkPasswordMatch() {
+			var password = document.getElementById("registerPassword").value;
+			var confirmPassword = document.getElementById("registerConfirmPassword").value;
+
+			if (password === confirmPassword) {
+				document.getElementById("registerConfirmPassword").setCustomValidity("");
+			} else {
+				document.getElementById("registerConfirmPassword").setCustomValidity("Re-entered password does not match");
+			}
+		}
+	</script>
+</body>
+</html>

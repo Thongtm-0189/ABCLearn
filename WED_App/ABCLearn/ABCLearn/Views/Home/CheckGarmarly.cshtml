@@ -1,0 +1,83 @@
+﻿@using ABCLearn.DataContext
+@using ABCLearn.DataAccess
+@{
+	string scriptUrl = "https://cdn.jsdelivr.net/npm/@grammarly/editor-sdk?clientId=client_XraDzQEXXHpqVdrBjcgAsG";
+	ViewBag.top = "top";
+	ViewBag.title = "ABC Learn";
+	var Lecturers = LecturerDAO.Instance.Lecturers();
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	@Html.Partial("_head")
+</head>
+
+<body>
+	@Html.Partial("_navStart")
+	@if (ViewBag.Role != "Lecturer")
+    {
+        <a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
+        <a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+		<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link ">Contact</a>
+    }
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link ">Course</a>
+	@Html.Partial("_navEnd")
+	<!-- tab search dictionary -->
+	<div class="container-fluid bg-primary mb-2 hero-header">
+		<div class="container py-1">
+			<div class="row justify-content-center" style="margin-top: 100px">
+				<div class="col-lg-10 text-center">
+					<h1 class="display-3 text-white animated slideInDown">Gramarly</h1>
+					<p class="fs-4 text-white animated slideInDown">Enter your text we can check it for you</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--text area in here-->
+	<div class="container">
+		<div class="">
+			<grammarly-editor-plugin>
+				<textarea class="form-control" id="multilineInput" style="resize: none; height: 350px" placeholder="Enter your text..."></textarea>
+			</grammarly-editor-plugin>
+		</div>
+		<div class="row justify-content-center">
+			<button id="copy" type="submit" class="col-1 btn btn-primary rounded-pill right border-10" style="margin-top: 7px;">Copy</button>
+			<button id="Past" onclick="pasteContent()" type="submit" class="col-1 btn btn-primary rounded-pill right border-10" style="margin-top: 7px;">Past</button>
+		</div>
+	</div>
+
+
+	<script src="@Html.Raw(scriptUrl)"></script>
+	<script>
+		//copy nọi dung sau khi sửa
+		document.querySelector("#copy").onclick = function () {
+			document.querySelector("textarea").select();
+			alert("copied")
+			document.execCommand('copy');
+		}
+
+		//past nội dung đã copy
+		function pasteContent() {
+			// Kiểm tra xem trình duyệt có hỗ trợ Clipboard API không
+			if (navigator.clipboard && navigator.clipboard.readText) {
+				// Đọc nội dung đã sao chép từ Clipboard
+				navigator.clipboard.readText()
+					.then((content) => {
+						// Gán nội dung đã sao chép vào textarea
+						document.querySelector("textarea").value = content;
+					})
+					.catch((error) => {
+						console.error('Lỗi khi đọc nội dung từ Clipboard:', error);
+					});
+			} else {
+				// Trình duyệt không hỗ trợ Clipboard API
+				console.warn('Trình duyệt của bạn không hỗ trợ Clipboard API.');
+			}
+		}
+	</script>
+	@Html.Partial("_endScript")
+</body>
+
+</html>

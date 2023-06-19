@@ -1,0 +1,123 @@
+﻿@model List<Quiz>
+@using ABCLearn.DataAccess
+@{
+	string role = ViewBag.Role;
+	ViewBag.title = "ABC Learn";
+	List<Course> Courses = new List<Course>();
+	if (ViewBag.login)
+	{
+		var user = ViewBag.user;
+		Courses = user.Courses;
+	}
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	@Html.Partial("_head")
+</head>
+
+<body>
+	@Html.Partial("_spanner")
+	@Html.Partial("_navStart")
+	@if (ViewBag.Role != "Lecturer")
+	{
+		<a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
+		<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+		<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+	}
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+	@Html.Partial("_navEnd")
+	<!-- tab search dictionary -->
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-1">
+			<div class="row justify-content-center" style="margin-top: 100px">
+				<div class="col-lg-10 text-center">
+					<h1 class="display-3 text-white animated slideInDown">Test your ability</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		@if (role == "Student")
+		{
+			<form action="@Url.Action("Quiz","Quiz")" class="row col-6 justify-content-center" method="post">
+				<div class="form-group col-9">
+					<p>Your course: </p>
+					<select name="courseChoise" class="form-control">
+						@foreach (var courseChoise in Courses)
+						{
+							<option value="@(courseChoise.Id)">
+								@(courseChoise.Title)
+							</option>
+						}
+					</select>
+				</div>
+				<button id="btnSub" type="submit" class="btn col-3 btn-primary">Change questions by course</button>
+			</form>
+		}
+
+		@if (ViewBag.Role != "Lecturer" && Model.Count>0)
+		{
+			<form action="@Url.Action("SubmitQuiz","Quiz")" class="form-control justify-content-center" method="post">
+				<table class="table table-striped">
+					<tbody>
+						@foreach (var quiz in Model)
+						{
+							<tr>
+								<td>
+									<p style="margin-top: 20px">@quiz.Question</p>
+									<input type="radio" class="form-check-input" name="answer[@(quiz.Id)]" value="@quiz.AnswerA" />
+									<label class="form-check-label">
+										A: @quiz.AnswerA
+									</label>
+									<br />
+									<input type="radio" class="form-check-input" name="answer[@(quiz.Id)]" value="@quiz.AnswerB" />
+									<label class="form-check-label">
+										B: @quiz.AnswerB
+									</label>
+									<br />
+									<input type="radio" class="form-check-input" name="answer[@(quiz.Id)]" value="@quiz.AnswerC" />
+									<label class="form-check-label">
+										C: @quiz.AnswerC
+									</label>
+									<br />
+									<input type="radio" class="form-check-input" name="answer[@(quiz.Id)]" value="@quiz.AnswerD" />
+									<label class="form-check-label">
+										D: @quiz.AnswerD
+									</label>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+				<div class="m-5">
+					<input type="radio" id="checkSubmit" class="form-check-input" />
+					<label class="form-check-label">
+						<b>I was sure to submit the post</b>
+					</label>
+					<div id="btnSubmit" style="display: none" class="container justify-content-center">
+						<input type="submit" class="btn btn-primary" value="Done" />
+					</div>
+				</div>
+			</form>
+		}
+	</div>
+	<!-- Quiz Start -->
+	<!-- Quiz End -->
+	@Html.Partial("_footer")
+	@Html.Partial("_endScript")
+	<script>
+		var checkSubmit = document.querySelector("#checkSubmit");
+		var tbnSubmit = document.querySelector("#btnSubmit");
+		checkSubmit.addEventListener('click', (e) => {
+			if (e.target.checked) {
+				tbnSubmit.style.display = "block";
+			} else {
+				tbnSubmit.style.display = "none";
+			}
+		})
+	</script>
+</body>
+
+</html>

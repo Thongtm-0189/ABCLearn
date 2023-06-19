@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.title = "ABC Learn";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @Html.Partial("_head")
+</head>
+
+<body>
+    @Html.Partial("_spanner")
+    @Html.Partial("_navStart")
+    @if (UserLogin.Instance.RoleID != "Lecturer")
+    {
+        <a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
+        <a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+        <a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+    }
+    <a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+    @Html.Partial("_navEnd")
+    <div class="container-fluid bg-primary mb-5 hero-header" style="height: 400px">
+        <div class="container py-5">
+            <div class="row justify-content-center py-5"">
+                <div class="col-lg-10 pt-lg-5 text-center">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Dictionary</h1>
+                    <p class="fs-4 text-white mb-4 animated slideInDown">Enter the word to find</p>
+                    <div class="position-relative w-75 mx-auto animated slideInDown">
+                        <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" id="word" type="text" value="@ViewBag.word" placeholder="Eg: Vocabulary">
+                        <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="content" style="margin: 0 7% 40px 7%">
+        <h1 id="title" class="text-primary m-0 text-center text-decoration-underline" style=""></h1>
+        <div id="phonetic"></div>
+        <div id="meaning"></div>
+    </div>
+    @Html.Partial("_footer")
+    @Html.Partial("_endScript")
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+        let word = "@ViewBag.word";
+        let meaning = [];
+        let phonetic = [];
+        document.getElementById("word").addEventListener('change', (e)=>{search(e)});
+        const search = (event) => {
+            if (event != null) word = event.target.value;
+            //console.log("hehe");
+            axios.get(
+                `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+            ).then(
+                (res) => {
+                    tempPhonetic = "<h5>Phonology</h5>";
+                    for (let index = 1; index < res.data[0].phonetics.length; index++) {
+                        tempPhonetic += `<i class="phonic">${res.data[0].phonetics[index].text}</br></i>`;
+                    }
+
+                    function PrintDefi(data) {
+                        //console.log(data.definitions[0])
+                        tempDefinition = "";
+                        for (let index = 0; index < data.definitions.length; index++) {
+                            tempDefinition += `<p class="definition">${data.definitions[index].definition}</p>`;
+                        }
+                        return tempDefinition;
+                    }
+
+                    tempMeaning = "";
+                    for (let index = 0; index < res.data[0].meanings.length; index++) {
+                        tempMeaning += `<div class="wrap-meaning">
+                                            <h5 class="part-of-speech">${res.data[0].meanings[index].partOfSpeech}</h5>
+                                             <p class="definition">
+                                                 ${PrintDefi(res.data[0].meanings[index])}
+                                             </p>
+                                        </div>`;
+                    }
+                    //console.log(res.data[0]);
+                    //console.log(res.data[0].phonetics[0].text);
+                    document.getElementById("title").innerText = res.data[0].word;
+                    document.getElementById("phonetic").innerHTML = tempPhonetic+"<hr/>";
+                    document.getElementById("meaning").innerHTML = tempMeaning+"<hr/>";
+                    document.querySelector(".definition").innerHTML = tempDefinition + "<hr/>";
+                }
+            ).catch(()=>{
+                document.getElementById("title").innerText = `NOT FOUND THE WORD ${word}`;
+                document.getElementById("phonetic").innerHTML = "";
+                document.getElementById("meaning").innerHTML = "";
+                document.querySelector(".definition").innerHTML = "";
+            })
+        }
+        search(null);
+    </script>
+</body>
+
+</html>

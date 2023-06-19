@@ -1,0 +1,225 @@
+﻿@using ABCLearn.DataContext
+@using ABCLearn.DataAccess
+@{
+	ViewBag.title = "ABC Learn";
+	var pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,32}$/";
+	List<string> StudentEmail = new List<string>();
+	List<string> LecturerEmail = new List<string>();
+	StudentDAO.Instance.Students().ForEach(x => StudentEmail.Add(x.Email));
+	LecturerDAO.Instance.Lecturers().ForEach(x => LecturerEmail.Add(x.Email));
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	@Html.Partial("_head")
+</head>
+<body class=" hero-header">
+	@Html.Partial("_spanner")
+	@Html.Partial("_navStart")
+	<a href="@Url.Action("Index", "Home")" class="nav-item nav-link">Home</a>
+	<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link">Course</a>
+	<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+	@Html.Partial("_navEnd")
+
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-1">
+			<div class="row justify-content-center py-5">
+				<h1 class="text-center text-white animated slideInDown">Welcome to ABC-Learning</h1>
+			</div>
+			<div class="container">
+				<div class="row justify-content-center py-1">
+					<div id="loginForm" class="col-md-4 py-3 title wow" data-wow-delay="0.2s">
+						<h1 class="text-center text-white">Login</h1>
+						<form action="@Url.Action("Login", "Login")">
+							<p class="text-center" style="color: red"><small>@TempData["MessError"]</small></p>
+							<div class="form-group">
+								<label for="loginUsername">Email:</label>
+								<input type="email" class="form-control" name="Email" id="loginEmail" placeholder="Enter email" required>
+							</div>
+
+							<div class="form-group">
+								<label for="loginPassword">Password:</label>
+								<input type="password" name="Password" class="form-control" id="loginPassword" placeholder="Enter password" required>
+							</div>
+							<p class=".align-text-center">Login with</p>
+							<div class="form-group row justify-content-center">
+								<button type="submit" class=" btn btn-primary col-md-5 border-1 button" name="submitButton" value="Sutdent" id="loginStudent" required>Student</button>
+								<div class="col-1"></div>
+								<button type="submit" class=" btn btn-primary col-md-5 border-1 button" name="submitButton" value="Lecturer" id="loginLecture" required>Lecture</button>
+							</div>
+						</form>
+						<p>Do not have an account? <a href="#" onclick="showRegisterForm()">Register</a> Or have you <a href="#" onclick="showForgotpass()">forgotten your password</a>?</p>
+					</div>
+					 
+					<div id="registerForm" style="display:none" class="col-md-6 title wow" data-wow-delay="0.2s">
+						<h2 class="text-center text-white">Register</h2>
+						<form action="@Url.Action("ConfirmEmail", "Register")" class="row" method="post">
+							<div id="left-form" class="col-6 col-md-6">
+								<input type="hidden" name="Role" value="Student" />
+								<div class="form-group">
+									<label for="registerUsername">First Name</label>
+									<input type="text" maxlength="20" name="FirstName" class="form-control" id="registerFirstname" placeholder="Enter First Name" required>
+								</div>
+								<div class="form-group">
+									<label for="registerUsername">Last Name</label>
+									<input type="text" maxlength="20" name="LastName" class="form-control" id="registerLastname" placeholder="Enter Last Name" required>
+								</div>
+
+								<div class="form-group">
+									<label for="registerEmail">Gander</label>
+									<select name="Gander" class="form-control">
+										<option value="Male">
+											Male
+										</option>
+										<option value="Female">Female</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="registerEmail">Email</label>
+									<input id="emailRegister" onchange="checkEmail(this)" maxlength="30" type="email" name="Email" class="form-control" placeholder="Enter Email" required>
+									<small><span id="spanEmail" style="color:red; display: none">This Mail existed</span></small>
+								</div>
+							</div>
+
+							<div id="right-form" class="col-6 col-md-6">
+								<div class="form-group">
+									<label for="registerEmail">Date of birthday</label>
+									<input type="date" name="DOB" class="form-control" id="registerEmail" placeholder="Enter Email" required>
+								</div>
+								<div class="form-group">
+									<label for="registerPhonenumber">Phone number</label>
+									<input type="tel" maxlength="10" name="Phone" pattern="[0-9]{10}" title="Please enter the number phone with 10 digit" class="form-control" id="registerPhonenumber" placeholder="Enter Phone number" required>
+								</div>
+								<div class="form-group">
+									<label for="registerPassword">Password</label>
+									<input type="password" maxlength="20" title="Password must be at least 8 characters, including at least one uppercase letter, one lowercase letter, one number and one special character" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$" name="Password" class="form-control" id="registerPassword" placeholder="Enter Password EX:Abc123@@" required>
+									<small><span id="spanPass" style="color:red; display: none">Not correct </span></small>
+								</div>
+								<div class="form-group">
+									<label for="registerConfirmPassword">Confirm password</label>
+									<input type="password" maxlength="20" class="form-control" id="registerConfirmPassword" title="Re-entered password does not match" onchange="checkPasswordMatch()" placeholder="Enter Confirm password" required>
+									<small><span id="spanConfirmpass" style="color:red; display:none">Password not correct</span></small>
+								</div>
+							</div>
+
+							<button id="btnRegister" type="submit" class="btn btn-primary"> Register</button>
+						</form>
+						<p>Do have an account?<a href="#" onclick="showLoginForm()">Login</a> Or have you <a href="#" onclick="showForgotpass()">forgotten your password</a>?</p>
+					</div>
+					
+					<div id="forgotPass" style="display:none; margin: 50px 0 160px 0" class="col-md-6 title justify-content-center wow" data-wow-delay="0.2s">
+						<h2 class="text-center text-white">Forgot password</h2>
+						<form action="@Url.Action("ConfirmEmail","Forgot")" class="row col-12 justify-content-center">
+							<div id="left-form" class="col-10 col-md-10 justify-content-center">
+								<div class="form-group">
+									<label for="registerUsername">Your Email</label>
+									<input type="email" name="Email" class="form-control" id="inputResetPass" placeholder="Enter your Email" required>
+									<span id="spanResetPass" style="display: none; color: red"><small>Email does not exist</small></span>
+									<label for="Rolename">You are </label>
+									<input type="hidden" value="reset" name="forgot"/>
+									<select name="Role" id="RoleName" class="form-control">
+										<option value="Student">
+											Student
+										</option>
+										<option value="Lecturer">Lecturer</option>
+									</select>
+								</div>
+								<button type="button" id="btnReset" class="btn btn-primary">Reset</button>
+								<p>Do have an account?<a href="#" onclick="showLoginForm()">Login</a> Or Do not have an account? <a href="#" onclick="showRegisterForm()">Register</a></p>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	@Html.Partial("_endScript")
+	<script>
+		var listEmail = @Html.Raw(Json.Serialize(StudentEmail));
+		var listEmailLT = @Html.Raw(Json.Serialize(LecturerEmail));
+		var count = 0;
+		var btnRegister = document.querySelector("#btnRegister")
+
+		function checkEmail(email) {
+			var value = email.value;
+			var check = listEmail.includes(value);
+			if(check){
+				document.querySelector("#btnRegister").setAttribute("type", "button");
+				document.querySelector("#spanEmail").style.display = "block";
+			}else{
+				document.querySelector("#spanEmail").style.display = "none";
+				document.querySelector("#btnRegister").setAttribute("type", "submit");
+			}
+		}
+
+		function checkPasswordMatch() {
+			var password = document.getElementById("registerPassword").value;
+			var confirmPassword = document.getElementById("registerConfirmPassword").value;
+
+			if (password === confirmPassword) {
+				document.getElementById("registerConfirmPassword").setCustomValidity("");
+			} else {
+				document.getElementById("registerConfirmPassword").setCustomValidity("Re-entered password does not match");
+			}
+		}
+
+		var roleName = "Student";
+
+		document.getElementById('RoleName').addEventListener('change', (event) => {
+			roleName = event.target.value;
+			document.getElementById('inputResetPass').value = "";
+			console.log(roleName);
+		});
+
+		document.getElementById('inputResetPass').addEventListener('change', (event) => {
+			var value = document.getElementById('inputResetPass').value;
+			const btnReset = document.getElementById('btnReset')
+			if (roleName == "Student") {
+				var check = listEmail.includes(value);
+				if (check) {
+					btnReset.setAttribute("type","submit");
+					document.getElementById('spanResetPass').style.display = "none";
+				} else {
+					btnReset.setAttribute("type", "button");
+					document.getElementById('spanResetPass').style.display = "block";
+				}
+
+			} else {
+				var check = listEmailLT.includes(value);
+				if (check) {
+					btnReset.setAttribute("type", "submit");
+					document.getElementById('spanResetPass').style.display = "none";
+				} else {
+					btnReset.setAttribute("type", "button");
+					document.getElementById('spanResetPass').style.display = "block";
+				}
+			}
+		});
+
+		function showForgotpass(){
+			document.getElementById("forgotPass").style.display = "block";
+			document.getElementById("loginForm").style.display = "none";
+			document.getElementById("registerForm").style.display = "none";
+		}
+
+		function showRegisterForm() {
+			document.getElementById("forgotPass").style.display = "none";
+			document.getElementById("loginForm").style.display = "none";
+			document.getElementById("registerForm").style.display = "block";
+		}
+
+		function showLoginForm() {
+			document.getElementById("loginForm").style.display = "block";
+			document.getElementById("registerForm").style.display = "none";
+			document.getElementById("forgotPass").style.display = "none";
+		}
+		if("@TempData["MessSS"]"){
+			alert("@TempData["MessSS"]");
+		}
+	</script>
+</body>
+</html>

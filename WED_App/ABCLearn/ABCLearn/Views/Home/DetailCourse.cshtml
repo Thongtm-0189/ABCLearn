@@ -1,0 +1,187 @@
+﻿@model Course
+@using ABCLearn.DataAccess
+@using ABCLearn.Models
+@{
+	ViewBag.title = "ABC Learn";
+	var count = 1;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	@Html.Partial("_head")
+</head>
+
+<body>
+	@Html.Partial("_spanner")
+	@Html.Partial("_navStart")
+	@if (ViewBag.Role != "Lecturer")
+	{
+		<a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
+		<a href="@Url.Action("About", "Home")" class="nav-item nav-link">About US</a>
+		<a href="@Url.Action("Contact", "Home")" class="nav-item nav-link">Contact</a>
+	}
+	<a href="@Url.Action("Course", "Home")" class="nav-item nav-link active">Course</a>
+	@Html.Partial("_navEnd")
+	<!-- tab search dictionary -->
+	<div class="container-fluid bg-primary mb-5 hero-header">
+		<div class="container py-5">
+			<div class="row justify-content-center py-5">
+				<div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+					<h1 class="display-3 text-white mb-3 animated slideInDown">Dictionary</h1>
+					<p class="fs-4 text-white mb-4 animated slideInDown">Enter the word to find</p>
+					<div class="position-relative w-75 mx-auto animated slideInDown">
+						<form action="/Dictionary?" method="get">
+							<input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" name="searchDictionary" id="word" type="text" value="@ViewBag.word" placeholder="Eg: Vocabulary">
+							<button type="submit" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="margin-top: 7px;">Search</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Sourse Start -->
+	<div class="container-xxl py-5">
+		<div class="container">
+			<div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+				<h6 class="section-title bg-white text-center text-primary px-3">Course</h6>
+				<h1 class="mb-5">Detail Course</h1>
+			</div>
+
+			<div class="row g-4 justify-content-center">
+				<div class="col-lg-5 col-md-4 wow fadeInUp" data-wow-delay="0.1s">
+					<div class="package-item">
+						<div class="overflow-hidden">
+							<img class="img-fluid img-responsive" src="~/img/Course/package-10.jpg" alt="">
+						</div>
+						<div class="d-flex border-bottom">
+							<small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2"></i>Online</small>
+							<small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2"></i>Every days</small>
+							<small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>All Student</small>
+						</div>
+						<div class="text-center p-4">
+							@if(Model.Sale >0){
+								<h3 class="mb-0"> <del><i>@Model.Price</i></del> @(Model.Price - (Model.Price * Model.Sale) / 100)</h3>
+							}else{
+								<h3 class="mb-0"> @Model.Price </h3>
+							}
+							<p><b>@Model.Title</b></p>
+							<p>@Model.Detail</p>
+							<p><b>Time line:</b></p>
+							@foreach (var claendar in Model.Calendars)
+							{
+								<p>@claendar.StartTime - @claendar.EndTime</p>
+							}
+							@if (@Model.Lecturer != null)
+							{
+								<div class="d-flex justify-content-center mb-2">
+									<a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 30px;">Enroll Now</a>
+								</div>
+							}else{
+								<div class="d-flex justify-content-center mb-2">
+									<a class="btn btn-sm btn-primary px-3" style="border-radius: 30px;">Not Yet</a>
+								</div>
+							}
+						</div>
+					</div>
+				</div>
+
+				@if(@Model.Lecturer != null){
+					<div class="col-lg-4 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
+						<div class="package-item">
+							<div class="overflow-hidden">
+								<img class="img-fluid" src="~/img/Avatar/Lecturer/@(Model.Lecturer.Avatar)" alt="">
+							</div>
+							<div class="text-center p-4">
+								<h3 class="mb-0"><a href="@Url.Action("ViewLecturer","Home", new{IDLecturer = Model.Lecturer.Id})">@Model.Lecturer.FirstName @Model.Lecturer.LastName</a></h3>
+								<div class="mb-3">
+									<small class="fa fa-star text-primary"></small>
+									<small class="fa fa-star text-primary"></small>
+									<small class="fa fa-star text-primary"></small>
+									<small class="fa fa-star text-primary"></small>
+									<small class="fa fa-star text-primary"></small>
+								</div>
+								<p><b>@Model.Lecturer.Phone</b></p>
+								<p>@Model.Lecturer.Email</p>
+							</div>
+						</div>
+					</div>
+				}
+			</div>
+			<br />
+			<div class="row  justify-content-center">
+				<h2>Comment:</h2>
+				@if (UserLogin.Instance.Islogin)
+				{
+					if (UserLogin.Instance.RoleID == "Student")
+					{
+						<form action="@Url.Action("Commemt", "Home")" class="col-11 col-md-10 row" data-wow-delay="0.2s">
+							<input class="border-0 rounded-pill w-70 py-2 ps-3 pe-4 col-md-10" placeholder="What do you think about this course?" name="comment" type="text" />
+							<input type="hidden" name="IDStudent" value="@UserLogin.Instance.Id" />
+							<input type="hidden" name="IDCourse" value="@Model.Id" />
+							<input class="btn btn-sm btn-primary justify-content-end px-2 col-md-1" type="submit" value="Send" />
+						</form>
+					}
+				}
+				else
+				{
+					<div id="btn-login" class="justify-content-center">
+						<a href="@Url.Action("Index", "Login")"><input class="btn btn-sm btn-primary px-4 col-md-3" type="submit" value="Login To Send Comment" /></a>
+					</div>
+				}
+				<br />
+				<!--comments-->
+				@if (Model.Comments.Count > 0)
+				{
+					<div id="less-comment" class="col-lg-9 col-md-5 m-4 justify-content-center" data-wow-delay="0.1s">
+						@foreach (var item in Model.Comments)
+						{
+							@if (count < 6)
+							{
+								<div class="package-item">
+									<div class="overflow-hidden">
+										<h4> @item.StudentName:</h4>
+										<p>--@item.Content  (<span style="font-size:10px">@item.CreatedDate</span>)</p>
+									</div>
+								</div>
+								<br />
+								count++;
+							}
+						}
+						<a class="btn btn-sm btn-primary px-4 col-md-3" onclick="moreComment()">More...</a>
+					</div>
+					<div id="more-comment" class="col-lg-9 col-md-5 m-4 justify-content-center" data-wow-delay="0.1s" style="display:none">
+						@foreach (var item in Model.Comments)
+						{
+							<div class="package-item">
+								<div class="overflow-hidden">
+									<h4> @item.StudentName:</h4>
+									<p>--@item.Content  (<span style="font-size:10px">@item.CreatedDate</span>)</p>
+								</div>
+							</div>
+							<br />
+						}
+						<a class="btn btn-sm btn-primary px-4 col-md-3" onclick="lessComment()">Less...</a>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+	<!-- Sourse End -->
+	<script>
+		function moreComment() {
+			document.getElementById("more-comment").style.display = "block";
+			document.getElementById("less-comment").style.display = "none";
+		}
+
+		function lessComment() {
+			document.getElementById("more-comment").style.display = "none";
+			document.getElementById("less-comment").style.display = "block";
+		}
+	</script>
+	@Html.Partial("_footer")
+	@Html.Partial("_endScript")
+</body>
+
+</html>
