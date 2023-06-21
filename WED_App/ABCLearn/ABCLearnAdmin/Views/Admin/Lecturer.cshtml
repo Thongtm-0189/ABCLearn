@@ -1,0 +1,83 @@
+﻿@using ABCLearn.DataContext
+@{
+    ViewBag.title = "ABC Learn";
+    var Lecturers = Model;
+    int numOflecturer = LecturerDAO.Instance.Lecturers().Count;
+    if (numOflecturer % 8 == 0)
+    {
+        numOflecturer = numOflecturer / 8;
+    }
+    else
+    {
+        numOflecturer = (numOflecturer / 8) + 1;
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @Html.Partial("_head")
+</head>
+
+<body>
+    @Html.Partial("_navAdmin")
+    <!-- tab search dictionary -->
+    <div class="container-fluid bg-primary hero-header">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <h1 class="display-3 text-white"></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="text-center">Lecturer Table</h2>
+        <table class="table table-striped text-center">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Number Of course</th>
+                    <th>Number Of Quiz</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var lecturer in Lecturers)
+                {
+                    <form action="@Url.Action("LecturertAction", "Admin")" method="post">
+                    <tr>
+                        <td>@lecturer.Id<input type="hidden" name="idLecturer" value="@lecturer.Id" /></td>
+                        <td>@lecturer.FirstName</td>
+                        <td>@lecturer.LastName</td>
+                        <td>@lecturer.Courses.Count <input type="hidden" name="countCourse" value="@lecturer.Courses.Count" /></td>
+                        <td>@lecturer.Quizs.Count</td>
+                        <td>
+                            <div class="d-flex row">
+                                <button name="btnLecturerAdmin" type="submit" class="col-6 btn btn-primary" value="View">View</button>
+                                <button name="btnLecturerAdmin" type="submit" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                    </form>
+                }
+            </tbody>
+        </table>
+        <div class="justify-content-center ">
+            @for (int i = 0; i < numOflecturer; i++)
+            {
+                <a href="@Url.Action("Lecturer", "Admin", new{page = i, max = numOflecturer})">@(i + 1)</a>
+            }
+        </div>
+    </div>
+    <script>
+        if ("@TempData["Lecturer"]") {
+            console.log("@TempData["Lecturer"]");
+        }
+    </script>
+</body>
+
+</html>

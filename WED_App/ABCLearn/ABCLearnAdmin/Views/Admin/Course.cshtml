@@ -1,0 +1,72 @@
+﻿@using ABCLearn.DataContext
+@{
+    ViewBag.title = "ABC Learn";
+    var Courses = CourseDAO.Instance.Courses();
+    int numOfCourse = CourseDAO.Instance.Courses().Count;
+    if (numOfCourse % 8 == 0)
+    {
+        numOfCourse = numOfCourse / 8;
+    }
+    else
+    {
+        numOfCourse = (numOfCourse / 8) + 1;
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @Html.Partial("_head")
+</head>
+
+<body>
+    @Html.Partial("_navAdmin")
+    <!-- tab search dictionary -->
+    <div class="container-fluid bg-primary hero-header">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <h1 class="display-3 text-white"></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="text-center">Course Table</h2>
+        <table class="table table-striped text-center">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Detail</th>
+                    <th>Slot</th>
+                    <th>Number Of Student</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in Courses)
+                {
+                    <tr>
+                        <td>@course.Id</td>
+                        <td>@course.Title</td>
+                        <td>@course.Detail</td>
+                        <td>@course.Calendars.Count</td>
+                        <td>@course.Students</td>
+                        <td>Action</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="justify-content-center ">
+            @for (int i = 0; i < numOfCourse; i++)
+            {
+                <a href="@Url.Action("pageStudent", "Admin", new{page = i, max = numOfCourse})">@(i + 1)</a>
+            }
+        </div>
+    </div>
+</body>
+
+</html>
