@@ -1,0 +1,75 @@
+﻿@using ABCLearn.DataContext
+@{
+    ViewBag.title = "ABC Learn";
+}
+@model List<Notification>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    @Html.Partial("_head")
+</head>
+
+<body>
+    @Html.Partial("_navAdmin")
+    <!-- tab search dictionary -->
+    <div class="container-fluid bg-primary hero-header">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <h1 class="display-3 text-white"></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h1>Notification</h1>
+        <form>
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" placeholder="Enter Dtail">
+            </div>
+            <div class="form-group">
+                <label for="message">Content</label>
+                <textarea class="form-control" id="message" rows="3" placeholder="Enter Content"></textarea>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="showNotification()">Create New Notification
+        </form>
+    </div>
+
+    <div class="container">
+        <table class="table table-striped text-center">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Detail</th>
+                    <th>Date Create</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function showNotification() {
+            var title = document.getElementById("title").value;
+            var message = document.getElementById("message").value;
+
+            var notification = `<div class="alert alert-success alert-dismissible fade show" role="alert">
+                                  <strong>${title}</strong> - ${message}
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>`;
+
+            var notificationContainer = document.getElementById("notification-container");
+            notificationContainer.innerHTML = notification;
+        }
+    </script>
+</body>
+
+</html>
