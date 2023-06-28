@@ -37,12 +37,12 @@
 							<p class="text-center" style="color: red"><small>@TempData["MessError"]</small></p>
 							<div class="form-group">
 								<label for="loginUsername">Email:</label>
-								<input type="email" class="form-control" name="Email" id="loginEmail" placeholder="Enter email" required>
+								<input type="email" class="form-control" pattern=".*\S.*" name="Email" id="loginEmail" placeholder="Enter email" required>
 							</div>
 
 							<div class="form-group">
 								<label for="loginPassword">Password:</label>
-								<input type="password" name="Password" class="form-control" id="loginPassword" placeholder="Enter password" required>
+								<input type="password" name="Password" pattern=".*\S.*" class="form-control" id="loginPassword" placeholder="Enter password" required>
 							</div>
 							<p class=".align-text-center">Login with</p>
 							<div class="form-group row justify-content-center">
@@ -79,7 +79,7 @@
 								</div>
 								<div class="form-group">
 									<label for="registerEmail">Email</label>
-									<input id="emailRegister" onchange="checkEmail(this)" maxlength="30" type="email" name="Email" class="form-control" placeholder="Enter Email" required>
+									<input id="emailRegister" onchange="checkEmail(this)" type="email" name="Email" class="form-control" placeholder="Enter Email" required>
 									<small><span id="spanEmail" style="color:red; display: none">This Mail existed</span></small>
 								</div>
 							</div>
@@ -104,8 +104,7 @@
 									<small><span id="spanConfirmpass" style="color:red; display:none">Password not correct</span></small>
 								</div>
 							</div>
-
-							<button id="btnRegister" type="submit" class="btn btn-primary"> Register</button>
+							<button id="btnRegister" type="submit" class="btn btn-primary">Register</button>
 						</form>
 						<p>Do have an account?<a href="#" onclick="showLoginForm()">Login</a> Or have you <a href="#" onclick="showForgotpass()">forgotten your password</a>?</p>
 					</div>

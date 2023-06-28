@@ -113,36 +113,45 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (var course in Courses)
+				@if(Courses.Count > 0)
+				{
+					@foreach (var course in Courses)
+					{
+						<tr>
+							<td>@course.Id</td>
+							<td>@course.Title</td>
+							<td>@course.Price</td>
+							<td>@course.Sale %</td>
+							@if (course.Lecturer == null)
+							{
+								<td>No body</td>
+							}
+							else
+							{
+								<td>@course.Lecturer.FirstName @course.Lecturer.FirstName</td>
+							}
+							<td>@course.Calendars.Count</td>
+							<td>@course.Quantity / 30</td>
+							<td>
+								<div class="d-flex row">
+									<a href="@Url.Action("ViewCourse", "Course", new{IdCourse = course.Id})" name="btnStudentAdmin" class="col-7 btn btn-primary">View</a>
+									@if (course.Status)
+									{
+										<a href="@Url.Action("SetStatus", "Course", new{Id = course.Id, Status = true})" type="submit" name="btnStudentAdmin" class="col-5 btn btn-primary" value="Delete" style="color: red">Lock</a>
+									}
+									else
+									{
+										<a href="@Url.Action("SetStatus", "Course", new{Id = course.Id, Status = false})" type="buttom" name="btnStudentAdmin" class="col-5 btn btn-primary" value="Delete" style="color: red">UnLock</a>
+									}
+								</div>
+							</td>
+						</tr>
+					}
+				}
+				else
 				{
 					<tr>
-						<td>@course.Id</td>
-						<td>@course.Title</td>
-						<td>@course.Price</td>
-						<td>@course.Sale %</td>
-						@if (course.Lecturer == null)
-						{
-							<td>No body</td>
-						}
-						else
-						{
-							<td>@course.Lecturer.FirstName @course.Lecturer.FirstName</td>
-						}
-						<td>@course.Calendars.Count</td>
-						<td>@course.Quantity / 30</td>
-						<td>
-							<div class="d-flex row">
-								<a href="@Url.Action("ViewCourse", "Course", new{IdCourse = course.Id})" name="btnStudentAdmin" class="col-7 btn btn-primary">View</a>
-								@if (course.Status)
-								{
-									<a href="@Url.Action("SetStatus", "Course", new{Id = course.Id, Status = true})" type="submit" name="btnStudentAdmin" class="col-5 btn btn-primary" value="Delete" style="color: red">Lock</a>
-								}
-								else
-								{
-									<a href="@Url.Action("SetStatus", "Course", new{Id = course.Id, Status = false})" type="buttom" name="btnStudentAdmin" class="col-5 btn btn-primary" value="Delete" style="color: red">UnLock</a>
-								}
-							</div>
-						</td>
+						<td colspan="8"><h2>Not Found Anything</h2></td>
 					</tr>
 				}
 			</tbody>

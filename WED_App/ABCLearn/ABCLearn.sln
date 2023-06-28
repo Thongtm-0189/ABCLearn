@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ABCLearn", "ABCLearn\ABCLearn.csproj", "{341A2D53-0ABC-4EA9-A219-FE94E397DC88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassDiagram", "ClassDiagram\ClassDiagram.csproj", "{8117EB53-6FFF-4157-B878-BCAD87D39E32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassDiagram", "ClassDiagram\ClassDiagram.csproj", "{8117EB53-6FFF-4157-B878-BCAD87D39E32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

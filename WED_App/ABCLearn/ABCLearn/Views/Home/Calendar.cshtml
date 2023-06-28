@@ -50,31 +50,40 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (Calendar calendar in calendares)
+				@if(calendares.Count > 0)
 				{
-					var check = CourseDAO.Instance.Courses().First(x => x.Id == calendar.IDCourse).Status;
-					if (check)
+					@foreach (Calendar calendar in calendares)
 					{
-						Course cor = CourseDAO.Instance.Courses().First(x => x.Id == calendar.IDCourse);
-						var NameLecturer = cor.Lecturer.FirstName + " " + cor.Lecturer.LastName;
-						<tr>
-							<td><b>@calendar.NameCourse</b></td>
-							<td>@NameLecturer</td>
-							<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
-							@if (currentTime < calendar.EndTime && currentTime > calendar.StartTime)
-							{
-								<td><a href="@Url.Action("Index", "MeetingRoom", new {idCourse = calendar.IDCourse})" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
-							}
-							else if (currentTime < calendar.StartTime)
-							{
-								<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
-							}
-							else if (currentTime > calendar.EndTime)
-							{
-								<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
-							}
-						</tr>
+						var check = CourseDAO.Instance.Courses().First(x => x.Id == calendar.IDCourse).Status;
+						if (check)
+						{
+							Course cor = CourseDAO.Instance.Courses().First(x => x.Id == calendar.IDCourse);
+							var NameLecturer = cor.Lecturer.FirstName + " " + cor.Lecturer.LastName;
+							<tr>
+								<td><b>@calendar.NameCourse</b></td>
+								<td>@NameLecturer</td>
+								<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
+								@if (currentTime < calendar.EndTime && currentTime > calendar.StartTime)
+								{
+									<td><a href="@Url.Action("Index", "MeetingRoom", new {idCourse = calendar.IDCourse})" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
+								}
+								else if (currentTime < calendar.StartTime)
+								{
+									<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
+								}
+								else if (currentTime > calendar.EndTime)
+								{
+									<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
+								}
+							</tr>
+						}
 					}
+				}
+				else
+				{
+					<tr>
+						<td colspan="4"><h2>Not Found Anything</h2></td>
+					</tr>
 				}
 			</tbody>
 		</table>

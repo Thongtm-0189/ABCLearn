@@ -40,7 +40,7 @@
 					<label for="fileInput">Import many Question</label>
 					<input type="hidden" name="CourseID" value="@ViewBag.Idcourse" />
 					<div class="col-md-6">
-						<input type="file" name="fileExcel" id="fileInput" accept=".xls, .xlsx" class="form-control" />
+						<input type="file" name="fileExcel" id="fileInput" accept=".xls, .xlsx" class="form-control" required />
 					</div>
 					<button type="submit" name="btnQuiz" id="SubmitFile" class="d-none col-md-6 btn btn-primary">Import</button>
 				</form>
@@ -65,24 +65,24 @@
 				<tr>
 					<td colspan="6">
 						<input type="hidden" name="Id" value="" />
-						<input type="text" class="border-0 rounded-pill w-70 py-2 ps-3 pe-4 col-md-10" name="Question" placeholder="Question" value="" />
+						<input type="text" class="border-0 rounded-pill w-70 py-2 ps-3 pe-4 col-md-10" name="Question" placeholder="Question" value="" required />
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<input type="text" class="border-1 rounded-pill" name="AnswerA" placeholder="Answer A" value="" />
+						<input type="text" class="border-1 rounded-pill" name="AnswerA" placeholder="Answer A" value="" required />
 					</td>
 					<td>
-						<input type="text" class="border-1 rounded-pill" name="AnswerB" placeholder="Answer B" value="" />
+						<input type="text" class="border-1 rounded-pill" name="AnswerB" placeholder="Answer B" value="" required />
 					</td>
 					<td>
-						<input type="text" class="border-1 rounded-pill" name="AnswerC" placeholder="Answer C" value="" />
+						<input type="text" class="border-1 rounded-pill" name="AnswerC" placeholder="Answer C" value="" required />
 					</td>
 					<td>
-						<input type="text" class="border-1 rounded-pill" name="AnswerD" placeholder="Answer D" value="" />
+						<input type="text" class="border-1 rounded-pill" name="AnswerD" placeholder="Answer D" value="" required />
 					</td>
 					<td>
-						<input type="text" class="border-1 rounded-pill" name="CorrectAnswer" placeholder="Correct Answer" value="" />
+						<input type="text" class="border-1 rounded-pill" name="CorrectAnswer" placeholder="Correct Answer" value="" required />
 					</td>
 					<td>
 						<div class="row">
@@ -128,7 +128,13 @@
 						</form>
 					}
 				}
-			</tbody>
+				else
+				{
+					<tr>
+						<td colspan="6"><h2>Empty quiz in this course</h2></td>
+					</tr>
+				}
+				</tbody>
 		</table>
 	</div>
 	<!-- Quiz End -->

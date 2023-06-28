@@ -134,7 +134,44 @@
 				<h6 class="section-title bg-white text-center text-primary px-3">Course</h6>
 				<h1 class="mb-5">Our Course</h1>
 			</div>
-
+			<div id="PaymentModel" class="modal fade p-lg-5" role="dialog">
+				<div class="modal-dialog modal-lg" role="content">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 id="payTitle" class="modal-title text-dark">ADD New Calendar</h4>
+							<ion-icon class="closeForm" style="cursor: pointer;" onclick="formTable()" name="close-outline"></ion-icon>
+						</div>
+						<div class="modal-body">
+							<form action="@Url.Action("SelectTypePay", "EnrollCourse")" method="post" enctype="multipart/form-data">
+								<input id="coursepayment" type="hidden" name="IdCourse" value="" />
+								<div class="form-row row">
+									<div class="row col-6">
+										<div class="form-check">
+											<input class="form-check-input" type="radio" name="paymentMethod" id="VNPAY" value="VNPAY">
+											<label class="form-check-label" for="VNPAY">
+												<img src="~/img/VNPAY.png" class="img-responsive img-circle" style="width: 20%; height: auto;" />
+											</label>
+										</div>
+									</div>
+									<div class="row col-6">
+										<div class="form-check">
+											<input class="form-check-input" type="radio" name="paymentMethod" id="MOMO" value="MOMO">
+											<label class="form-check-label" for="MOMO">
+												<img src="~/img/MOMO.png" class="img-responsive img-circle" style="width: 20%; height: auto; border-radius: 10px" />
+											</label>
+										</div>
+									</div>
+								</div>
+								<div class="form-row p-md-3 center">
+									<button type="button" onclick="formTable()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
+									<button type="submit" class="btn btn-primary btn-sm ml-1">OK</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="row g-4 justify-content-center">
 				@for (int i = 0; i < 3; i++)
 				{
@@ -170,7 +207,7 @@
 								<p>@Courses[i].Detail</p>
 								<div class="d-flex justify-content-center mb-2">
 									<a href="@Url.Action("CourseDetail", "Home", new{id = Courses[i].Id})" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
-									<a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Enroll Now</a>
+										<button onclick="formTable(@Courses[i].Id)" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Enroll Now</button>
 								</div>
 							</div>
 						</div>
@@ -296,7 +333,13 @@
 	@Html.Partial("_footer")
 	@Html.Partial("_endScript")
 	<script>
+		function formTable(id) {
+			document.querySelector("#coursepayment").value = id;
+			document.querySelector("#payTitle").innerHTML = "Choose a payment method to pay for the course ";
+			console.log(id)
+			$('#PaymentModel').modal('toggle');
 
+		}
 	</script>
 </body>
 

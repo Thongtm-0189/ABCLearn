@@ -89,41 +89,81 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (Calendar calendar in calendares)
+				@if(calendares.Count > 0)
 				{
-					Course cor = CourseDAO.Instance.Courses().First(x => x.Id == calendar.IDCourse);
-					var NameLecturer = cor.Lecturer.FirstName + " " + cor.Lecturer.LastName;
+					@foreach (Calendar calendar in calendares)
+					{
+						Course cor = CourseDAO.Instance.Courses().First(x => x.Id == calendar.IDCourse);
+						var NameLecturer = cor.Lecturer.FirstName + " " + cor.Lecturer.LastName;
+						<tr>
+							<td><b>@calendar.NameCourse</b></td>
+							<td>@NameLecturer</td>
+							<form action="@Url.Action("SetTimeCalendar","Calendar")" method="post">
+							<td>
+								<input type="hidden" value="@calendar.Id" name="Id">
+								<input name="StartTime" type="time" class="glyphicon-time" value="@calendar.StartTime.ToString()" required />
+								- <p>@calendar.EndTime.ToString()</p>
+							</td>
+							<td>
+								<button type="submit" name="btnCalendar" value="Set" class="col-3 btn btn-primary">Set</button>
+								<button type="button" name="btnCalendar" onclick="acceptDelete(@calendar.Id)" value="Delete" href="" class="col-5 btn btn-primary" style="color:red">Delete</button>
+							</td>
+							</form>
+							@if (currentTime > calendar.EndTime)
+							{
+								<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
+							}
+							else if (currentTime < calendar.StartTime)
+							{
+								<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
+							}
+							else
+							{
+								<td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
+							}
+						</tr>
+					}
+				}
+				else
+				{
 					<tr>
-						<td><b>@calendar.NameCourse</b></td>
-						<td>@NameLecturer</td>
-						<form action="@Url.Action("SetTimeCalendar","Calendar")" method="post">
-						<td>
-							<input type="hidden" value="@calendar.Id" name="Id">
-							<input name="StartTime" type="time" class="glyphicon-time" value="@calendar.StartTime.ToString()" />
-							- <p>@calendar.EndTime.ToString()</p>
-						</td>
-						<td>
-							<button type="submit" name="btnCalendar" value="Set" class="col-3 btn btn-primary">Set</button>
-							<button type="submit" name="btnCalendar" value="Delete" href="" class="col-5 btn btn-primary" style="color:red">Delete</button>
-						</td>
-						</form>
-						@if (currentTime > calendar.EndTime)
-						{
-							<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
-						}
-						else if (currentTime < calendar.StartTime)
-						{
-							<td class=""><a class="btn-primary px-5" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
-						}
-						else
-						{
-							<td><a href="#" class="btn-primary px-5" style="border-radius:30px;">Join Now</a></td>
-						}
+						<td colspan="5"><h2>Not Found Anything</h2></td>
 					</tr>
 				}
 			</tbody>
 		</table>
+
+		<div id="DeleteForm" class="modal fade p-lg-5" role="dialog">
+			<div class="modal-dialog modal-lg" role="content">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title text-dark">Delete</h4>
+						<ion-icon class="closeForm" style="cursor: pointer;" onclick="acceptDelete()" name="close-outline"></ion-icon>
+					</div>
+					<div class="modal-body">
+						<form action="@Url.Action("SetTimeCalendar","Calendar")" method="post">
+							<input type="hidden" id="idcalendarToDelete" name="Id" value="" />
+							<input type="hidden" name="btnStudentAdmin" value="Delete" />
+							<h3 id="formDeleteForm">Are you sure delete</h3>
+							<div class="form-row p-md-3 center">
+								<button type="button" onclick="acceptDelete()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
+								<button type="submit" class="btn btn-primary btn-sm ml-1">Yes</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+	<script>
+		function acceptDelete(id = null) {
+			if (id != null) {
+				document.querySelector("#idcalendarToDelete").value = id;
+			}
+			$('#DeleteForm').modal('toggle');
+		}
+	</script>
 	<script src="~/js/AdminSet.js"></script>
 	@Html.Partial("_endScript")
 </body>

@@ -40,8 +40,30 @@ BEGIN
 END;
 GO
 
-DELETE tblCourseOfStudent
-WHERE IDCourse = 18 AND IDStudent = 1
+CREATE TRIGGER trg_DeleteStudent
+ON tblStudent
+INSTEAD OF DELETE
+AS
+BEGIN
+    -- Xóa dữ liệu từ bảng comment liên quan
+    DELETE FROM tblCommentOfStudent
+    WHERE IDStudent IN (SELECT IDStudent FROM deleted);
+
+    -- Xóa dữ liệu từ bảng course liên quan
+    DELETE FROM tblCourseOfStudent
+    WHERE IDStudent IN (SELECT IDStudent FROM deleted);
+
+	-- Xóa dữ liệu từ bảng transaction liên quan
+    DELETE FROM tblTransactionHistory
+    WHERE IDStudent IN (SELECT IDStudent FROM deleted);
+
+	DELETE FROM tblStudent
+    WHERE IDStudent IN (SELECT IDStudent FROM deleted);
+END;
+
+DELETE tblStudent
+WHERE IDStudent = 1038
 
 INSERT INTO tblCourseOfStudent
 Values(5 , 12 ,'2023-12-02 12:00:00.000')
+

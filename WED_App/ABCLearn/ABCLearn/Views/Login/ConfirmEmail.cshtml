@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
 	string forgot = Model;
 }
 
@@ -27,14 +26,15 @@
 			<div id="forgotPass" style="margin: 50px 0 160px 0" class="col-md-12 title">
 				<div class="row ">
 					<div class="col-3"></div>
-					<form action="@Url.Action("AcceptanceEmail","Register")" class="row col-6 justify-content-center">
+					<form action="@Url.Action("AcceptanceEmail","Register")" class="row col-6 justify-content-center" onsubmit="return checkOTP()">
 						<h2 class="text-center text-white">Verify your email address</h2>
 						<div id="left-form" class="col-10 col-md-10 justify-content-center">
 							<div class="form-group">
 								<label for="registerUsername"><b>OTP sent and your Email: @(ViewBag.Email) </b></label>
 								<input type="number" class="form-control" id="OTP" placeholder="Enter OTP" required>
 								<span id="spanOTP" style="display:none; color:red"><small>OTP code is incorrect!!</small></span>
-								@if (forgot == "reset"){
+								@if (forgot == "reset")
+								{
 									<input type="hidden" value="reset" name="forgot" />
 								}
 								else
@@ -57,15 +57,18 @@
 		var inputOTP = document.querySelector("#OTP")
 		var btn = document.querySelector("#btnSub")
 		var spanOPT = document.querySelector('#spanOTP')
-		inputOTP.addEventListener('change',()=>{
+		inputOTP.addEventListener('change',checkOTP)
+		function checkOTP() {
 			if (inputOTP.value == "@ViewBag.OTP") {
 				btn.setAttribute("type", "submit");
 				spanOPT.style.display = "none"
-			}else{
+				return true;
+			} else {
 				spanOPT.style.display = "block"
 				btn.setAttribute("type", "button");
+				return false;
 			}
-		})
+		}
 	</script>
 </body>
 </html>

@@ -57,17 +57,17 @@
 								<div class="row col-6">
 									<div class="form-group p-md-2">
 										<label class="sr-only" for="Firstname">First Name</label>
-										<input type="text" name="FirstName" class="form-control text-secondary form-control-sm mr-1"
+										<input maxlength="20" type="text" name="FirstName" class="form-control text-secondary form-control-sm mr-1"
 											   id="Firstname" placeholder="Enter FirstName" required>
 									</div>
 									<div class="form-group p-md-2">
 										<label class="sr-only" for="LastName">Last Name</label>
-										<input type="text" name="LastName" class="form-control text-secondary form-control-sm mr-1"
+										<input maxlength="20" type="text" name="LastName" class="form-control text-secondary form-control-sm mr-1"
 											   id="LastName" placeholder="Enter LastName" required>
 									</div>
 									<div class="form-group p-md-2">
 										<label class="sr-only" for="Phone">Number Phone</label>
-										<input type="tel" name="Phone" class="form-control text-secondary form-control-sm mr-1"
+										<input maxlength="10" pattern="[0-9]{10}" type="tel" name="Phone" class="form-control text-secondary form-control-sm mr-1"
 											   id="Phone" placeholder="Enter Phone" required>
 									</div>
 								</div>
@@ -75,13 +75,13 @@
 								<div class="row col-6">
 									<div class="form-group p-md-2">
 										<label class="sr-only" for="EmailLecturer">Email address</label>
-										<input type="email" name="Email" class="form-control text-secondary form-control-sm mr-1"
+										<input maxlength="20"  type="email" name="Email" class="form-control text-secondary form-control-sm mr-1"
 											   id="EmailLecturer" placeholder="Enter email" required>
 										<span id="spanEmail" style="color: red; display:none">E-mail is being used</span>
 									</div>
 									<div class="form-group p-md-2">
 										<label class="sr-only" for="password">Password</label>
-										<input type="text" name="Password" class="form-control text-secondary form-control-sm mr-1"
+										<input type="text" maxlength="30" title="Password must be at least 8 characters, including at least one uppercase letter, one lowercase letter, one number and one special character" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$" name="Password" class="form-control text-secondary form-control-sm mr-1"
 											   id="password" placeholder="Password" required>
 									</div>
 									<div class="form-group p-md-2">
@@ -111,22 +111,31 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (var lecturer in Lecturers)
+				@if (Lecturers.Count > 0)
 				{
-					<form action="@Url.Action("LecturertAction", "Admin")" method="post">
+					@foreach (var lecturer in Lecturers)
+					{
+						<form action="@Url.Action("LecturertAction", "Admin")" method="post">
+							<tr>
+								<td>@lecturer.Id<input type="hidden" name="idLecturer" value="@lecturer.Id" /></td>
+								<td>@lecturer.FirstName</td>
+								<td>@lecturer.LastName</td>
+								<td>@lecturer.Courses.Count <input type="hidden" name="countCourse" value="@lecturer.Courses.Count" /></td>
+								<td>
+									<div class="d-flex row">
+										<a href="@Url.Action("ViewLecturer","Lecturer", new{IDLecturer = lecturer.Id})" name="btnLecturerAdmin" type="submit" class="col-6 btn btn-primary" value="View">View</a>
+										<button name="btnLecturerAdmin" type="button" onclick="acceptDelete(@lecturer.Id)" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</button>
+									</div>
+								</td>
+							</tr>
+						</form>
+					}
+				}
+				else
+				{
 					<tr>
-						<td>@lecturer.Id<input type="hidden" name="idLecturer" value="@lecturer.Id" /></td>
-						<td>@lecturer.FirstName</td>
-						<td>@lecturer.LastName</td>
-						<td>@lecturer.Courses.Count <input type="hidden" name="countCourse" value="@lecturer.Courses.Count" /></td>
-						<td>
-							<div class="d-flex row">
-								<a href="@Url.Action("ViewLecturer","Lecturer", new{IDLecturer = lecturer.Id})" name="btnLecturerAdmin" type="submit" class="col-6 btn btn-primary" value="View">View</a>
-								<button name="btnLecturerAdmin" type="button" onclick="acceptDelete(@lecturer.Id)" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</button>
-							</div>
-						</td>
+						<td colspan="5"><h2>Not Found Anything</h2></td>
 					</tr>
-					</form>
 				}
 			</tbody>
 		</table>

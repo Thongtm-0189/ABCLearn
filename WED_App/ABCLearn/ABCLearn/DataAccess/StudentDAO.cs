@@ -35,7 +35,7 @@ namespace ABCLearn.DataContext
 		public bool login(AccountLogin acc)
 		{
 			string query = "SELECT * FROM tblStudent WHERE Email = @Email AND Password = @pass";
-			DataTable tb = ConectionData.ExecuteQuery(query, new object[] { acc.Email, acc.Password });
+			DataTable tb = ConectionData.ExecuteQuery(query, new object[] { acc.Email.Trim(), acc.Password.Trim() });
 			foreach (DataRow row in tb.Rows)
 			{
 				UserLogin obj = new UserLogin()

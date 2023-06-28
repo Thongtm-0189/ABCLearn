@@ -21,7 +21,7 @@
 		</div>
 	</div>
 	<!-- Profile in here -->
-
+	<a href="@Url.Action("Student", "Admin")" class="nav-item nav-link "><--Back</a>
 	<div class="container">
 		<div class="main-body">
 			<div class="row gutters-sm">
@@ -125,24 +125,20 @@
 					<div id="EditProfileForm" class="card mb-3 edit-form" style="display:none ;">
 						<div class="card-body">
 							<form action="@Url.Action("updateStudent", "Student")" method="post">
-								<input type="hidden" name="Id" value="@(Model.Id)"></input>
-								<input type="hidden" name="admin" value="Admin"></input>
+								<input type="hidden" name="Id" value="@(Model.Id)"/>
+								<input type="hidden" name="admin" value="Admin"/>
 								<div class="row">
 									<div class="col-sm-3">
 										<h6 class="mb-0">First Name</h6>
 									</div>
-									<input class="col-sm-9 text-secondary" placeholder="First Name" name="FirstName" value="@Model.FirstName">
-
-									</input>
+									<input maxlength="20" class="col-sm-9 text-secondary" placeholder="First Name" name="FirstName" value="@Model.FirstName" required />
 								</div>
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
 										<h6 class="mb-0">Last Name</h6>
 									</div>
-									<input class="col-sm-9 text-secondary" placeholder="Last Name" name="LastName" value="@Model.LastName">
-
-									</input>
+									<input maxlength="20" class="col-sm-9 text-secondary" placeholder="Last Name" name="LastName" value="@Model.LastName" required />
 								</div>
 								<hr>
 								<div class="row">
@@ -163,32 +159,28 @@
 									<div class="col-sm-3">
 										<h6 class="mb-0">Day of Birthday</h6>
 									</div>
-									<input id="dobInput" class="col-sm-9 text-secondary datetimepicker-input" name="DOB" data-toggle="datetimepicker" type="date" placeholder="Last Name" value="@Model.DOB.ToString("dd-MM-yyyy")" />
+									<input maxlength="20" id="dobInput" class="col-sm-9 text-secondary datetimepicker-input" name="DOB" data-toggle="datetimepicker" type="date" placeholder="Last Name" value="@Model.DOB.ToString("dd-MM-yyyy")" required />
 								</div>
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
 										<h6 class="mb-0">Password</h6>
 									</div>
-									<input class="col-sm-9 text-secondary" name="Password" placeholder="Password" value="@Model.Password">
-
-									</input>
+									<input maxlength="20" class="col-sm-9 text-secondary" name="Password" placeholder="Password" maxlength="20" title="Password must be at least 8 characters, including at least one uppercase letter, one lowercase letter, one number and one special character" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$" value="@Model.Password" required />
 								</div>
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
 										<h6 class="mb-0">Email</h6>
 									</div>
-									<input class="col-sm-9 text-secondary" name="Email" placeholder="Email" type="email" value="@Model.Email">
-									</input>
+									<input maxlength="20" class="col-sm-9 text-secondary" name="Email" placeholder="Email" type="email" value="@Model.Email" required />
 								</div>
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
 										<h6 class="mb-0">Phone</h6>
 									</div>
-									<input class="col-sm-9 text-secondary" name="Phone" type="tel" placeholder="Phone Number" value="@Model.Phone">
-									</input>
+									<input maxlength="10" pattern="[0-9]{10}" title="Please enter the number phone with 10 digit" class="col-sm-9 text-secondary" name="Phone" type="tel" placeholder="Phone Number" value="@Model.Phone" required />
 								</div>
 								<hr>
 								<div class="row">

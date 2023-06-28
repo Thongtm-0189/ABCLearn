@@ -33,7 +33,7 @@
     <div class="container">
         <h2 class="text-center" >Student Table</h2>
         <form action="@Url.Action("searchStudentByLastname","Student")" method="post">
-			<input type="text" class="btn btn-primary" name="LastName" value="" />
+			<input type="text" class="btn btn-primary" name="LastName" value="" required/>
 			<button id="btnSub" type="submit" class="btn col-3 btn-primary">Search by Last name</button>
 		</form>
         <table class="table table-striped text-center">
@@ -48,20 +48,29 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var student in Students)
+                @if(Students.Count > 0)
+                {
+                    @foreach (var student in Students)
+                    {
+                        <tr>
+                            <td>@student.Id</td>
+                            <td>@student.FirstName</td>
+                            <td>@student.LastName</td>
+                            <td>@student.Courses.Count</td>
+                            <td>@student.DateCreated.Date.ToString()</td>
+                            <td>
+                                <div class="d-flex row">
+                                    <a href="@Url.Action("ViewStudent","Student", new{idStudent = @student.Id})" name="btnStudentAdmin" class="col-6 btn btn-primary">View</a>
+                                    <button type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" onclick="acceptDelete(@student.Id)" value="Delete" style="color: red">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
                 {
                     <tr>
-                        <td>@student.Id</td>
-                        <td>@student.FirstName</td>
-                        <td>@student.LastName</td>
-                        <td>@student.Courses.Count</td>
-                        <td>@student.DateCreated.Date.ToString()</td>
-                        <td>
-                            <div class="d-flex row">
-                                <a href="@Url.Action("ViewStudent","Student", new{idStudent = @student.Id})" name="btnStudentAdmin" class="col-6 btn btn-primary">View</a>
-                                <button type="submit" name="btnStudentAdmin" class="col-6 btn btn-primary" onclick="acceptDelete(@student.Id)" value="Delete" style="color: red">Delete</button>
-                            </div>
-                        </td>
+                        <td colspan="6"><h2>Not Found Anything</h2></td>
                     </tr>
                 }
             </tbody>

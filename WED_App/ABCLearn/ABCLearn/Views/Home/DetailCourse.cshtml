@@ -76,7 +76,7 @@
 							@if (@Model.Lecturer != null)
 							{
 								<div class="d-flex justify-content-center mb-2">
-									<a href="#" class="btn btn-sm btn-primary px-3" style="border-radius: 30px;">Enroll Now</a>
+									<button onclick="formTable(@Model.Id)" class="btn btn-sm btn-primary px-3" style="border-radius: 30px;">Enroll Now</button>
 								</div>
 							}else{
 								<div class="d-flex justify-content-center mb-2">
@@ -112,12 +112,12 @@
 			<br />
 			<div class="row  justify-content-center">
 				<h2>Comment:</h2>
-				@if (UserLogin.Instance.Islogin)
+				@if (ViewBag.login)
 				{
-					if (UserLogin.Instance.RoleID == "Student")
+					if (ViewBag.Role == "Student")
 					{
 						<form action="@Url.Action("Commemt", "Home")" class="col-11 col-md-10 row" data-wow-delay="0.2s">
-							<input class="border-0 rounded-pill w-70 py-2 ps-3 pe-4 col-md-10" placeholder="What do you think about this course?" name="comment" type="text" />
+							<input class="border-0 rounded-pill w-70 py-2 ps-3 pe-4 col-md-10" placeholder="What do you think about this course?" title="You should text something" name="comment" type="text" required/>
 							<input type="hidden" name="IDStudent" value="@UserLogin.Instance.Id" />
 							<input type="hidden" name="IDCourse" value="@Model.Id" />
 							<input class="btn btn-sm btn-primary justify-content-end px-2 col-md-1" type="submit" value="Send" />
@@ -165,10 +165,62 @@
 						<a class="btn btn-sm btn-primary px-4 col-md-3" onclick="lessComment()">Less...</a>
 					</div>
 				}
+				else
+				{
+					<h2 class="text-center">Empty comment</h2>
+				}
+			</div>
+		</div>
+		<div id="PaymentModel" class="modal fade p-lg-5" role="dialog">
+			<div class="modal-dialog modal-lg" role="content">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 id="payTitle" class="modal-title text-dark">ADD New Calendar</h4>
+						<ion-icon class="closeForm" style="cursor: pointer;" onclick="formTable()" name="close-outline"></ion-icon>
+					</div>
+					<div class="modal-body">
+						<form action="@Url.Action("SelectTypePay", "EnrollCourse")" method="post" enctype="multipart/form-data">
+							<input id="coursepayment" type="hidden" name="IdCourse" value="" />
+							<div class="form-row row">
+								<div class="row col-6">
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="paymentMethod" id="VNPAY" value="VNPAY">
+										<label class="form-check-label" for="VNPAY">
+											<img src="~/img/VNPAY.png" class="img-responsive img-circle" style="width: 20%; height: auto;" />
+										</label>
+									</div>
+								</div>
+								<div class="row col-6">
+									<div class="form-check">
+										<input class="form-check-input" type="radio" name="paymentMethod" id="MOMO" value="MOMO">
+										<label class="form-check-label" for="MOMO">
+											<img src="~/img/MOMO.png" class="img-responsive img-circle" style="width: 20%; height: auto; border-radius: 10px" />
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-row p-md-3 center">
+								<button type="button" onclick="formTable()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
+								<button type="submit" class="btn btn-primary btn-sm ml-1">OK</button>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Sourse End -->
+	<script>
+
+		function formTable(id) {
+			document.querySelector("#coursepayment").value = id;
+			document.querySelector("#payTitle").innerHTML = "Choose a payment method to pay for the course ";
+			console.log(id)
+			$('#PaymentModel').modal('toggle');
+
+		}
+	</script>
 	<script>
 		function moreComment() {
 			document.getElementById("more-comment").style.display = "block";

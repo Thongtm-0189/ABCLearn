@@ -25,7 +25,7 @@
 		</div>
 	</div>
 	<!-- Profile in here -->
-
+	<a href="@Url.Action("Course","Admin")"><---Back</a>
 	<div class="container">
 		<div class="main-body">
 			<div class="row gutters-sm">
@@ -84,7 +84,7 @@
 								<div class="row">
 									<div class="col-sm-12">
 										<input type="submit" class="btn btn-primary px-5" />
-										<a class="btn btn-primary px-5">Cancer</a>
+										<a href="@Url.Action("Course","Admin")" class="btn btn-primary px-5">Cancer</a>
 									</div>
 								</div>
 							</form>
@@ -111,6 +111,10 @@
 										</td>
 									</tr>
 								}
+							}
+							else
+							{
+								<h2>Not Found Anything</h2>
 							}
 						</tbody>
 					</table>

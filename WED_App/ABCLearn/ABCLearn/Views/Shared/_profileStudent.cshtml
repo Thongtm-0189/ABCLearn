@@ -161,13 +161,13 @@
 				<div id="EditProfileForm" class="card mb-3 edit-form" style="display:none ;">
 					<div class="card-body">
 						<form action="@Url.Action("EditInformation", "Profile")" method="post">
+							<input type="hidden" name="Role" value="@(ViewBag.user.RoleID)" />
 							<input type="hidden" name="Id" value="@(ViewBag.user.Id)" />
 							<div class="row">
 								<div class="col-sm-3">
 									<h6 class="mb-0">First Name</h6>
 								</div>
-								<input maxlength="20" class="col-sm-9 text-secondary" placeholder="First Name" name="FirstName" value="@ViewBag.user.FirstName">
-
+								<input maxlength="20" class="col-sm-9 text-secondary" placeholder="First Name" name="FirstName" value="@ViewBag.user.FirstName" required />
 								</input>
 							</div>
 							<hr>
@@ -175,9 +175,7 @@
 								<div class="col-sm-3">
 									<h6 class="mb-0">Last Name</h6>
 								</div>
-								<input maxlength="20" class="col-sm-9 text-secondary" placeholder="Last Name" name="LastName" value="@ViewBag.user.LastName">
-
-								</input>
+								<input maxlength="20" class="col-sm-9 text-secondary" placeholder="Last Name" name="LastName" value="@ViewBag.user.LastName" required />
 							</div>
 							<hr>
 							<div class="row">
@@ -198,32 +196,31 @@
 								<div class="col-sm-3">
 									<h6 class="mb-0">Day of Birthday</h6>
 								</div>
-								<input id="dobInput" class="col-sm-9 text-secondary datetimepicker-input" name="DOB" data-toggle="datetimepicker" type="date" placeholder="Last Name" value="@ViewBag.user.DOB.ToString("dd-MM-yyyy")" />
+								<input id="dobInput" class="col-sm-9 text-secondary datetimepicker-input" name="DOB" data-toggle="datetimepicker" type="date" placeholder="Last Name" value="@ViewBag.user.DOB.ToString("dd-MM-yyyy")" required />
 							</div>
 							<hr>
 							<div class="row">
 								<div class="col-sm-3">
 									<h6 class="mb-0">Password</h6>
 								</div>
-								<input maxlength="20" class="col-sm-9 text-secondary" title="Password must be at least 8 characters, including at least one uppercase letter, one lowercase letter, one number and one special character" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$" name="Password" placeholder="Password" value="@ViewBag.user.Password">
-
-								</input>
+								<input type="hidden" name="Password" value="@ViewBag.user.Password" />
+								<input disabled maxlength="30" class="col-sm-9 text-secondary" title="Password must be at least 8 characters, including at least one uppercase letter, one lowercase letter, one number and one special character" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$"
+								placeholder="Password" value="@ViewBag.user.Password" required />
 							</div>
 							<hr>
 							<div class="row">
 								<div class="col-sm-3">
 									<h6 class="mb-0">Email</h6>
 								</div>
-								<input maxlength="30" class="col-sm-9 text-secondary" name="Email" placeholder="Email" type="email" value="@ViewBag.user.Email">
-								</input>
+								<input type="hidden" name="Email" value="@ViewBag.user.Email" />
+								<input disabled class="col-sm-9 text-secondary" placeholder="Email" type="email" value="@ViewBag.user.Email" required />
 							</div>
 							<hr>
 							<div class="row">
 								<div class="col-sm-3">
 									<h6 class="mb-0">Phone</h6>
 								</div>
-								<input maxlength="10" pattern="[0-9]{10}" maxlength="20" class="col-sm-9 text-secondary" name="Phone" type="tel" placeholder="Phone Number" value="@ViewBag.user.Phone">
-								</input>
+								<input maxlength="10" pattern="[0-9]{10}" maxlength="10" class="col-sm-9 text-secondary" name="Phone" type="tel" placeholder="Phone Number" value="@ViewBag.user.Phone" required />
 							</div>
 							<hr>
 							<div class="row">
@@ -251,29 +248,26 @@
 							<tbody>
 								@foreach (Course course in ViewBag.user.Courses)
 								{
-									@if (course.Status)
+									@if (course.Calendars.Count > 0)
 									{
-										@if (course.Calendars.Count > 0)
+										@foreach (Calendar calendar in course.Calendars)
 										{
-											@foreach (Calendar calendar in course.Calendars)
-											{
-												<tr>
-													<td><b>@course.Title</b></td>
-													<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
-													@if (currentTime < calendar.EndTime && currentTime > calendar.StartTime)
-													{
-														<td><a href="@Url.Action("Index", "MeetingRoom", new {idCourse = course.Id})" class="btn-primary px-3" style="border-radius:30px;">Join Now</a></td>
-													}
-													else if (currentTime < calendar.StartTime)
-													{
-														<td class=""><a class="btn-primary px-3" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
-													}
-													else if (currentTime > calendar.EndTime)
-													{
-														<td class=""><a class="btn-primary px-3" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
-													}
-												</tr>
-											}
+											<tr>
+												<td><b>@course.Title</b></td>
+												<td><b><i>@calendar.StartTime.ToString() - @calendar.EndTime.ToString()</i></b></td>
+												@if (currentTime < calendar.EndTime && currentTime > calendar.StartTime)
+												{
+													<td><a href="@Url.Action("Index", "MeetingRoom", new {idCourse = course.Id})" class="btn-primary px-3" style="border-radius:30px;">Join Now</a></td>
+												}
+												else if (currentTime < calendar.StartTime)
+												{
+													<td class=""><a class="btn-primary px-3" style="border-radius:30px; background-color: #2d8cdd;">Coming Soon</a></td>
+												}
+												else if (currentTime > calendar.EndTime)
+												{
+													<td class=""><a class="btn-primary px-3" style="border-radius:30px; background-color: #fc8282;">Class is over</a></td>
+												}
+											</tr>
 										}
 									}
 								}

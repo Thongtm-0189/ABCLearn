@@ -22,6 +22,7 @@ namespace ABCLearn.Controllers
 				bool isSend = afterSend.Item1;
 				int OTP = afterSend.Item2;
 				StudentDAO.Instance.AddNew(pro);
+				StudentDAO.Instance.SaveChange();
 				if (isSend)
 				{
 					ViewBag.Email = email;

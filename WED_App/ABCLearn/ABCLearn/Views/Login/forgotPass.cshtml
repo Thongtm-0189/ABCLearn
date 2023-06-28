@@ -39,7 +39,7 @@
 								<small><span id="spanConfirmpass" style="color:red; display:none">Password not correct</span></small>
 							</div>
 							<input type="hidden" value="reset" name="forgot" />
-							<button id="btnSub" type="submit" class="btn btn-primary">Confirm</button>
+							<button id="btnSub" type="button" class="btn btn-primary">Confirm</button>
 							<p>If you can not see it, you should check it in spam Email</p>
 						</div>
 					</form>
@@ -57,8 +57,10 @@
 
 			if (password === confirmPassword) {
 				document.getElementById("registerConfirmPassword").setCustomValidity("");
+				document.querySelector("#btnSub").setAttribute("type","submit");
 			} else {
 				document.getElementById("registerConfirmPassword").setCustomValidity("Re-entered password does not match");
+				document.querySelector("#btnSub").setAttribute("type", "button");
 			}
 		}
 	</script>

@@ -26,7 +26,7 @@ namespace ABCLearn.Controllers
 		{
 			if (submitButton == "Sutdent")
 			{
-				if (StudentDAO.Instance.login(acc))
+				if (StudentDAO.Instance.login(acc) && !acc.Password.Trim().Equals("") && !acc.Email.Trim().Equals(""))
 				{
 					DateTime nowUtc = DateTime.UtcNow;
 					TimeZoneInfo vietnamTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time"); // Múi giờ của Việt Nam
