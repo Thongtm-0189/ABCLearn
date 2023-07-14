@@ -52,10 +52,13 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlld1N0dWRlbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+<<<<<<< Updated upstream
 [D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Course/ViewCourse.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXFZpZXdDb3Vyc2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+=======
+>>>>>>> Stashed changes
 [D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Dictionary/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGljdGlvbmFyeVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
