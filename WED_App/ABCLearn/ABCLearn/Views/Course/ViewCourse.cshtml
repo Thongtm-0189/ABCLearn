@@ -36,18 +36,18 @@
 								<input type="hidden" name="Id" value="@(Model.Id)"></input>
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">Title</h6>
+										<h6 class="mb-0">Title <span style="color: red">*<span></h6>
 									</div>
-									<input class="col-sm-9 text-secondary" name="Title" value="@Model.Title">
+									<input class="col-sm-9 text-secondary" name="Title" value="@Model.Title" required>
 
 									</input>
 								</div>
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">Detail</h6>
+										<h6 class="mb-0">Detail <span style="color: red">*<span></h6>
 									</div>
-									<input style="height:50px" class="col-sm-9 text-secondary" name="Detail" value="@Model.Detail">
+									<input style="height:50px" class="col-sm-9 text-secondary" name="Detail" value="@Model.Detail" required>
 										
 									</input>
 								</div>
@@ -66,17 +66,17 @@
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">Price</h6>
+										<h6 class="mb-0">Price <span style="color: red">*<span></h6>
 									</div>
 									<input id="dobInput" class="col-sm-9 text-secondary datetimepicker-input" name="Price"
-										   data-toggle="datetimepicker" type="number" value="@Model.Price" />
+										   data-toggle="datetimepicker" type="number" value="@Model.Price" required />
 								</div>
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">Sale</h6>
+										<h6 class="mb-0">Sale <span style="color: red">*<span></h6>
 									</div>
-									<input class="col-sm-9 text-secondary" type="number" name="Sale" value="@Model.Sale">
+									<input class="col-sm-9 text-secondary" type="number" name="Sale" value="@Model.Sale" required>
 
 									</input>
 								</div>

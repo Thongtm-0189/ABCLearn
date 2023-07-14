@@ -190,6 +190,14 @@ namespace ABCLearn.DataContext
 			result = ConectionData.ExecuteUpdate(query, new object[] { pro.Password, pro.Email });
 			return result;
 		}
+		public bool ChangePass(int Id, string Pass)
+		{
+			bool result = false;
+			string query = "UPDATE tblStudent SET Password = @pass WHERE IDStudent = @idStudent ";
+			result = ConectionData.ExecuteUpdate(query, new object[] { Pass, Id });
+			return result;
+		}
+
 		public void SaveChange()
 		{
 			_student.Clear();

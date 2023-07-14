@@ -103,44 +103,45 @@
 								<input type="hidden" name="Id" value="@(Model.Id)" />
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">First Name</h6>
+										<h6 class="mb-0">First Name <span style="color: red">*<span></h6>
 									</div>
 									<input maxlength="20" class="col-sm-9 text-secondary" placeholder="First Name" name="FirstName" value="@Model.FirstName" required />
 								</div>
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">Last Name</h6>
+										<h6 class="mb-0">Last Name <span style="color: red">*<span></h6>
 									</div>
 									<input maxlength="20" class="col-sm-9 text-secondary" placeholder="Last Name" name="LastName" value="@Model.LastName" required />
 								</div>
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">Password</h6>
+										<h6 class="mb-0">Password <span style="color: red">*<span></h6>
 									</div>
 									<input class="col-sm-9 text-secondary" name="Password" maxlength="20" title="Password must be at least 8 characters, including at least one uppercase letter, one lowercase letter, one number and one special character" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$" placeholder="Password" value="@Model.Password" required />
 								</div>
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">Email</h6>
+										<h6 class="mb-0">Email <span style="color: red">*<span></h6>
 									</div>
 									<input maxlength="20" class="col-sm-9 text-secondary" name="Email" placeholder="Email" type="email" value="@Model.Email" required />
 								</div>
 								<hr>
 								<div class="row">
 									<div class="col-sm-3">
-										<h6 class="mb-0">Phone</h6>
+										<h6 class="mb-0">Phone <span style="color: red">*<span></h6>
 									</div>
 									<input maxlength="10" pattern="[0-9]{10}" title="Please enter the number phone with 10 digit" class="col-sm-9 text-secondary" name="Phone" type="tel" placeholder="Phone Number" value="@Model.Phone" required />
 
 								</div>
 								<hr>
 								<div class="row">
-									<div class="col-sm-12">
-										<input type="submit" class="btn btn-primary px-5" />
-										<a onclick="showEditProfileFormlt()" class="btn btn-primary px-5">Cancer</a>
+									<div class="col-7"></div>
+									<div class="col-4 d-flex">
+										<input type="submit" class="btn m-1 btn-primary px-5" />
+										<a onclick="showEditProfileFormlt()" class="btn m-1 btn-primary px-5">Cancer</a>
 									</div>
 								</div>
 							</form>

@@ -86,8 +86,15 @@
 										<p><b>@Courses[i].Title</b></p>
 										<p>@Courses[i].Detail</p>
 										<div class="d-flex justify-content-center mb-2">
-											<a href="@Url.Action("CourseDetail", "Home", new{id = Courses[i].Id})" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
-											<button onclick="formTable(@(Courses[i].Id))" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Enroll Now</button>
+											@if (ViewBag.Role != "Lecturer")
+											{
+												<a href="@Url.Action("CourseDetail", "Home", new{id = Courses[i].Id})" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Read More</a>
+												<button onclick="formTable(@(Courses[i].Id))" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Enroll Now</button>
+											}
+											else
+											{
+												<a href="@Url.Action("CourseDetail", "Home", new{id = Courses[i].Id})" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px;">Read More</a>
+											}
 										</div>
 									</div>
 								</div>
@@ -145,7 +152,7 @@
 	@Html.Partial("_footer")
 	@Html.Partial("_endScript")
 	<script>
-		
+
 		function formTable(id) {
 			document.querySelector("#coursepayment").value = id;
 			document.querySelector("#payTitle").innerHTML = "Choose a payment method to pay for the course ";

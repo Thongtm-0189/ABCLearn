@@ -50,13 +50,13 @@ namespace ABCLearn.Controllers
 			lecturer.Courses.ForEach(x => x.Calendars = CourseDAO.Instance.getCalendar(x.Id));
 			return View("Views/Admin/ViewLecturer.cshtml", lecturer);
 		}
-		public IActionResult removeLecturer(int idLecturer)
+		public IActionResult removeLecturer(int IDLecturer)
 		{
 			if (!UserLogin.Instance.Islogin || UserLogin.Instance.RoleID != "Admin")
 			{
 				return RedirectToAction("Index", "Admin");
 			}
-			var isRemove = LecturerDAO.Instance.Delete(idLecturer);
+			var isRemove = LecturerDAO.Instance.Delete(IDLecturer);
 			if (isRemove)
 			{
 				CourseDAO.Instance.SaveChange();
@@ -70,6 +70,16 @@ namespace ABCLearn.Controllers
 			LecturerDAO.Instance.SaveChange();
 			CourseDAO.Instance.SaveChange();
 			return RedirectToAction("ViewLecturer", "Lecturer", new { IDLecturer = pro.Id });
+		}
+		public IActionResult ChangePassword(int Id, string Password)
+		{
+			var check = LecturerDAO.Instance.ChangePass(Id, Password);
+			ViewBag.Message = "ERROR!!";
+			if (check)
+			{
+				ViewBag.Message = "Change new password was SUCCESS!!";
+			}
+			return RedirectToAction("Profile", "Home");
 		}
 		private void renderData()
 		{

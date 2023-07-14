@@ -21,7 +21,7 @@ namespace ABCLearn.Controllers
 			SessionUser();
 			return View();
 		}
-		private List<Quiz> quizs = new List<Quiz>();
+		private static List<Quiz> quizs = new List<Quiz>();
 		public IActionResult Quiz(int courseChoise = 0)
 		{
 			QuizDAO.Instance.Quizzes();
@@ -29,7 +29,6 @@ namespace ABCLearn.Controllers
 			{
 				UserLogin.Instance = null;
 			}
-			quizs = QuizDAO.Instance.Quizzes().Take(5).ToList();
 			if (HttpContext.Session.GetObject<UserLogin>("User") != null)
 			{
 				quizs.Clear();
@@ -57,7 +56,25 @@ namespace ABCLearn.Controllers
 				}
 				else
 				{
-					quizs = QuizDAO.Instance.Quizzes().Take(2).ToList();
+					if (QuizDAO.Instance.Quizzes().Count > 5)
+					{
+						quizs = QuizDAO.Instance.Quizzes().Take(5).ToList();
+					}
+					else
+					{
+						quizs = QuizDAO.Instance.Quizzes();
+					}
+				}
+			}
+			else
+			{
+				if (QuizDAO.Instance.Quizzes().Count > 5)
+				{
+					quizs = QuizDAO.Instance.Quizzes().Take(5).ToList();
+				}
+				else
+				{
+					quizs = QuizDAO.Instance.Quizzes();
 				}
 			}
 			SessionUser();
@@ -69,7 +86,6 @@ namespace ABCLearn.Controllers
 			{
 				UserLogin.Instance = null;
 			}
-			renderData();
 			var score = CalculatorScore(answer);
 			ViewBag.Score = score;
 			SessionUser();

@@ -13,6 +13,10 @@ namespace ABCLearn.Controllers
 		public IActionResult Index()
 		{
 			//renderData();
+			if (UserLogin.Instance.RoleID == "Lecturer")
+			{
+				return RedirectToAction("Profile", "Home");
+			}
 			SessionUser();
 			return View();
 		}

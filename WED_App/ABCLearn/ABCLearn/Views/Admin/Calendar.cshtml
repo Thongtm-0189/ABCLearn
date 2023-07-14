@@ -50,7 +50,7 @@
 							<div class="form-row row">
 								<div class="row col-6">
 									<div class="form-group p-md-2">
-										<label class="sr-only" for="Firstname">Course</label>
+										<label for="Firstname">Course</label>
 										<select class="form-control" name="IDCourse">
 											@foreach (var item in CourseDAO.Instance.Courses())
 											{
@@ -63,15 +63,16 @@
 								</div>
 								<div class="row col-6">
 									<div class="form-group p-md-2">
-										<label class="sr-only" for="Phone">Time Start</label>
+										<label for="Phone">Time Start <span style="color: red">*<span></label>
 										<input type="time" name="timeStart" class="form-control text-secondary form-control-sm mr-1"
 											   placeholder="Time Start" required>
 									</div>
 								</div>
 							</div>
-							<div class="form-row p-md-3 center">
-								<button type="button" onclick="formTable()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
-								<button type="submit" class="btn btn-primary btn-sm ml-1">Submit</button>
+							<div class="form-row p-md-3 center row">
+								<div class="col-md-7 col-sm-12"></div>
+								<button type="button" onclick="formTable()" class="col-md-2 col-sm-12 btn btn-secondary btn-sm m-1 ml-auto cancelForm">Cancel</button>
+								<button type="submit" class="btn btn-primary btn-sm ml-1 col-sm-12 col-md-2 m-1">Submit</button>
 							</div>
 						</form>
 					</div>

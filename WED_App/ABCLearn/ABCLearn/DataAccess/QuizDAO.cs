@@ -22,10 +22,7 @@ namespace ABCLearn.DataContext
 		}
 		public List<Quiz> Quizzes()
 		{
-			if (_quizzes == null)
-			{
-				GetAll();
-			}
+			GetAll();
 			return _quizzes;
 		}
 		public void GetAll()

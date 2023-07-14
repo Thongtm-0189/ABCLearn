@@ -32,7 +32,11 @@
 	<!--<h1 style="text-align: center">@ViewBag.roomid</h1>-->
 	<div class="container-fluid m-0 p-0 row" style="--bs-gutter-x: 0 !important;">
 		<div class="col-md-9 col-sm-9 position-relative min-vh-100 row" id="meet-layout">
-			<div video-grid class="col-md-12"></div>
+			<div video-grid class="col-md-12">
+				<div id="screen-share-container" class="box screen-share-container">
+					<video id="share-screen" style="height: auto !important"></video>
+				</div>
+			</div>
 			<div class="col-md-12 w-100 button-container fixed-bottom  row" style="background: #4d8347; padding: 0.5% 0">
 				<div my-video class="w-3 col-4">
 				</div>
@@ -45,6 +49,7 @@
 									class="btn btn-primary rounded p-3 m-1 fs-5 rounded-circle">
 								<i class="bi bi-telephone" id="phone"></i>
 							</button>
+							<button type="button" class="btn btn-primary rounded p-3 m-1 fs-5 rounded-circle" id="toggle-screen-share"><i class="bi bi-aspect-ratio-fill"></i></button>
 						</form>
 					</div>
 					<div class="col-4 d-flex justify-content-center ">
@@ -88,7 +93,6 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 
@@ -121,6 +125,8 @@
 			startSignalR(); // Start SignalR connection
 		});
 
+		const screenShareContainer = document.querySelector('#screen-share-container');
+		const screenVideo = document.querySelector('#share-screen');
 		const videoGrid = document.querySelector('[video-grid]');
 		const MYvideoGrid = document.querySelector('[my-video]');
 		const myVideo = document.createElement('video');
@@ -192,6 +198,51 @@
 			}
 		});
 
+		// Event when a user starts screen sharing
+		connection.on('start_screen_share', (id, jsonData) => {
+			try {
+				const tracks = JSON.parse(jsonData);
+				console.log("Someone started screen sharing: " + id);
+				if (Peers[id]?.userVideo) {
+					Peers[id].userVideo.srcObject = null;
+					Peers[id].userVideo.parentNode.removeChild(Peers[id].userVideo);
+					delete Peers[id].userVideo;
+				}
+				if (Peers[id]?.screenShareVideo) {
+					Peers[id].screenShareVideo.srcObject = null;
+					Peers[id].screenShareVideo.parentNode.removeChild(Peers[id].screenShareVideo);
+					delete Peers[id].screenShareVideo;
+				}
+				const newStream = new MediaStream();
+				tracks.forEach(trackInfo => {
+					const { id, kind, label, muted, enabled, readyState } = trackInfo;
+					const constraints = { id, kind, label, muted, enabled, readyState };
+					navigator.mediaDevices.getUserMedia(constraints)
+						.then(mediaStream => {
+							const track = mediaStream.getTracks()[0];
+							newStream.addTrack(track);
+						})
+						.catch(error => {
+							console.error('Error adding track to new stream:', error);
+						});
+				});
+				startShare(newStream);
+			} catch (ex) {
+				console.error(ex);
+			}
+		});
+
+		// Event when a user stops screen sharing
+		connection.on('stop-screen-share', (id) => {
+			console.log("Someone stopped screen sharing: " + id);
+			if (Peers[id]?.screenShareVideo) {
+				const screenShareVideo = Peers[id].screenShareVideo;
+				screenShareVideo.srcObject.getTracks().forEach(track => track.stop());
+				screenShareVideo.parentNode.removeChild(screenShareVideo);
+				delete Peers[id].screenShareVideo;
+			}
+		});
+
 		// Event when a new user joins the room
 		myPeer.on('call', call => {
 			call.answer(localStream);
@@ -200,7 +251,7 @@
 			userVideo.id = call.peer;
 
 			call.on('stream', userVideoStream => {
-				addVideoStream(userVideo, userVideoStream, userVideo.id);
+				addVideoStream(userVideo, userVideoStream, userId);
 			});
 		});
 
@@ -216,7 +267,7 @@
 			}
 			else {
 				var box = document.createElement("div");
-				box.setAttribute("class","box");
+				box.setAttribute("class", "box");
 				var icon = document.createElement("i");
 				icon.setAttribute("class", "bi bi-mic-mute position-absolute fs-1 text-success bg-dark p-3 rounded-circle d-none top-0 end-0")
 				box.appendChild(video);
@@ -300,15 +351,67 @@
 				}
 			}
 		});
+		var screenTrackShareScreen;
+		var screenShareBtn = document.getElementById('toggle-screen-share');
+		var isShareScreen = false;
+		screenShareBtn.addEventListener('click', () => {
+			if (!isShareScreen) {
+				startScreenSharing();
+			} else {
+				screenTrackShareScreen.stop();
+				screenShareContainer.style.display = 'none';
+			}
+			isShareScreen = !isShareScreen;
+		});
 
-		function setWidthVideo() {
-			var listVideo = document.querySelectorAll("video");
-			var countBox = document.querySelectorAll(".box").length;
-			listVideo.forEach(x => {
-				x.style.width = (100 / countBox) + "%";
-			})
-			listVideo[listVideo.length - 1].style.width = "100%";
+		// Function to start screen sharing
+		const startScreenSharing = () => {
+			navigator.mediaDevices.getDisplayMedia({ video: true })
+				.then(stream => {
+					const tracks = stream.getTracks().map(track => ({
+						id: track.id,
+						kind: track.kind,
+						label: track.label,
+						muted: track.muted,
+						enabled: track.enabled,
+						readyState: track.readyState
+					}));
+					const jsonStream = JSON.stringify(tracks);
+					connection.invoke("StartScreenShare", RoomID, userId, jsonStream)
+
+					startShare(stream)
+
+				})
+				.catch(error => {
+					console.error('Error starting screen sharing:', error);
+				});
+		};
+
+		const stopScreenSharing = () => {
+			connection.invoke('StopScreenShare', RoomID, userId)
+				.catch(error => {
+					console.error('Error invoking StopScreenShare:', error);
+				});
+		};
+
+		const startShare = (stream) => {
+			screenShareContainer.style.display = 'block';
+
+			const screenTrack = stream.getTracks().find(track => track.kind === 'video');
+			screenTrackShareScreen = screenTrack;
+
+			screenTrack.onended = () => {
+				console.log('Screen sharing stopped');
+				screenShareContainer.style.display = 'none';
+				isShareScreen = !isShareScreen;
+			};
+
+			screenVideo.srcObject = stream;
+			screenVideo.addEventListener('loadedmetadata', () => {
+				screenVideo.play();
+			});
 		}
+
 	</script>
 
 	<script>

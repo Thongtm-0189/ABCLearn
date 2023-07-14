@@ -58,6 +58,16 @@ namespace ABCLearn.Controllers
 			StudentDAO.Instance.SaveChange();
 			return RedirectToAction("ViewStudent", "Student", new { idStudent = pro.Id });
 		}
+		public IActionResult ChangePassword(int Id, string Password)
+		{
+			var check = StudentDAO.Instance.ChangePass(Id, Password);
+			ViewBag.Message = "ERROR!!";
+			if (check)
+			{
+				ViewBag.Message = "Change new password was SUCCESS!!";
+			}
+			return RedirectToAction("Profile", "Home");
+		}
 		private void renderData()
 		{
 			LecturerDAO.Instance.GetAll();

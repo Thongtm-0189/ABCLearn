@@ -93,43 +93,48 @@
 							<input type="hidden" name="Id" value="@(ViewBag.user.Id)" />
 							<div class="row">
 								<div class="col-sm-3">
-									<h6 class="mb-0">First Name</h6>
+									<h6 class="mb-0">First Name <span style="color: red">*<span></h6>
 								</div>
 								<input maxlength="20" class="col-sm-9 text-secondary" placeholder="First Name" name="FirstName" value="@ViewBag.user.FirstName" required/>
 							</div>
 							<hr>
 							<div class="row">
 								<div class="col-sm-3">
-									<h6 class="mb-0">Last Name</h6>
+									<h6 class="mb-0">Last Name <span style="color: red">*<span></h6>
 								</div>
 								<input maxlength="20" class="col-sm-9 text-secondary" placeholder="Last Name" name="LastName" value="@ViewBag.user.LastName" required />
 							</div>
 							<hr>
 							<div class="row">
-								<div class="col-sm-3">
+								<div class="col-sm-3 col-md-3">
 									<h6 class="mb-0">Password</h6>
 								</div>
-								<input maxlength="30" disabled class="col-sm-9 text-secondary" title="Password must be at least 8 characters, including at least one uppercase letter, one lowercase letter, one number and one special character" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$" name="Password" placeholder="Password" value="@ViewBag.user.Password" required />
+								<input type="hidden" name="Password" value="@ViewBag.user.Password" />
+								<input disabled maxlength="30" class="col-sm-6 col-md-6 text-secondary" title="Password must be at least 8 characters, including at least one uppercase letter, one lowercase letter, one number and one special character" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$"
+									   placeholder="Password" value="********" required />
+								<button type="button" onclick="ChangePassword()" class="col-sm-3 btn btn-primary btn-">Change</button>
 							</div>
 							<hr>
 							<div class="row">
 								<div class="col-sm-3">
 									<h6 class="mb-0">Email</h6>
 								</div>
-								<input disabled class="col-sm-9 text-secondary" name="Email" placeholder="Email" type="email" value="@ViewBag.user.Email" required />
+								<input type="hidden" name="Email" value="@ViewBag.user.Email" />
+								<input disabled class="col-sm-9 text-secondary" placeholder="Email" type="email" value="@ViewBag.user.Email" required />
 							</div>
 							<hr>
 							<div class="row">
 								<div class="col-sm-3">
-									<h6 class="mb-0">Phone</h6>
+									<h6 class="mb-0">Phone <span style="color: red">*<span></h6>
 								</div>
 								<input maxlength="10" pattern="[0-9]{10}" class="col-sm-9 text-secondary" name="Phone" type="tel" placeholder="Phone Number" value="@ViewBag.user.Phone" required />
 							</div>
 							<hr>
 							<div class="row">
-								<div class="col-sm-12">
-									<input type="submit" class="btn btn-primary px-5" />
-									<a onclick="showEditProfileFormlt()" class="btn btn-primary px-5">Cancer</a>
+								<div class="col-7"></div>
+								<div class="col-4 d-flex">
+									<input type="submit" class="btn btn-primary px-5 m-1" />
+									<a onclick="showEditProfileFormlt()" class=" m-1 btn btn-primary px-5">Cancer</a>
 								</div>
 							</div>
 						</form>
@@ -184,7 +189,57 @@
 					</div>
 				}
 			</div>
-
+			<div id="ChangePassForm" class="modal fade p-lg-5" role="dialog">
+				<div class="modal-dialog modal-lg" role="content">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title text-dark">Change Your Password</h4>
+							<ion-icon class="closeForm" style="cursor: pointer;" onclick="ChangePassword()" name="close-outline"></ion-icon>
+						</div>
+						<div class="modal-body">
+							<form action="@Url.Action("ChangePassword","Lecturer")">
+								<input type="hidden" name="Id" value="@(ViewBag.user.Id)" />
+								<div class="form-row row">
+									<div class="form-group m-1">
+										<label for="oldPassword">Old Password <span style="color: red">*<span></label>
+										<input type="password" maxlength="20"
+											   pattern="@ViewBag.user.Password"
+											   name="oldPassword"
+											   title="Please enter your old password"
+											   class="form-control" id="oldPassword"
+											   placeholder="Your old password" required>
+										<small><span id="spanPass" style="color:red; display: none">Not correct </span></small>
+									</div>
+									<div class="form-group m-1">
+										<label for="changePassword">New Password <span style="color: red">*<span></label>
+										<input type="password"
+											   maxlength="20"
+											   title="Password must be at least 8 characters, including at least one uppercase letter, one lowercase letter, one number and one special character"
+											   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$"
+											   name="Password" class="form-control" id="changePassword" placeholder="Enter Password EX:Abc123@@" required>
+										<small><span id="spanPass" style="color:red; display: none">Not correct </span></small>
+									</div>
+									<div class="form-group m-1">
+										<label for="changeConfirmPassword">Confirm password <span style="color: red">*<span></label>
+										<input type="password" maxlength="20"
+											   class="form-control"
+											   id="changeConfirmPassword"
+											   title="Re-entered password does not match"
+											   onchange="checkPasswordMatch()"
+											   placeholder="Enter Confirm password" required>
+										<small><span id="spanConfirmpass" style="color:red; display:none">Password not correct</span></small>
+									</div>
+								</div>
+								<div class="form-row p-md-3 center">
+									<button type="submit" class="btn btn-primary btn-sm ml-auto cancelForm">Change</button>
+									<button type="button" onclick="ChangePassword()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -207,4 +262,18 @@
 		fileInput.value = '';
 		cancelButton.style.display = 'none';
 	});
+
+	function ChangePassword() {
+		$('#ChangePassForm').modal('toggle');
+	}
+	function checkPasswordMatch() {
+		var password = document.getElementById("changePassword").value;
+		var confirmPassword = document.getElementById("changeConfirmPassword").value;
+		console.log(password, confirmPassword)
+		if (password === confirmPassword) {
+			document.getElementById("changeConfirmPassword").setCustomValidity("");
+		} else {
+			document.getElementById("changeConfirmPassword").setCustomValidity("Re-entered password does not match");
+		}
+	}
 </script>

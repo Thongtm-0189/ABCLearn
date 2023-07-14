@@ -56,17 +56,17 @@
 							<div class="form-row row">
 								<div class="row col-6">
 									<div class="form-group p-md-2">
-										<label class="sr-only" for="Firstname">First Name</label>
+										<label for="Firstname">First Name <span style="color: red">*<span></label>
 										<input maxlength="20" type="text" name="FirstName" class="form-control text-secondary form-control-sm mr-1"
 											   id="Firstname" placeholder="Enter FirstName" required>
 									</div>
 									<div class="form-group p-md-2">
-										<label class="sr-only" for="LastName">Last Name</label>
+										<label for="LastName">Last Name <span style="color: red">*<span></label>
 										<input maxlength="20" type="text" name="LastName" class="form-control text-secondary form-control-sm mr-1"
 											   id="LastName" placeholder="Enter LastName" required>
 									</div>
 									<div class="form-group p-md-2">
-										<label class="sr-only" for="Phone">Number Phone</label>
+										<label for="Phone">Number Phone <span style="color: red">*<span></label>
 										<input maxlength="10" pattern="[0-9]{10}" type="tel" name="Phone" class="form-control text-secondary form-control-sm mr-1"
 											   id="Phone" placeholder="Enter Phone" required>
 									</div>
@@ -74,25 +74,26 @@
 
 								<div class="row col-6">
 									<div class="form-group p-md-2">
-										<label class="sr-only" for="EmailLecturer">Email address</label>
+										<label for="EmailLecturer">Email address <span style="color: red">*<span></label>
 										<input maxlength="20"  type="email" name="Email" class="form-control text-secondary form-control-sm mr-1"
 											   id="EmailLecturer" placeholder="Enter email" required>
 										<span id="spanEmail" style="color: red; display:none">E-mail is being used</span>
 									</div>
 									<div class="form-group p-md-2">
-										<label class="sr-only" for="password">Password</label>
+										<label for="password">Password <span style="color: red">*<span></label>
 										<input type="text" maxlength="30" title="Password must be at least 8 characters, including at least one uppercase letter, one lowercase letter, one number and one special character" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$" name="Password" class="form-control text-secondary form-control-sm mr-1"
 											   id="password" placeholder="Password" required>
 									</div>
 									<div class="form-group p-md-2">
-										<label class="sr-only" for="Avatar">Avatar</label>
+										<label for="Avatar">Avatar</label>
 										<input type="file" name="image" accept="image/*" class="form-control form-control-sm mr-1" id="Avatar" placeholder="Avatar">
 									</div>
 								</div>
 							</div>
-							<div class="form-row p-md-3 center">
-								<button type="button" onclick="formTable()" class="btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
-								<button type="submit" class="btn btn-primary btn-sm ml-1">Submit</button>
+							<div class="form-row p-md-3 center row">
+								<div class="col-md-7 col-sm-12"></div>
+								<button type="button" onclick="formTable()" class=" col-md-2 col-sm-12 m-1 btn btn-secondary btn-sm ml-auto cancelForm">Cancel</button>
+								<button type="submit" class="btn btn-primary btn-sm ml-1 col-md-2 col-sm-12 m-1">Submit</button>
 							</div>
 						</form>
 					</div>

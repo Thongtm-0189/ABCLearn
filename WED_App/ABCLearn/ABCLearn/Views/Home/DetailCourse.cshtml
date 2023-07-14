@@ -61,9 +61,12 @@
 							<small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>All Student</small>
 						</div>
 						<div class="text-center p-4">
-							@if(Model.Sale >0){
+							@if (Model.Sale > 0)
+							{
 								<h3 class="mb-0"> <del><i>@Model.Price</i></del> @(Model.Price - (Model.Price * Model.Sale) / 100)</h3>
-							}else{
+							}
+							else
+							{
 								<h3 class="mb-0"> @Model.Price </h3>
 							}
 							<p><b>@Model.Title</b></p>
@@ -75,10 +78,15 @@
 							}
 							@if (@Model.Lecturer != null)
 							{
-								<div class="d-flex justify-content-center mb-2">
-									<button onclick="formTable(@Model.Id)" class="btn btn-sm btn-primary px-3" style="border-radius: 30px;">Enroll Now</button>
-								</div>
-							}else{
+								if (ViewBag.Role != "Lecturer")
+								{
+									<div class="d-flex justify-content-center mb-2">
+										<button onclick="formTable(@Model.Id)" class="btn btn-sm btn-primary px-3" style="border-radius: 30px;">Enroll Now</button>
+									</div>
+								}
+							}
+							else
+							{
 								<div class="d-flex justify-content-center mb-2">
 									<a class="btn btn-sm btn-primary px-3" style="border-radius: 30px;">Not Yet</a>
 								</div>
@@ -87,7 +95,8 @@
 					</div>
 				</div>
 
-				@if(@Model.Lecturer != null){
+				@if (@Model.Lecturer != null)
+				{
 					<div class="col-lg-4 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
 						<div class="package-item">
 							<div class="overflow-hidden">
@@ -117,7 +126,7 @@
 					if (ViewBag.Role == "Student")
 					{
 						<form action="@Url.Action("Commemt", "Home")" class="col-11 col-md-10 row" data-wow-delay="0.2s">
-							<input class="border-0 rounded-pill w-70 py-2 ps-3 pe-4 col-md-10" placeholder="What do you think about this course?" title="You should text something" name="comment" type="text" required/>
+							<input class="border-0 rounded-pill w-70 py-2 ps-3 pe-4 col-md-10" placeholder="What do you think about this course?" title="You should text something" name="comment" type="text" required />
 							<input type="hidden" name="IDStudent" value="@UserLogin.Instance.Id" />
 							<input type="hidden" name="IDCourse" value="@Model.Id" />
 							<input class="btn btn-sm btn-primary justify-content-end px-2 col-md-1" type="submit" value="Send" />

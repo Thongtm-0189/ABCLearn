@@ -11,24 +11,24 @@ namespace ABCLearn.Controllers
 		{
 			var user = HttpContext.Session.GetObject<UserLogin>("User");
 			var check = new Course();
-			check = user.Courses.FirstOrDefault(x => x.Id == idCourse);
-			if (user == null || check == null)
-			{
-				return RedirectToAction("Index", "Home");
-			}
-			idroom = idCourse;
+			//check = user.Courses.FirstOrDefault(x => x.Id == idCourse);
+			//if (user == null || check == null)
+			//{
+			//	return RedirectToAction("Index", "Home");
+			//}
+			idroom = 1;//idCourse;
 			return RedirectToAction("Room", "MeetingRoom");
 		}
 		public IActionResult Room()
 		{
 			var user = HttpContext.Session.GetObject<UserLogin>("User");
-			if (user == null)
-			{
-				return RedirectToAction("Index", "Home");
-			}
+			//if (user == null)
+			//{
+			//	return RedirectToAction("Index", "Home");
+			//}
 			ViewBag.roomid = idroom;
-			ViewBag.nameUser = user.FirstName + " " + user.LastName;
-			ViewBag.UerID = user.Id;
+			ViewBag.nameUser = "thong";//user.FirstName + " " + user.LastName;
+			ViewBag.UerID = "1";//user.Id;
 			return View();
 		}
 	}

@@ -57,18 +57,18 @@
 					<div id="registerForm" style="display:none" class="col-md-6 title wow" data-wow-delay="0.2s">
 						<h2 class="text-center text-white">Register</h2>
 						<form action="@Url.Action("ConfirmEmail", "Register")" class="row" method="post">
-							<div id="left-form" class="col-6 col-md-6">
+							<div id="left-form" class="col-6 col-md-6 ">
 								<input type="hidden" name="Role" value="Student" />
-								<div class="form-group">
-									<label for="registerUsername">First Name</label>
+								<div class="form-group m-1">
+									<label for="registerUsername">First Name <span style="color: red">*<span></label>
 									<input type="text" maxlength="20" name="FirstName" class="form-control" id="registerFirstname" placeholder="Enter First Name" required>
 								</div>
-								<div class="form-group">
-									<label for="registerUsername">Last Name</label>
+								<div class="form-group m-1">
+									<label for="registerUsername">Last Name <span style="color: red">*<span></label>
 									<input type="text" maxlength="20" name="LastName" class="form-control" id="registerLastname" placeholder="Enter Last Name" required>
 								</div>
 
-								<div class="form-group">
+								<div class="form-group m-1">
 									<label for="registerEmail">Gander</label>
 									<select name="Gander" class="form-control">
 										<option value="Male">
@@ -77,29 +77,29 @@
 										<option value="Female">Female</option>
 									</select>
 								</div>
-								<div class="form-group">
-									<label for="registerEmail">Email</label>
+								<div class="form-group m-1">
+									<label for="registerEmail">Email <span style="color: red">*<span></label>
 									<input id="emailRegister" onchange="checkEmail(this)" type="email" name="Email" class="form-control" placeholder="Enter Email" required>
 									<small><span id="spanEmail" style="color:red; display: none">This Mail existed</span></small>
 								</div>
 							</div>
 
 							<div id="right-form" class="col-6 col-md-6">
-								<div class="form-group">
-									<label for="registerEmail">Date of birthday</label>
+								<div class="form-group m-1">
+									<label for="registerEmail">Date of birthday <span style="color: red">*<span></label>
 									<input type="date" name="DOB" class="form-control" id="registerEmail" placeholder="Enter Email" required>
 								</div>
-								<div class="form-group">
-									<label for="registerPhonenumber">Phone number</label>
+								<div class="form-group m-1">
+									<label for="registerPhonenumber">Phone number <span style="color: red">*<span></label>
 									<input type="tel" maxlength="10" name="Phone" pattern="[0-9]{10}" title="Please enter the number phone with 10 digit" class="form-control" id="registerPhonenumber" placeholder="Enter Phone number" required>
 								</div>
-								<div class="form-group">
-									<label for="registerPassword">Password</label>
+								<div class="form-group m-1">
+									<label for="registerPassword">Password <span style="color: red">*<span></label>
 									<input type="password" maxlength="20" title="Password must be at least 8 characters, including at least one uppercase letter, one lowercase letter, one number and one special character" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,30}$" name="Password" class="form-control" id="registerPassword" placeholder="Enter Password EX:Abc123@@" required>
 									<small><span id="spanPass" style="color:red; display: none">Not correct </span></small>
 								</div>
-								<div class="form-group">
-									<label for="registerConfirmPassword">Confirm password</label>
+								<div class="form-group m-1">
+									<label for="registerConfirmPassword">Confirm password <span style="color: red">*<span></label>
 									<input type="password" maxlength="20" class="form-control" id="registerConfirmPassword" title="Re-entered password does not match" onchange="checkPasswordMatch()" placeholder="Enter Confirm password" required>
 									<small><span id="spanConfirmpass" style="color:red; display:none">Password not correct</span></small>
 								</div>
@@ -114,7 +114,7 @@
 						<form action="@Url.Action("ConfirmEmail","Forgot")" class="row col-12 justify-content-center">
 							<div id="left-form" class="col-10 col-md-10 justify-content-center">
 								<div class="form-group">
-									<label for="registerUsername">Your Email</label>
+									<label for="registerUsername">Your Email <span style="color: red">*<span></label>
 									<input type="email" name="Email" class="form-control" id="inputResetPass" placeholder="Enter your Email" required>
 									<span id="spanResetPass" style="display: none; color: red"><small>Email does not exist</small></span>
 									<label for="Rolename">You are </label>
