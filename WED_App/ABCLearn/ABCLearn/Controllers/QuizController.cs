@@ -34,24 +34,33 @@ namespace ABCLearn.Controllers
 				quizs.Clear();
 				Random rand = new Random();
 				HashSet<int> usedIndexes = new HashSet<int>(); // Sử dụng HashSet để theo dõi các chỉ số đã sử dụng
+				var quizCourse = QuizDAO.Instance.Quizzes().Where(x => x.IDCourse == courseChoise).ToList();
+
 				if (courseChoise != 0)
 				{
-					int numberQuiz = QuizDAO.Instance.Quizzes().Where(x => x.IDCourse == courseChoise).ToList().Count;
-					for (int i = 0; i < numberQuiz; i++)
+					int numberQuiz = quizCourse.Count;
+					if (numberQuiz > 10)
 					{
-						int numberRandom;
-						do
+						for (int i = 0; i < 10; i++)
 						{
-							numberRandom = rand.Next(0, numberQuiz);
+							int numberRandom;
+							do
+							{
+								numberRandom = rand.Next(0, numberQuiz);
+							}
+							while (usedIndexes.Contains(numberRandom)); // Lặp lại cho đến khi có chỉ số chưa được sử dụng
+							Quiz subQuiz = QuizDAO.Instance.Quizzes()[numberRandom];
+
+							subQuiz = QuizDAO.Instance.Quizzes().Where(x => x.IDCourse == courseChoise).ToList()[numberRandom];
+
+							usedIndexes.Add(numberRandom); // Đánh dấu chỉ số đã sử dụng
+
+							quizs.Add(subQuiz);
 						}
-						while (usedIndexes.Contains(numberRandom)); // Lặp lại cho đến khi có chỉ số chưa được sử dụng
-						Quiz subQuiz = QuizDAO.Instance.Quizzes()[numberRandom];
-
-						subQuiz = QuizDAO.Instance.Quizzes().Where(x => x.IDCourse == courseChoise).ToList()[numberRandom];
-
-						usedIndexes.Add(numberRandom); // Đánh dấu chỉ số đã sử dụng
-
-						quizs.Add(subQuiz);
+					}
+					else
+					{
+						quizs = quizCourse;
 					}
 				}
 				else
@@ -113,9 +122,9 @@ namespace ABCLearn.Controllers
 		}
 		public IActionResult DetailQuiz(int IDCourse)
 		{
-			if (HttpContext.Session.GetObject<UserLogin>("User") == null)
+			if (HttpContext.Session.GetObject<UserLogin>("User") == null || HttpContext.Session.GetObject<UserLogin>("User").RoleID != "Lecturer")
 			{
-				UserLogin.Instance = null;
+				return RedirectToAction("Index", "Home");
 			}
 			List<Quiz> quizzes = new List<Quiz>();
 			quizzes = QuizDAO.Instance.Quizzes().Where(x => x.IDCourse == IDCourse).ToList();

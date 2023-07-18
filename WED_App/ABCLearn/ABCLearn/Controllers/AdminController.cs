@@ -33,7 +33,6 @@ namespace ABCLearn.Controllers
 		}
 		public IActionResult Lecturer(int page = 0, int max = 1)
 		{
-			renderData();
 			if (HttpContext.Session.GetObject<UserLogin>("ADMIN") == null)
 			{
 				return RedirectToAction("Index", "Admin");
@@ -48,11 +47,12 @@ namespace ABCLearn.Controllers
 			{
 				subList = LecturerDAO.Instance.Lecturers().Skip(8 * page).ToList();
 			}
+			ViewBag.crPage = page;
+
 			return View(subList);
 		}
 		public IActionResult Course(int page = 0, int max = 1)
 		{
-			renderData();
 			if (HttpContext.Session.GetObject<UserLogin>("ADMIN") == null)
 			{
 				return RedirectToAction("Index", "Admin");
@@ -67,6 +67,7 @@ namespace ABCLearn.Controllers
 			{
 				subList = CourseDAO.Instance.Courses().Skip(8 * page).ToList();
 			}
+			ViewBag.crPage = page;
 			return View(subList);
 		}
 		public IActionResult Calendar()
@@ -90,7 +91,6 @@ namespace ABCLearn.Controllers
 		}
 		public IActionResult Student(int page = 0, int max = 0)
 		{
-			renderData();
 			if (HttpContext.Session.GetObject<UserLogin>("ADMIN") == null)
 			{
 				return RedirectToAction("Index", "Admin");
@@ -105,6 +105,7 @@ namespace ABCLearn.Controllers
 			{
 				subList = StudentDAO.Instance.Students().Skip(8 * page).ToList();
 			}
+			ViewBag.crPage = page;
 			return View(@"Views/Admin/AdminPage.cshtml", subList);
 		}
 		public IActionResult LogOut()

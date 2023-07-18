@@ -1,5 +1,6 @@
 ﻿@using ABCLearn.DataContext
 @using ABCLearn.Services
+@using ABCLearn.Models
 @using ABCLearn.DataAccess
 @{
 	ViewBag.title = "ABC Learn";
@@ -106,8 +107,8 @@
 								- <p>@calendar.EndTime.ToString()</p>
 							</td>
 							<td>
-								<button type="submit" name="btnCalendar" value="Set" class="col-3 btn btn-primary">Set</button>
-								<button type="button" name="btnCalendar" onclick="acceptDelete(@calendar.Id)" value="Delete" href="" class="col-5 btn btn-primary" style="color:red">Delete</button>
+								<button type="submit" name="btnCalendar" value="Set" class="col-3 btn btn-primary"><i class="bi bi-capslock-fill m-0"></i></button>
+								<button type="button" name="btnCalendar" onclick="acceptDelete(@calendar.Id)" value="Delete" href="" class="col-5 btn btn-primary m-0" style="color:red"><i class="bi bi-trash-fill"></i></button>
 							</td>
 							</form>
 							@if (currentTime > calendar.EndTime)

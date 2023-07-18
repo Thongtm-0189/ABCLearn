@@ -1,4 +1,5 @@
-﻿@model Lecturer
+﻿@using ABCLearn.Models
+@model Lecturer
 @using ABCLearn.DataAccess
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +22,7 @@
 		</div>
 	</div>
 	<!-- Profile in here -->
-	<a href="@Url.Action("Lecturer", "Admin")" class=" nav-item nav-link "><--Back</a>
+	<a href="@Url.Action("Lecturer", "Admin")" class="btn btn-primary p-3" style="margin-left: 5%;">Back</a>
 	<div class="container">
 		<div class="main-body">
 			<div class="row gutters-sm">

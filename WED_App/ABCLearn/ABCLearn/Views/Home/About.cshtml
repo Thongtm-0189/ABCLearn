@@ -1,5 +1,5 @@
 ﻿@using ABCLearn.DataContext
-
+@using ABCLearn.Models
 @using ABCLearn.DataAccess
 @{
     ViewBag.title = "ABC Learn";
@@ -13,7 +13,6 @@
 </head>
 
 <body>
-    @Html.Partial("_spanner")
     @Html.Partial("_navStart")
     <a href="@Url.Action("Index", "Home")" class="nav-item nav-link ">Home</a>
     <a href="@Url.Action("About", "Home")" class="nav-item nav-link active">About US</a>

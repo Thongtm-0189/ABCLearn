@@ -1,4 +1,3 @@
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\appsettings.Development.json
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\appsettings.json
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\ABCLearn.staticwebassets.runtime.json
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\ABCLearn.exe
@@ -260,22 +259,13 @@ D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\ABCLearn.RazorAssemblyInfo.cs
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\staticwebassets.build.json
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\staticwebassets.development.json
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\scopedcss\Views\Shared\_endScript.cshtml.rz.scp.css
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\scopedcss\Views\Shared\_footer.cshtml.rz.scp.css
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\scopedcss\Views\Shared\_head.cshtml.rz.scp.css
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\scopedcss\Views\Shared\_navEnd.cshtml.rz.scp.css
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\scopedcss\Views\Shared\_navStart.cshtml.rz.scp.css
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\scopedcss\Views\Shared\_spanner.cshtml.rz.scp.css
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\scopedcss\bundle\ABCLearn.styles.css
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\scopedcss\projectbundle\ABCLearn.bundle.scp.css
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\ABCLearn.csproj.CopyComplete
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\ABCLearn.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\refint\ABCLearn.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\ABCLearn.pdb
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\ABCLearn.genruntimeconfig.cache
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\ref\ABCLearn.dll
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\scopedcss\Views\Shared\_navAdmin.cshtml.rz.scp.css
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\refs\Microsoft.AspNetCore.Antiforgery.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\refs\Microsoft.AspNetCore.Authentication.Abstractions.dll
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\bin\Release\net6.0\refs\Microsoft.AspNetCore.Authentication.Cookies.dll

@@ -52,15 +52,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cVmlld1N0dWRlbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-<<<<<<< Updated upstream
 [D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Course/ViewCourse.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291cnNlXFZpZXdDb3Vyc2UuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-=======
->>>>>>> Stashed changes
-[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Dictionary/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGljdGlvbmFyeVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/EnrollCourse/PaymentCallBackMomo.cshtml]
@@ -99,16 +92,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEZXRhaWxDb3Vyc2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Home/Dictionary.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEaWN0aW9uYXJ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Home/Notification.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxOb3RpZmljYXRpb24uY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Home/Profile.cshtml]
@@ -151,8 +144,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUXVpelxTdWJtaXRRdWl6LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/Error.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_endScript.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9lbmRTY3JpcHQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_footer.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9mb290ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_head.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9oZWFkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_navAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9uYXZBZG1pbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_navEnd.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9uYXZFbmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_navStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9uYXZTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_profileLecturer.cshtml]
@@ -163,46 +176,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9wcm9maWxlU3R1ZGVudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_ValidationScriptsPartial.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/_ViewImports.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/_ViewStart.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_endScript.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9lbmRTY3JpcHQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = b-zuhbhio72c
-
-[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_footer.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9mb290ZXIuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = b-9g8m6oqh8d
-
-[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_head.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9oZWFkLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = b-zqknymvrxw
-
-[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_Layout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = b-avwmwzlapy
-
-[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_navAdmin.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9uYXZBZG1pbi5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = b-3oendflbjb
-
-[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_navEnd.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9uYXZFbmQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = b-nch2p7fskc
-
-[D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_navStart.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9uYXZTdGFydC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = b-qwh13evkyd
-
 [D:/SE17A07/kỳ 5 - SU23/SWP391 - Software development project/ABCLearn/ABCLearn-project/ABCLearn/WED_App/ABCLearn/ABCLearn/Views/Shared/_spanner.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9zcGFubmVyLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = b-kdub2066db
+build_metadata.AdditionalFiles.CssScope = 

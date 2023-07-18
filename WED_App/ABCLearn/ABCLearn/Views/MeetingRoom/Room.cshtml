@@ -49,7 +49,10 @@
 									class="btn btn-primary rounded p-3 m-1 fs-5 rounded-circle">
 								<i class="bi bi-telephone" id="phone"></i>
 							</button>
-							<button type="button" class="btn btn-primary rounded p-3 m-1 fs-5 rounded-circle" id="toggle-screen-share"><i class="bi bi-aspect-ratio-fill"></i></button>
+							@if (ViewBag.role == "Lecturer")
+							{
+								<button type="button" class="btn btn-primary rounded p-3 m-1 fs-5 rounded-circle" id="toggle-screen-share"><i class="bi bi-aspect-ratio-fill"></i></button>
+							}
 						</form>
 					</div>
 					<div class="col-4 d-flex justify-content-center ">
@@ -66,7 +69,7 @@
 			</div>
 
 			<div id="chatboxcard" class="card-body" style="position: relative;">
-				<div id="messagesList" class="card-body" style="height: 80vh; overflow-y: auto; padding-bottom:30px;"></div>
+				<div id="messagesList" class="card-body" style="height: 75vh; overflow-y: auto; padding-bottom:30px;"></div>
 
 				<div class="card-footer" style="position: absolute;bottom: 0; left: 0;  width: 100%;">
 					<div class="input-group" style="display: flex;">
@@ -79,7 +82,7 @@
 			</div>
 
 			<div id="dictionarycard" class="card-body" style="display: none;">
-				<div id="contentDictionary" class="card-body" style="height: 80vh; overflow-y: auto;">
+				<div id="contentDictionary" class="card-body" style="height: 60vh; overflow-y: auto;">
 					<h6 id="title" class="text-primary m-0 text-center text-decoration-underline"></h6>
 					<div id="phonetic"></div>
 					<div id="meaning"></div>

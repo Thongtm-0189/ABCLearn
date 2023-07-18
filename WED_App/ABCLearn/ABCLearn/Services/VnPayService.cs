@@ -2,45 +2,48 @@
 
 namespace ABCLearn.Services
 {
-	public class VnPayService : IVnPayService
-	{
-		private readonly IConfiguration _configuration;
-		public VnPayService(IConfiguration configuration)
-		{
-			_configuration = configuration;
-		}
-		public string CreatePaymentUrl(PaymentInformationModel model, HttpContext context)
-		{
-			var timeZoneById = TimeZoneInfo.FindSystemTimeZoneById(_configuration["TimeZoneId"]);
-			var timeNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneById);
-			var tick = DateTime.Now.Ticks.ToString();
-			var pay = new VnPayLibrary();
-			var urlCallBack = _configuration["PaymentCallBack:ReturnUrl"];
+    public class VnPayService : IVnPayService
+    {
+        private readonly IConfiguration _configuration;
 
-			pay.AddRequestData("vnp_Version", _configuration["Vnpay:Version"]);
-			pay.AddRequestData("vnp_Command", _configuration["Vnpay:Command"]);
-			pay.AddRequestData("vnp_TmnCode", _configuration["Vnpay:TmnCode"]);
-			pay.AddRequestData("vnp_Amount", ((int)model.Amount * 100).ToString());
-			pay.AddRequestData("vnp_CreateDate", timeNow.ToString("yyyyMMddHHmmss"));
-			pay.AddRequestData("vnp_CurrCode", _configuration["Vnpay:CurrCode"]);
-			pay.AddRequestData("vnp_IpAddr", pay.GetIpAddress(context));
-			pay.AddRequestData("vnp_Locale", _configuration["Vnpay:Locale"]);
-			pay.AddRequestData("vnp_OrderInfo", $"{model.Name} {model.OrderDescription} {model.Amount}");
-			pay.AddRequestData("vnp_OrderType", model.OrderType);
-			pay.AddRequestData("vnp_ReturnUrl", urlCallBack);
-			pay.AddRequestData("vnp_TxnRef", tick);
+        public VnPayService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+        public string CreatePaymentUrl(PaymentInformationModel model, HttpContext context)
+        {
+            //var timeZoneById = TimeZoneInfo.FindSystemTimeZoneById(_configuration["TimeZoneId"]);
+            //var timeNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneById);
+            var timeNow = CurrentDateTime.GetcurrentDateTime;
+            var tick = DateTime.Now.Ticks.ToString();
+            var pay = new VnPayLibrary();
+            var urlCallBack = _configuration["PaymentCallBack:ReturnUrl"];
+            var amount = (model.Amount * 100) + "";
+            var modeType = model.OrderType;
+            pay.AddRequestData("vnp_Version", _configuration["Vnpay:Version"]);
+            pay.AddRequestData("vnp_Command", _configuration["Vnpay:Command"]);
+            pay.AddRequestData("vnp_TmnCode", _configuration["Vnpay:TmnCode"]);
+            pay.AddRequestData("vnp_Amount", amount);//
+            pay.AddRequestData("vnp_CreateDate", timeNow.ToString("yyyyMMddHHmmss"));
+            pay.AddRequestData("vnp_CurrCode", _configuration["Vnpay:CurrCode"]);
+            pay.AddRequestData("vnp_IpAddr", pay.GetIpAddress(context));
+            pay.AddRequestData("vnp_Locale", _configuration["Vnpay:Locale"]);
+            pay.AddRequestData("vnp_OrderInfo", $"{model.Name} {model.OrderDescription} {model.Amount}");
+            pay.AddRequestData("vnp_OrderType", "electric");//
+            pay.AddRequestData("vnp_ReturnUrl", urlCallBack);
+            pay.AddRequestData("vnp_TxnRef", tick);
 
-			var paymentUrl = pay.CreateRequestUrl(_configuration["Vnpay:BaseUrl"], _configuration["Vnpay:HashSecret"]);
+            var paymentUrl = pay.CreateRequestUrl(_configuration["Vnpay:BaseUrl"], _configuration["Vnpay:HashSecret"]);
 
-			return paymentUrl;
-		}
+            return paymentUrl;
+        }
 
-		public PaymentResponseModel PaymentExecute(IQueryCollection collections)
-		{
-			var pay = new VnPayLibrary();
-			var response = pay.GetFullResponseData(collections, _configuration["Vnpay:HashSecret"]);
+        public PaymentResponseModel PaymentExecute(IQueryCollection collections)
+        {
+            var pay = new VnPayLibrary();
+            var response = pay.GetFullResponseData(collections, _configuration["Vnpay:HashSecret"]);
 
-			return response;
-		}
-	}
+            return response;
+        }
+    }
 }

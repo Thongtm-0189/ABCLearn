@@ -1,10 +1,6 @@
 {
   "version": 2,
-<<<<<<< Updated upstream
   "dgSpecHash": "1ygj76QCowbkaEzF/gPfMs4I59MA92LENdord0DQFp0dLOaD1LzOzWAPen6ZJ0cdbGtAxXyMFE73TFozrjGXlA==",
-=======
-  "dgSpecHash": "pxwEsF99UqvBryi0qZijFf1en2AgPfN6X9EYexcjJM5YfbRlweDWdKjAxktpR6AdKKms7c3vFYmthveFsdH4Yg==",
->>>>>>> Stashed changes
   "success": true,
   "projectFilePath": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\ABCLearn.csproj",
   "expectedPackageFiles": [

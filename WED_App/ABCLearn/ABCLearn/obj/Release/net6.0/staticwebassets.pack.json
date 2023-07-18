@@ -1,24 +1,8 @@
 {
   "Files": [
     {
-      "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\obj\\Release\\net6.0\\scopedcss\\projectbundle\\ABCLearn.bundle.scp.css",
-      "PackagePath": "staticwebassets\\ABCLearn.bundle.scp.css"
-    },
-    {
       "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\File\\FileQuiz.xlsx",
       "PackagePath": "staticwebassets\\File\\FileQuiz.xlsx"
-    },
-    {
-      "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\css-Amin\\bootstrap.min.css",
-      "PackagePath": "staticwebassets\\css-Amin\\bootstrap.min.css"
-    },
-    {
-      "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\css-Amin\\dataTables\\dataTables.bootstrap.css",
-      "PackagePath": "staticwebassets\\css-Amin\\dataTables\\dataTables.bootstrap.css"
-    },
-    {
-      "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\css-Amin\\dataTables\\dataTables.responsive.css",
-      "PackagePath": "staticwebassets\\css-Amin\\dataTables\\dataTables.responsive.css"
     },
     {
       "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\css\\MettingRoom.css",
@@ -27,6 +11,10 @@
     {
       "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\css\\StyleSpanner.css",
       "PackagePath": "staticwebassets\\css\\StyleSpanner.css"
+    },
+    {
+      "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\css\\Styles.css",
+      "PackagePath": "staticwebassets\\css\\Styles.css"
     },
     {
       "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\css\\bootstrap.min.css",
@@ -39,14 +27,6 @@
     {
       "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\css\\style.css",
       "PackagePath": "staticwebassets\\css\\style.css"
-    },
-    {
-      "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\css\\styles.css",
-      "PackagePath": "staticwebassets\\css\\styles.css"
-    },
-    {
-      "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\favicon.ico",
-      "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
       "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\img\\Avatar\\Lecturer\\Lecturer-1.jpg",
@@ -91,6 +71,10 @@
     {
       "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\img\\Avatar\\Student\\Student-1.png",
       "PackagePath": "staticwebassets\\img\\Avatar\\Student\\Student-1.png"
+    },
+    {
+      "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\img\\Avatar\\Student\\Student-1040.jpg",
+      "PackagePath": "staticwebassets\\img\\Avatar\\Student\\Student-1040.jpg"
     },
     {
       "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\img\\Course\\package-1.jpg",
@@ -247,10 +231,6 @@
     {
       "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\js\\popper.js",
       "PackagePath": "staticwebassets\\js\\popper.js"
-    },
-    {
-      "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\js\\site.js",
-      "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
       "Id": "D:\\SE17A07\\kỳ 5 - SU23\\SWP391 - Software development project\\ABCLearn\\ABCLearn-project\\ABCLearn\\WED_App\\ABCLearn\\ABCLearn\\wwwroot\\lib\\animate\\animate.css",

@@ -25,7 +25,7 @@
 		</div>
 	</div>
 	<!-- Profile in here -->
-	<a href="@Url.Action("Course","Admin")"><---Back</a>
+	<a href="@Url.Action("Course","Admin")" class="btn btn-primary p-3" style="margin-left: 5%;">Back</a>
 	<div class="container">
 		<div class="main-body">
 			<div class="row gutters-sm">
@@ -59,7 +59,14 @@
 									<select class="col-sm-9 form-control" name="IDLecturer">
 										@foreach (Lecturer item in LecturerDAO.Instance.Lecturers())
 										{
-											<option value="@item.Id">@item.FirstName @item.LastName</option>
+											if (item.Id == Model.Lecturer.Id)
+											{
+												<option value="@item.Id" selected>@item.FirstName @item.LastName</option>
+											}
+											else
+											{
+												<option value="@item.Id">@item.FirstName @item.LastName</option>
+											}
 										}
 									</select>
 								</div>

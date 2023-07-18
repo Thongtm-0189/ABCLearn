@@ -1,5 +1,6 @@
 ﻿@using ABCLearn.DataAccess
 @using ABCLearn.DataContext
+@using ABCLearn.Models
 @{
     ViewBag.title = "ABC Learn";
     var Courses = CourseDAO.Instance.Courses();
@@ -77,7 +78,7 @@
                             <td>@noti.StartDate.ToString("yyyy-MM-dd")</td>
                             <td>@noti.EndDate.ToString("yyyy-MM-dd")</td>
                             <td>
-                                <button name="btnLecturerAdmin" type="button" onclick="acceptDelete(@noti.Id)" class="col-6 btn btn-primary" value="Delete" style="color: red">Delete</button>
+                                <button name="btnLecturerAdmin" type="button" onclick="acceptDelete(@noti.Id)" class="col-6 btn btn-primary" value="Delete" style="color: red"><i class="bi bi-trash-fill"></i></button>
                             </td>
                         </tr>
                     }

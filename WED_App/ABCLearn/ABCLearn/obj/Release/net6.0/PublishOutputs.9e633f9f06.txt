@@ -1,5 +1,4 @@
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\ABCLearn.exe
-D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\appsettings.Development.json
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\appsettings.json
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\libman.json
 D:\SE17A07\kỳ 5 - SU23\SWP391 - Software development project\ABCLearn\ABCLearn-project\ABCLearn\WED_App\ABCLearn\ABCLearn\obj\Release\net6.0\PubTmp\Out\refs\Microsoft.AspNetCore.Antiforgery.dll

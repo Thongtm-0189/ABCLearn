@@ -1,4 +1,5 @@
 ﻿using ABCLearn.DataAccess;
+using ABCLearn.Extend;
 using ABCLearn.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +26,23 @@ namespace ABCLearn.Controllers
 
 		public IActionResult ViewNotification()
 		{
+			SessionUser();
 			return View("Views/Home/Notification.cshtml");
+		}
+		private void SessionUser()
+		{
+			var user = HttpContext.Session.GetObject<UserLogin>("User");
+			if (user != null)
+			{
+				ViewBag.Role = user.RoleID;
+				ViewBag.login = true;
+				ViewBag.user = user;
+			}
+			else
+			{
+				ViewBag.Role = "guest";
+				ViewBag.login = false;
+			}
 		}
 	}
 }

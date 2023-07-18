@@ -1,5 +1,6 @@
 ﻿@using ABCLearn.DataContext
 @using ABCLearn.DataAccess
+@using ABCLearn.Models
 @{
 	ViewBag.title = "ABC Learn";
 	var Courses = Model;
@@ -11,6 +12,10 @@
 	else
 	{
 		numOfCourse = (numOfCourse / 8) + 1;
+	}
+	if (ViewBag.crPage == null)
+	{
+		ViewBag.crPage = 1;
 	}
 }
 
@@ -135,15 +140,17 @@
 							<td>@course.Quantity / 30</td>
 							<td>
 								<div class="d-flex row">
-									<a href="@Url.Action("ViewCourse", "Course", new{IdCourse = course.Id})" name="btnStudentAdmin" class="col-7 btn btn-primary">View</a>
+									<div class="col-md-3"></div>
+									<a href="@Url.Action("ViewCourse", "Course", new{IdCourse = course.Id})" name="btnStudentAdmin" class="col-3 btn btn-primary"><i class="bi bi-pencil-square"></i></a>
 									@if (course.Status)
 									{
-										<a href="@Url.Action("SetStatus", "Course", new{Id = course.Id, Status = true})" type="submit" name="btnStudentAdmin" class="col-5 btn btn-primary" value="Delete" style="color: red">Lock</a>
+										<a href="@Url.Action("SetStatus", "Course", new{Id = course.Id, Status = true})" type="submit" name="btnStudentAdmin" class="col-3 btn btn-primary" value="Delete" style="color: red"><i class="bi bi-lock-fill"></i></a>
 									}
 									else
 									{
-										<a href="@Url.Action("SetStatus", "Course", new{Id = course.Id, Status = false})" type="buttom" name="btnStudentAdmin" class="col-5 btn btn-primary" value="Delete" style="color: red">UnLock</a>
+										<a href="@Url.Action("SetStatus", "Course", new{Id = course.Id, Status = false})" type="buttom" name="btnStudentAdmin" class="col-3 btn btn-primary" value="Delete" style="color: red"><i class="bi bi-unlock-fill"></i></a>
 									}
+									<div class="col-md-3"></div>
 								</div>
 							</td>
 						</tr>
@@ -160,7 +167,15 @@
 		<div class="justify-content-center ">
 			@for (int i = 0; i < numOfCourse; i++)
 			{
-				<a href="@Url.Action("Course", "Admin", new{page = i, max = numOfCourse})">@(i + 1)</a>
+				if(ViewBag.crPage == i)
+				{
+
+				<a href="@Url.Action("Course", "Admin", new{page = i, max = numOfCourse})" class="border m-1 btn btn-primary">@(i + 1)</a>
+				}
+				else
+				{
+					<a href="@Url.Action("Course", "Admin", new{page = i, max = numOfCourse})" class="border m-1 p-1">@(i + 1)</a>
+				}
 			}
 		</div>
 	</div>
